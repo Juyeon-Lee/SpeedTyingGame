@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "CSocCom.h"
 
 // MatchGame 대화 상자
 
@@ -24,4 +25,7 @@ public:
 	CString m_strTyping;
 	CString m_strScore;
 	CString m_strID;
+	CSocCom m_socCom;
+	afx_msg void OnBnClickedButtonConnect();
+	LPARAM OnReceive(UINT wParam, LPARAM lParam);
 };
