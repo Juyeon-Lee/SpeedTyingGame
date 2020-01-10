@@ -186,6 +186,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CDlgConnect.h" />
     <ClInclude Include="CDlgLogin.h" />
     <ClInclude Include="CSocCom.h" />
     <ClInclude Include="framework.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CDlgConnect.cpp" />
     <ClCompile Include="CDlgLogin.cpp" />
     <ClCompile Include="CSocCom.cpp" />
     <ClCompile Include="MatchGame.cpp" />
