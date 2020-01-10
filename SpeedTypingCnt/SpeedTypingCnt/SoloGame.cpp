@@ -1,0 +1,40 @@
+﻿// SoloGame.cpp: 구현 파일
+//
+
+#include "pch.h"
+#include "SpeedTypingCnt.h"
+#include "SoloGame.h"
+#include "afxdialogex.h"
+
+
+// SoloGame 대화 상자
+
+IMPLEMENT_DYNAMIC(SoloGame, CDialogEx)
+
+SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_DIALOG_SOLO, pParent)
+	, m_strTyping(_T(""))
+	, m_strTime(_T("걸린시간 :"))
+	, m_strID(_T("회원"))
+{
+
+}
+
+SoloGame::~SoloGame()
+{
+}
+
+void SoloGame::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
+	DDX_Text(pDX, IDC_STATIC_TIME, m_strTime);
+	DDX_Text(pDX, IDC_STATIC_ID, m_strID);
+}
+
+
+BEGIN_MESSAGE_MAP(SoloGame, CDialogEx)
+END_MESSAGE_MAP()
+
+
+// SoloGame 메시지 처리기
