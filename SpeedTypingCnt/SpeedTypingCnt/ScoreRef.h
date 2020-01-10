@@ -22,6 +22,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CListCtrl m_scoreList;
-	CString m_strIP_score;
+//	CString m_strIP_score;
 	virtual BOOL OnInitDialog();
+	CString m_strID_score;
 };

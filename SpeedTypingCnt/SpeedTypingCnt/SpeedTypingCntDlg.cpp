@@ -7,6 +7,7 @@
 #include "SpeedTypingCnt.h"
 #include "SpeedTypingCntDlg.h"
 #include "afxdialogex.h"
+#include "ScoreRef.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,6 +66,7 @@ BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
 END_MESSAGE_MAP()
 
 
@@ -151,4 +153,12 @@ void CSpeedTypingCntDlg::OnPaint()
 HCURSOR CSpeedTypingCntDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+void CSpeedTypingCntDlg::OnBnClickedButtonScore()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 점수 조회 버튼을 누르면 해당 다이얼로그 보이기
+	CScoreRef dlg;
+	dlg.DoModal();
 }
