@@ -152,4 +152,3 @@ HCURSOR CSpeedTypingCntDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
-
