@@ -12,8 +12,6 @@ class CSpeedTypingCntDlg : public CDialogEx
 public:
 	CSpeedTypingCntDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
 	
-	CDatabase m_db;
-	CRecordset* m_pRs;
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME

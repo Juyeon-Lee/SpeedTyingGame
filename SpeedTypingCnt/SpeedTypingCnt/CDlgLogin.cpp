@@ -47,7 +47,7 @@ void CDlgLogin::OnClickedButtonAdd()
 	m_db.BeginTrans();
 	try
 	{
-		m_db.ExecuteSQL(_T("INSERT INTO USER_INFO(USER_ID,USER_PW) VALUES('CAT',1234)"));
+		//m_db.ExecuteSQL(_T("INSERT INTO USER_INFO(USER_ID,USER_PW) VALUES('CAT',1234)"));
 		
 	}
 	catch (CException * e)
