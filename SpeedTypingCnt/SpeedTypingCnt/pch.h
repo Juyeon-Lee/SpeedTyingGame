@@ -12,4 +12,5 @@
 #include <afxcontrolbars.h>
 #include "afxsock.h"
 
+#define UM_RECEIVE WM_USER+2
 #endif //PCH_H

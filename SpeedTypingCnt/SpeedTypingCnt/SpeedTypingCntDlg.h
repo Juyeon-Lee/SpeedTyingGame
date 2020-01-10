@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+# include <afxdb.h>
 
 // CSpeedTypingCntDlg 대화 상자
 class CSpeedTypingCntDlg : public CDialogEx
@@ -11,6 +11,9 @@ class CSpeedTypingCntDlg : public CDialogEx
 // 생성입니다.
 public:
 	CSpeedTypingCntDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
+	
+	CDatabase m_db;
+	CRecordset* m_pRs;
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
