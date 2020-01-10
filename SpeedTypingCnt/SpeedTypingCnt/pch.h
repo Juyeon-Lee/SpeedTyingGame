@@ -11,5 +11,6 @@
 #include "framework.h"
 #include <afxcontrolbars.h>
 #include "afxsock.h"
+#include "CDlgLogin.h"
 
 #endif //PCH_H
