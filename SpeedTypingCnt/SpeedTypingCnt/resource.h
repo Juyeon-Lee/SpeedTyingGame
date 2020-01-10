@@ -26,6 +26,22 @@
 #define IDC_STATIC_TIME                 1009
 #define IDC_BUTTON_CONNECT              1010
 #define IDC_STATIC_SCORE                1011
+#define IDC_STATIC1                     1013
+#define IDC_STATIC2                     1014
+#define IDC_STATIC3                     1015
+#define IDC_STATIC4                     1016
+#define IDC_STATIC5                     1017
+#define IDC_STATIC6                     1018
+#define IDC_STATIC7                     1019
+#define IDC_STATIC8                     1020
+#define IDC_STATIC9                     1021
+#define IDC_STATIC10                    1022
+#define IDC_STATIC11                    1023
+#define IDC_STATIC12                    1024
+#define IDC_STATIC13                    1025
+#define IDC_STATIC14                    1026
+#define IDC_STATIC15                    1027
+#define IDC_STATIC_9                    1028
 
 // Next default values for new objects
 // 
@@ -33,7 +49,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1013
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
