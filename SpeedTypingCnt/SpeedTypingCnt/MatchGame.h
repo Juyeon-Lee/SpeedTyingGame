@@ -20,4 +20,8 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CString m_strTyping;
+	CString m_strScore;
+	CString m_strID;
 };

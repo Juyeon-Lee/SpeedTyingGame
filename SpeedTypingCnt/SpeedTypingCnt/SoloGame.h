@@ -22,4 +22,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CString m_strTyping;
+	CString m_strTime;
+	CString m_strID;
 };

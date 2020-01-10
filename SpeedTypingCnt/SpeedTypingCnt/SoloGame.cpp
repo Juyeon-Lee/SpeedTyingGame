@@ -14,6 +14,8 @@ IMPLEMENT_DYNAMIC(SoloGame, CDialogEx)
 SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SOLO, pParent)
 	, m_strTyping(_T(""))
+	, m_strTime(_T(""))
+	, m_strID(_T(""))
 {
 
 }
@@ -26,6 +28,8 @@ void SoloGame::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
+	DDX_Text(pDX, IDC_STATIC_TIME, m_strTime);
+	DDX_Text(pDX, IDC_STATIC_ID, m_strID);
 }
 
 

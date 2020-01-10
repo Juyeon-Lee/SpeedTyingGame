@@ -13,6 +13,9 @@ IMPLEMENT_DYNAMIC(MatchGame, CDialogEx)
 
 MatchGame::MatchGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_MATCH, pParent)
+	, m_strTyping(_T(""))
+	, m_strScore(_T(""))
+	, m_strID(_T(""))
 {
 
 }
@@ -24,6 +27,9 @@ MatchGame::~MatchGame()
 void MatchGame::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
+	DDX_Text(pDX, IDC_STATIC_SCORE, m_strScore);
+	DDX_Text(pDX, IDC_STATIC_ID, m_strID);
 }
 
 
