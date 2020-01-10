@@ -9,8 +9,7 @@
 #define IDR_MAINFRAME                   128
 #define IDD_DIALOG_LOGIN                130
 #define IDD_DIALOG_SCORE                134
-#define IDD_DIALOG_MATCH2               136
-#define IDD_DIALOG_MATCH                137
+#define IDD_DIALOG_MATCH                136
 #define IDD_DIALOG_SOLO                 137
 #define IDC_BUTTON_SOLO                 1000
 #define IDC_EDIT_ID                     1001
@@ -27,6 +26,7 @@
 #define IDC_STATIC_TIME                 1009
 #define IDC_BUTTON_CONNECT              1010
 #define IDC_STATIC_SCORE                1011
+#define IDC_TAB1                        1012
 
 // Next default values for new objects
 // 
@@ -34,7 +34,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
