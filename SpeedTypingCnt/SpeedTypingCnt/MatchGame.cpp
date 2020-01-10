@@ -14,8 +14,8 @@ IMPLEMENT_DYNAMIC(MatchGame, CDialogEx)
 MatchGame::MatchGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_MATCH, pParent)
 	, m_strTyping(_T(""))
-	, m_strScore(_T(""))
-	, m_strID(_T(""))
+	, m_strScore(_T("점수 :"))
+	, m_strID(_T("회원"))
 {
 
 }

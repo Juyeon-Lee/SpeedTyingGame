@@ -26,7 +26,6 @@
 #define IDC_STATIC_TIME                 1009
 #define IDC_BUTTON_CONNECT              1010
 #define IDC_STATIC_SCORE                1011
-#define IDC_TAB1                        1012
 
 // Next default values for new objects
 // 
