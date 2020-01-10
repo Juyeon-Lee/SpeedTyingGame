@@ -13,4 +13,5 @@
 #include "afxsock.h"
 #include "CDlgLogin.h"
 
+#define UM_RECEIVE WM_USER+2
 #endif //PCH_H
