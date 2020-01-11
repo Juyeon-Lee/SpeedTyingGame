@@ -55,4 +55,7 @@ public:
 	int endGameIndex;
 	CString score;
 //	CString m_strScroreText;
+	BOOL IsGameEnd();
+	void EraseCheck(int wordIndex);
+	void SetGameEnd();
 };

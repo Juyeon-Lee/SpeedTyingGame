@@ -105,17 +105,17 @@ void MatchGame::OnBnClickedButtonConnect()
 		if (b)
 		{
 			m_socCom.Init(this->m_hWnd);
-			m_strConnect = "접속성공";
+			// m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
 			//m_bConnect = TRUE;
-			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
+			// GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 		}
 		else
 		{
-			m_strConnect = "접속실패";
+			// m_strConnect = "접속실패";
 			MessageBox(_T("접속 실패..."));
 
-			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
+			// GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 		}
 
 		UpdateData(FALSE);
@@ -136,13 +136,13 @@ LPARAM MatchGame::OnReceive(UINT wParam, LPARAM lParam)
 	//일단은 헤더 없음
 
 	str.Format("%s", pTmp);
-	
+	/*
 	EraseCheck(atoi(str));
 
 	if (IsGameEnd()) {
 		Sleep(1000);
 		SetGameEnd();
-	}
+	}*/
 
 	
 	return LPARAM();
@@ -160,7 +160,8 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 		// EDIT TEXT에서 문자열 획득 후, STATIC TEXT들과 비교하는 함수로 전달
 		CString str;
 		GetDlgItemText(IDC_EDIT_TYPING, str);
-		OnSearchWord(str);
+		// 여기서 staticStringToIndex로 해당 문자열에 대한 인덱스 찾으면 될 것 같아요
+		// 찾은 인덱스로 EraseCheck(인덱스)하면 단어가 삭제
 		SetDlgItemText(IDC_EDIT_TYPING, "");
 		return true;
 	}
@@ -168,7 +169,7 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-// 입력한 단어를 화면에 있는 단어들과 비교 후 삭제하는 함수
+// 입력한 단어를 화면에 있는 단어들과 비교 후 삭제하는 함수(곧 삭제될 예정)
 void MatchGame::OnSearchWord(CString searchWord)
 {
 	// TODO: 여기에 구현 코드 추가.
@@ -267,7 +268,6 @@ void MatchGame::OnSearchWord(CString searchWord)
 		SetDlgItemText(IDC_STATIC_SCORE, score);
 	}
 	else if (searchWord == m_word14)
-	switch (wordIndex)
 	{
 		SetDlgItemText(IDC_STATIC14, "");
 		endGameIndex++;
@@ -286,4 +286,67 @@ void MatchGame::OnSearchWord(CString searchWord)
 	{
 		MessageBox("게임이 종료되었습니다!\n최종 스코어 : " + score + "점");
 	}
+}
+
+
+BOOL MatchGame::IsGameEnd()
+{
+	// TODO: 여기에 구현 코드 추가.
+	if (m_wordNum)
+		return TRUE;
+	else
+		return FALSE;
+
+}
+
+
+void MatchGame::EraseCheck(int wordIndex)
+{
+	// TODO: 여기에 구현 코드 추가.
+	switch (wordIndex)
+	{
+	case 1:
+		(GetDlgItem(IDC_STATIC1))->ShowWindow(FALSE);
+	case 2:
+		(GetDlgItem(IDC_STATIC2))->ShowWindow(FALSE);
+	case 3:
+		(GetDlgItem(IDC_STATIC3))->ShowWindow(FALSE);
+	case 4:
+		(GetDlgItem(IDC_STATIC4))->ShowWindow(FALSE);
+	case 5:
+		(GetDlgItem(IDC_STATIC5))->ShowWindow(FALSE);
+	case 6:
+		(GetDlgItem(IDC_STATIC6))->ShowWindow(FALSE);
+	case 7:
+		(GetDlgItem(IDC_STATIC7))->ShowWindow(FALSE);
+	case 8:
+		(GetDlgItem(IDC_STATIC8))->ShowWindow(FALSE);
+	case 9:
+		(GetDlgItem(IDC_STATIC9))->ShowWindow(FALSE);
+	case 10:
+		(GetDlgItem(IDC_STATIC10))->ShowWindow(FALSE);
+	case 11:
+		(GetDlgItem(IDC_STATIC11))->ShowWindow(FALSE);
+	case 12:
+		(GetDlgItem(IDC_STATIC12))->ShowWindow(FALSE);
+	case 13:
+		(GetDlgItem(IDC_STATIC13))->ShowWindow(FALSE);
+	case 14:
+		(GetDlgItem(IDC_STATIC14))->ShowWindow(FALSE);
+	case 15:
+		(GetDlgItem(IDC_STATIC15))->ShowWindow(FALSE);
+	default:
+		break;
+	}
+}
+
+void MatchGame::SetGameEnd()
+{
+	// TODO: 여기에 구현 코드 추가.
+	int competitorScore = 15 - m_myScore;
+	if (competitorScore > m_myScore)
+		MessageBox("패");
+	else
+		MessageBox("승");
+
 }
