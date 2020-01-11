@@ -21,7 +21,39 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString m_strTyping;
-	CString m_strTime;
+	
 	CString m_strID;
+
+	CEdit m_strTyping;
+	CButton m_strSend;
+	CStringList m_string_list;
+	
+	virtual BOOL PreTranslateMessage(MSG* pMsg); 
+	void SetWord();
+	void ViewWord();
+	void EraseCheck(int cnt);
+	BOOL IsGameEnd(int cnt);
+	int endcnt;
+	
+	clock_t startTime;
+	clock_t endTime;
+	double result;
+	
+
+	CStatic m_txt1;
+	CStatic m_txt10;
+	CStatic m_txt11;
+	CStatic m_txt12;
+	CStatic m_txt13;
+	CStatic m_txt14;
+	CStatic m_txt15;
+	CStatic m_txt2;
+	CStatic m_txt3;
+	CStatic m_txt5;
+	CStatic m_txt4;
+	CStatic m_txt6;
+	CStatic m_txt7;
+	CStatic m_Txt8;
+	CStatic m_txt9;
+	
 };

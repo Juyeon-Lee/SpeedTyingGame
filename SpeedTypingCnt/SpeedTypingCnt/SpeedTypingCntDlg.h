@@ -38,4 +38,5 @@ public:
 	afx_msg void OnBnClickedButtonMatch();
 public:
 	afx_msg void OnButtonInit();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

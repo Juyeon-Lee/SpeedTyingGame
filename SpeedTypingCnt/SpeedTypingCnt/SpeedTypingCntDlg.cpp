@@ -203,3 +203,13 @@ void CSpeedTypingCntDlg::OnButtonInit()
 	dlg->DoModal();
 	//if(d)
 }
+BOOL CSpeedTypingCntDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if (pMsg->wParam == VK_RETURN || pMsg->wParam == VK_ESCAPE) // enter or esc 값을 받았을 때 창이 꺼지지 않음
+			return TRUE;
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
