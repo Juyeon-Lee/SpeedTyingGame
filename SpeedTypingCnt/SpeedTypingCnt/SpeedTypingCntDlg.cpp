@@ -8,7 +8,7 @@
 #include "SpeedTypingCntDlg.h"
 #include "afxdialogex.h"
 #include "ScoreRef.h"
-#include "SoloGame.h"
+//#include "SoloGame.h"
 #include "MatchGame.h"
 
 #ifdef _DEBUG
@@ -182,8 +182,8 @@ void CSpeedTypingCntDlg::OnBnClickedButtonScore()
 void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	SoloGame* dlg = new SoloGame;
-	dlg->DoModal();
+	//SoloGame* dlg = new SoloGame;
+	//dlg->DoModal();
 }
 
 

@@ -33,24 +33,8 @@ MatchGame::MatchGame(CWnd* pParent /*=nullptr*/)
 	, m_word7(_T("가방"))
 	, m_word8(_T("칠성"))
 	, m_word9(_T("장수돌침대"))
+	, m_strConnect(_T(""))
 {
-	m_strList[0] = "함함하다";
-	m_strList[1] = "괴랄하다";
-	m_strList[2] = "신선함";
-	m_strList[3] = "고구마라떼";
-	m_strList[4] = "카푸치노";
-	m_strList[5] = "드라이기";
-	m_strList[6] = "가방";
-	m_strList[7] = "칠성";
-	m_strList[8] = "장수돌침대";
-	m_strList[9] = "슬렉스";
-	m_strList[10] = "트리트먼트";
-	m_strList[11] = "치킨";
-	m_strList[12] = "의자";
-	m_strList[13] = "요거트";
-	m_strList[14] = "수맥";
-	endGameIndex = 0;
-	score = _T("");
 }
 
 MatchGame::~MatchGame()
@@ -78,11 +62,13 @@ void MatchGame::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STATIC7, m_word7);
 	DDX_Text(pDX, IDC_STATIC8, m_word8);
 	DDX_Text(pDX, IDC_STATIC9, m_word9);
+	DDX_Text(pDX, IDC_STATIC_STATUS, m_strConnect);
 }
 
 
 BEGIN_MESSAGE_MAP(MatchGame, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_CONNECT, &MatchGame::OnBnClickedButtonConnect)
+	ON_MESSAGE(UM_RECEIVE, &MatchGame::OnReceive)
 END_MESSAGE_MAP()
 
 
@@ -103,29 +89,24 @@ void MatchGame::OnBnClickedButtonConnect()
 		if (b)
 		{
 			m_socCom.Init(this->m_hWnd);
-			// m_strConnect = "접속성공";
+			m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
-			//m_bConnect = TRUE;
-			// GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
+			m_bConnect = TRUE;
+			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 		}
 		else
 		{
-			// m_strConnect = "접속실패";
 			MessageBox(_T("접속 실패..."));
-
-			// GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 		}
 
 		UpdateData(FALSE);
 	}
 }
 
-
-LPARAM MatchGame::OnReceive(UINT wParam, LPARAM lParam)
+afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 {
-	// TODO: 여기에 구현 코드 추가.
 	char pTmp[256];
-	CString strTmp, str;
+	CString str;
 	memset(pTmp, '\0', 256);
 
 	// 데이터를 pTmp에 받는다
@@ -134,14 +115,19 @@ LPARAM MatchGame::OnReceive(UINT wParam, LPARAM lParam)
 	//일단은 헤더 없음
 
 	str.Format("%s", pTmp);
-	/*
-	EraseCheck(atoi(str));
+	if (str == _T("접속성공"))
+	{
+		m_bConnect = TRUE;
+	}
+	else 
+	{
+		EraseCheck(atoi(str), FALSE);
 
-	if (IsGameEnd()) {
-		Sleep(1000);
-		SetGameEnd();
-	}*/
-
+		if (IsGameEnd()) {
+			Sleep(1000);
+			SetGameEnd();
+		}
+	}
 	
 	return LPARAM();
 }
@@ -150,28 +136,58 @@ LPARAM MatchGame::OnReceive(UINT wParam, LPARAM lParam)
 BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	CString str;
+	int index;
 
 	// 엔터키 처리
-	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+	if ((pMsg->message == WM_KEYDOWN)
+		&& pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd
+		&& (pMsg->wParam == VK_RETURN)
+		&& m_bConnect == TRUE)
 	{
 		// EDIT TEXT에서 문자열 획득 후, STATIC TEXT들과 비교하는 함수로 전달
-		CString str;
-		int index;
+		
 		GetDlgItemText(IDC_EDIT_TYPING, str);
 
 		index = staticStringToIndex(str);
 
-		// 찾은 인덱스로 EraseCheck(인덱스)하면 단어가 삭제
-		if (index)
-			EraseCheck(index);
-		if(IsGameEnd())
-			MessageBox("게임이 종료되었습니다!\n최종 스코어 : " + score + "점");
+		if (index) // 찾은 인덱스로 EraseCheck(인덱스)하면 단어가 삭제
+		{
+			EraseCheck(index, TRUE);
+			UpdateData(FALSE);
+			str.Format("%d", index);
+			SendGame(str);
+		}
+			
+		if (IsGameEnd())
+		{
+			/*str.Format("%s%d%s", "게임이 종료되었습니다!\n최종 스코어 :", m_myScore, "점");
+			MessageBox(str);*/
+			Sleep(1000);
+			SetGameEnd();
+		}
 
 		SetDlgItemText(IDC_EDIT_TYPING, "");
 		return true;
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+BOOL MatchGame::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	endGameIndex = 0;
+	score = _T("");
+	m_strScore.Format("%d%s", m_myScore, "점");
+	m_bConnect = FALSE;
+
+	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
 
@@ -223,9 +239,8 @@ int MatchGame::staticStringToIndex(CString str)
 }
 
 
-void MatchGame::EraseCheck(int wordIndex)
+void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 {
-	// TODO: 여기에 구현 코드 추가.
 	switch (wordIndex)
 	{
 	case 1:
@@ -279,8 +294,13 @@ void MatchGame::EraseCheck(int wordIndex)
 
 	// 일치하는 단어 찾았을 때만
 	endGameIndex++;
+	if (itsMe)//내가 맞췄을 때만 내 점수 오른다.
+	{
+		m_myScore++;
+		m_strScore.Format("%d%s", m_myScore, "점");
+	}
+
 	score.Format("%d", endGameIndex);
-	SetDlgItemText(IDC_STATIC_SCORE, score);
 }
 
 void MatchGame::SetGameEnd()
@@ -293,4 +313,37 @@ void MatchGame::SetGameEnd()
 		MessageBox("승");
 
 }
+
+void MatchGame::SendGame(CString strTmp)
+{
+	// 데이터 전송
+	UpdateData(TRUE);
+	char pTmp[256];
+
+	memset(pTmp, '\0', 256);
+	sprintf_s(pTmp, 256, "%s", strTmp);
+
+	m_socCom.Send(pTmp, 256);
+}
+
+
+void MatchGame::InitGame()
+{
+	/*m_strList[0] = "함함하다";
+	m_strList[1] = "괴랄하다";
+	m_strList[2] = "신선함";
+	m_strList[3] = "고구마라떼";
+	m_strList[4] = "카푸치노";
+	m_strList[5] = "드라이기";
+	m_strList[6] = "가방";
+	m_strList[7] = "칠성";
+	m_strList[8] = "장수돌침대";
+	m_strList[9] = "슬렉스";
+	m_strList[10] = "트리트먼트";
+	m_strList[11] = "치킨";
+	m_strList[12] = "의자";
+	m_strList[13] = "요거트";
+	m_strList[14] = "수맥";*/
+}
+
 
