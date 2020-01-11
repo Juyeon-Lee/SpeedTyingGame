@@ -45,8 +45,8 @@
 #define IDC_STATIC15                    1029
 #define IDC_EDIT_IP                     1030
 #define IDC_STATIC_STATUS               1031
-#define IDC_STATIC_                     1031
-#define IDC_STATIC_MAINID               1032
+#define IDC_STATIC_SCORETEXT            1032
+#define IDC_STATIC_MAINID               1033
 
 // Next default values for new objects
 // 
