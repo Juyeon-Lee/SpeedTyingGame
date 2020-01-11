@@ -19,6 +19,7 @@ SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 {
 	SetWord();
 	endcnt = 1;
+	cnt = 1;
 }
 
 SoloGame::~SoloGame()
@@ -88,15 +89,16 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 	m_strTyping.GetWindowTextA(strText);
 	POSITION pos = m_string_list.GetHeadPosition();
 	//POSITION remove_pos;
-	int cnt = 1;
-
+	cnt = 1;
+	
 
 	ViewWord();
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd)
 	{
 		if (pMsg->wParam == VK_RETURN)
 		{
-			while (pos != NULL && IsGameEnd(endcnt)) {
+			
+			while (pos != NULL && IsGameEnd( endcnt)) {
 				
 				if (strText == m_string_list.GetAt(pos)) {
 					m_strTyping.SetWindowTextA("");
@@ -115,7 +117,9 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 				}
 
 			}
-
+			if(!IsGameEnd(endcnt))
+				EraseCheck(cnt);
+			
 			return TRUE;
 		}
 	}
@@ -185,6 +189,7 @@ void SoloGame::EraseCheck(int wordIndex)
 		break;
 	case 13:
 		(GetDlgItem(IDC_STATIC13_SOLO))->ShowWindow(FALSE);
+		break;
 	case 14:
 		(GetDlgItem(IDC_STATIC14_SOLO))->ShowWindow(FALSE);
 		break;
@@ -195,20 +200,21 @@ void SoloGame::EraseCheck(int wordIndex)
 		break;
 	}
 }
-BOOL SoloGame::IsGameEnd(int cnt)
+BOOL SoloGame::IsGameEnd(int endcnt)
 {
-	if (cnt == 1) {
+	if (endcnt == 1) {
 		startTime = clock();
 		return TRUE;
 	}
-	else if (cnt < 15)
+	else if (endcnt < 16)
 		return TRUE;
-	else if (cnt == 15) {
+	else if (endcnt == 16) {
 		endTime = clock();
 		result = ((double)( endTime - startTime)) / CLOCKS_PER_SEC;
 		CString strResult;
 		strResult.Format(_T("%.3f"), result);
 		EraseCheck(cnt);
+		
 		MessageBox(_T("걸린 시간 :"+ strResult +"초"), _T("연습결과"), MB_ICONERROR);
 		return FALSE;
 	}

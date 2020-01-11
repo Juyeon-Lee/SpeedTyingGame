@@ -32,8 +32,9 @@ public:
 	void SetWord();
 	void ViewWord();
 	void EraseCheck(int cnt);
-	BOOL IsGameEnd(int cnt);
+	BOOL IsGameEnd(int endcnt);
 	int endcnt;
+	int cnt;
 	
 	clock_t startTime;
 	clock_t endTime;
