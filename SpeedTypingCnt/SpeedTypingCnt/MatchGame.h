@@ -22,10 +22,17 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	const CString statics = "IDC_STATIC";
+	int m_wordNum = 15;
+	int m_myScore = 0;
 	CString m_strTyping;
 	CString m_strScore;
 	CString m_strID;
 	CSocCom m_socCom;
 	afx_msg void OnBnClickedButtonConnect();
 	LPARAM OnReceive(UINT wParam, LPARAM lParam);
+	CString m_strConnect;
+	BOOL IsGameEnd();
+	void EraseCheck(int wordIndex);
+	void SetGameEnd();
 };

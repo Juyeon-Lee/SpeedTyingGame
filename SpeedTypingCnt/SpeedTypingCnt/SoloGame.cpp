@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(SoloGame, CDialogEx)
 SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SOLO, pParent)
 	, m_strTyping(_T(""))
-	, m_strTime(_T("걸린시간 :"))
+	, m_strTime(_T("0초"))
 	, m_strID(_T("회원"))
 {
 

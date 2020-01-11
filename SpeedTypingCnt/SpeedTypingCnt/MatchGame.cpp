@@ -7,7 +7,6 @@
 #include "afxdialogex.h"
 #include "CDlgConnect.h"
 
-
 // MatchGame 대화 상자
 
 IMPLEMENT_DYNAMIC(MatchGame, CDialogEx)
@@ -15,8 +14,9 @@ IMPLEMENT_DYNAMIC(MatchGame, CDialogEx)
 MatchGame::MatchGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_MATCH, pParent)
 	, m_strTyping(_T(""))
-	, m_strScore(_T("점수 :"))
+	, m_strScore(_T("0점"))
 	, m_strID(_T("회원"))
+	, m_strConnect(_T(""))
 {
 
 }
@@ -31,6 +31,7 @@ void MatchGame::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
 	DDX_Text(pDX, IDC_STATIC_SCORE, m_strScore);
 	DDX_Text(pDX, IDC_STATIC_ID, m_strID);
+	DDX_Text(pDX, IDC_STATIC_STATUS, m_strConnect);
 }
 
 
@@ -56,11 +57,13 @@ void MatchGame::OnBnClickedButtonConnect()
 		if (b)
 		{
 			m_socCom.Init(this->m_hWnd);
+			m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
 			GetDlgItem(IDOK)->EnableWindow(TRUE);
 		}
 		else
 		{
+			m_strConnect = "접속실패";
 			MessageBox(_T("접속 실패..."));
 
 			GetDlgItem(IDOK)->EnableWindow(FALSE);
@@ -81,11 +84,79 @@ LPARAM MatchGame::OnReceive(UINT wParam, LPARAM lParam)
 	// 데이터를 pTmp에 받는다
 	m_socCom.Receive(pTmp, 256);
 
-	// strTmp에 헤더를 저장
-	strTmp.Format("%c", pTmp[0]);
+	//일단은 헤더 없음
 
-	// 받은 데이터의 헤더를 분석해 행동을 결정한다
-	int iType = atoi(strTmp);
+	str.Format("%s", pTmp);
+	
+	EraseCheck(atoi(str));
+
+	if (IsGameEnd()) {
+		Sleep(1000);
+		SetGameEnd();
+	}
+
 	
 	return LPARAM();
+}
+
+
+BOOL MatchGame::IsGameEnd()
+{
+	if (m_wordNum)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+
+void MatchGame::EraseCheck(int wordIndex)
+{
+	// (GetDlgItem(IDC_BT_EMCSTOP))->ShowWindow(FALSE);
+
+	switch (wordIndex)
+	{
+	case 1:
+		(GetDlgItem(IDC_STATIC1))->ShowWindow(FALSE);
+	case 2:
+		(GetDlgItem(IDC_STATIC2))->ShowWindow(FALSE);
+	case 3:
+		(GetDlgItem(IDC_STATIC3))->ShowWindow(FALSE);
+	case 4:
+		(GetDlgItem(IDC_STATIC4))->ShowWindow(FALSE);
+	case 5:
+		(GetDlgItem(IDC_STATIC5))->ShowWindow(FALSE);
+	case 6:
+		(GetDlgItem(IDC_STATIC6))->ShowWindow(FALSE);
+	case 7:
+		(GetDlgItem(IDC_STATIC7))->ShowWindow(FALSE);
+	case 8:
+		(GetDlgItem(IDC_STATIC8))->ShowWindow(FALSE);
+	case 9:
+		(GetDlgItem(IDC_STATIC9))->ShowWindow(FALSE);
+	case 10:
+		(GetDlgItem(IDC_STATIC10))->ShowWindow(FALSE);
+	case 11:
+		(GetDlgItem(IDC_STATIC11))->ShowWindow(FALSE);
+	case 12:
+		(GetDlgItem(IDC_STATIC12))->ShowWindow(FALSE);
+	case 13:
+		(GetDlgItem(IDC_STATIC13))->ShowWindow(FALSE);
+	case 14:
+		(GetDlgItem(IDC_STATIC14))->ShowWindow(FALSE);
+	case 15:
+		(GetDlgItem(IDC_STATIC15))->ShowWindow(FALSE);
+	default:
+		break;
+	}
+}
+
+
+void MatchGame::SetGameEnd()
+{
+	int competitorScore = 15 - m_myScore;
+	if (competitorScore > m_myScore)
+		MessageBox("패");
+	else
+		MessageBox("승");
+
 }

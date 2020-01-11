@@ -42,10 +42,9 @@
 #define IDC_STATIC13                    1027
 #define IDC_STATIC14                    1028
 #define IDC_STATIC15                    1029
-#define IDC_EDIT_IP                     1029
-#define IDC_STATIC_9                    1030
-#define IDC_STATIC_STATUS               1030
-#define IDC_STATIC_MAINID               1031
+#define IDC_EDIT_IP                     1030
+#define IDC_STATIC_STATUS               1031
+#define IDC_STATIC_MAINID               1032
 
 // Next default values for new objects
 // 
