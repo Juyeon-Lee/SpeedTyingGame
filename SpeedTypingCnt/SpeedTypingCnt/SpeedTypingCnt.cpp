@@ -51,7 +51,8 @@ BOOL CSpeedTypingCntApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinApp::InitInstance();
-
+	if (!AfxSocketInit())
+		return FALSE;
 
 	AfxEnableControlContainer();
 

@@ -188,6 +188,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayList.h" />
     <ClInclude Include="CDlgConnect.h" />
     <ClInclude Include="CDlgLogin.h" />
     <ClInclude Include="CSocCom.h" />

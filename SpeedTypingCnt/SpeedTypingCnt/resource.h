@@ -6,6 +6,7 @@
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDD_SPEEDTYPINGCNT_DIALOG       102
+#define IDP_SOCKETS_INIT_FAILED         103
 #define IDR_MAINFRAME                   128
 #define IDD_DIALOG_LOGIN                130
 #define IDD_DIALOG_SCORE                134
@@ -60,6 +61,9 @@
 #define IDC_STATIC13_SOLO               1045
 #define IDC_STATIC14_SOLO               1046
 #define IDC_STATIC15_SOLO               1047
+#define IDC_STATIC_                     1031
+#define IDC_STATIC_SCORETEXT            1032
+#define IDC_STATIC_MAINID               1033
 
 // Next default values for new objects
 // 
@@ -67,7 +71,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1048
+#define _APS_NEXT_CONTROL_VALUE         1031
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
