@@ -59,14 +59,15 @@ void MatchGame::OnBnClickedButtonConnect()
 			m_socCom.Init(this->m_hWnd);
 			m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
-			GetDlgItem(IDOK)->EnableWindow(TRUE);
+			//m_bConnect = TRUE;
+			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 		}
 		else
 		{
 			m_strConnect = "접속실패";
 			MessageBox(_T("접속 실패..."));
 
-			GetDlgItem(IDOK)->EnableWindow(FALSE);
+			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 		}
 
 		UpdateData(FALSE);
@@ -111,8 +112,6 @@ BOOL MatchGame::IsGameEnd()
 
 void MatchGame::EraseCheck(int wordIndex)
 {
-	// (GetDlgItem(IDC_BT_EMCSTOP))->ShowWindow(FALSE);
-
 	switch (wordIndex)
 	{
 	case 1:
