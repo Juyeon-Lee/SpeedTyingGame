@@ -208,6 +208,7 @@ BOOL SoloGame::IsGameEnd(int cnt)
 		result = ((double)( endTime - startTime)) / CLOCKS_PER_SEC;
 		CString strResult;
 		strResult.Format(_T("%.3f"), result);
+		EraseCheck(cnt);
 		MessageBox(_T("걸린 시간 :"+ strResult +"초"), _T("연습결과"), MB_ICONERROR);
 		return FALSE;
 	}
