@@ -23,7 +23,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	const CString statics = "IDC_STATIC";
-	int m_wordNum = 15;
 	int m_myScore = 0;
 	CString m_strTyping;
 	CString m_strScore;
@@ -41,13 +40,11 @@ public:
 	CString m_word2;
 	CString m_word3;
 	CString m_word4;
-//	CString m_word;
 	CString m_word5;
 	CString m_word6;
 	CString m_word7;
 	CString m_word8;
 	CString m_word9;
-//	afx_msg void OnStnClickedStatic2();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	void OnSearchWord(CString searchWord);
 	int m_listSize;
@@ -58,4 +55,5 @@ public:
 	BOOL IsGameEnd();
 	void EraseCheck(int wordIndex);
 	void SetGameEnd();
+	int staticStringToIndex(CString str);
 };

@@ -73,13 +73,11 @@ void MatchGame::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STATIC2, m_word2);
 	DDX_Text(pDX, IDC_STATIC3, m_word3);
 	DDX_Text(pDX, IDC_STATIC4, m_word4);
-	//  DDX_Text(pDX, IDC_STATIC5, m_word);
 	DDX_Text(pDX, IDC_STATIC5, m_word5);
 	DDX_Text(pDX, IDC_STATIC6, m_word6);
 	DDX_Text(pDX, IDC_STATIC7, m_word7);
 	DDX_Text(pDX, IDC_STATIC8, m_word8);
 	DDX_Text(pDX, IDC_STATIC9, m_word9);
-	//  DDX_Text(pDX, IDC_STATIC_SCORETEXT, m_strScroreText);
 }
 
 
@@ -156,12 +154,19 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 	// 엔터키 처리
 	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
 	{
-		// 여기에 원하는 동작의 코드를 삽입
 		// EDIT TEXT에서 문자열 획득 후, STATIC TEXT들과 비교하는 함수로 전달
 		CString str;
+		int index;
 		GetDlgItemText(IDC_EDIT_TYPING, str);
-		// 여기서 staticStringToIndex로 해당 문자열에 대한 인덱스 찾으면 될 것 같아요
+
+		index = staticStringToIndex(str);
+
 		// 찾은 인덱스로 EraseCheck(인덱스)하면 단어가 삭제
+		if (index)
+			EraseCheck(index);
+		if(IsGameEnd())
+			MessageBox("게임이 종료되었습니다!\n최종 스코어 : " + score + "점");
+
 		SetDlgItemText(IDC_EDIT_TYPING, "");
 		return true;
 	}
@@ -169,134 +174,52 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-// 입력한 단어를 화면에 있는 단어들과 비교 후 삭제하는 함수(곧 삭제될 예정)
-void MatchGame::OnSearchWord(CString searchWord)
-{
-	// TODO: 여기에 구현 코드 추가.
-
-	// 해당하는 단어 화면에서 지우기
-	if (searchWord == m_word1)
-	{
-		SetDlgItemText(IDC_STATIC1, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word2)
-	{
-		SetDlgItemText(IDC_STATIC2, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word3)
-	{
-		SetDlgItemText(IDC_STATIC3, "");
-		endGameIndex++;
-		CString score;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word4)
-	{
-		SetDlgItemText(IDC_STATIC4, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word5)
-	{
-		SetDlgItemText(IDC_STATIC5, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word6)
-	{
-		SetDlgItemText(IDC_STATIC6, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word7)
-	{
-		SetDlgItemText(IDC_STATIC7, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word8)
-	{
-		SetDlgItemText(IDC_STATIC8, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word9)
-	{
-		SetDlgItemText(IDC_STATIC9, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word10)
-	{
-		SetDlgItemText(IDC_STATIC10, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word11)
-	{
-		SetDlgItemText(IDC_STATIC11, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word12)
-	{
-		SetDlgItemText(IDC_STATIC12, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word13)
-	{
-		SetDlgItemText(IDC_STATIC13, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word14)
-	{
-		SetDlgItemText(IDC_STATIC14, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-	else if (searchWord == m_word15)
-	{
-		SetDlgItemText(IDC_STATIC15, "");
-		endGameIndex++;
-		score.Format("%d", endGameIndex);
-		SetDlgItemText(IDC_STATIC_SCORE, score);
-	}
-
-	if (endGameIndex >= 15)
-	{
-		MessageBox("게임이 종료되었습니다!\n최종 스코어 : " + score + "점");
-	}
-}
-
 
 BOOL MatchGame::IsGameEnd()
 {
 	// TODO: 여기에 구현 코드 추가.
-	if (m_wordNum)
+	if (endGameIndex >= 15)
 		return TRUE;
 	else
 		return FALSE;
 
+}
+
+
+int MatchGame::staticStringToIndex(CString str)
+{
+	if (str == m_word1)
+		return 1;
+	else if (str == m_word2)
+		return 2;
+	else if (str == m_word3)
+		return 3;
+	else if (str == m_word4)
+		return 4;
+	else if (str == m_word5)
+		return 5;
+	else if (str == m_word6)
+		return 6;
+	else if (str == m_word7)
+		return 7;
+	else if (str == m_word8)
+		return 8;
+	else if (str == m_word9)
+		return 9;
+	else if (str == m_word10)
+		return 10;
+	else if (str == m_word11)
+		return 11;
+	else if (str == m_word12)
+		return 12;
+	else if (str == m_word13)
+		return 13;
+	else if (str == m_word14)
+		return 14;
+	else if (str == m_word15)
+		return 15;
+	else // 맞는 단어 없음
+		return 0;
 }
 
 
@@ -307,37 +230,57 @@ void MatchGame::EraseCheck(int wordIndex)
 	{
 	case 1:
 		(GetDlgItem(IDC_STATIC1))->ShowWindow(FALSE);
+		break;
 	case 2:
 		(GetDlgItem(IDC_STATIC2))->ShowWindow(FALSE);
+		break;
 	case 3:
 		(GetDlgItem(IDC_STATIC3))->ShowWindow(FALSE);
+		break;
 	case 4:
 		(GetDlgItem(IDC_STATIC4))->ShowWindow(FALSE);
+		break;
 	case 5:
 		(GetDlgItem(IDC_STATIC5))->ShowWindow(FALSE);
+		break;
 	case 6:
 		(GetDlgItem(IDC_STATIC6))->ShowWindow(FALSE);
+		break;
 	case 7:
 		(GetDlgItem(IDC_STATIC7))->ShowWindow(FALSE);
+		break;
 	case 8:
 		(GetDlgItem(IDC_STATIC8))->ShowWindow(FALSE);
+		break;
 	case 9:
 		(GetDlgItem(IDC_STATIC9))->ShowWindow(FALSE);
+		break;
 	case 10:
 		(GetDlgItem(IDC_STATIC10))->ShowWindow(FALSE);
+		break;
 	case 11:
 		(GetDlgItem(IDC_STATIC11))->ShowWindow(FALSE);
+		break;
 	case 12:
 		(GetDlgItem(IDC_STATIC12))->ShowWindow(FALSE);
+		break;
 	case 13:
 		(GetDlgItem(IDC_STATIC13))->ShowWindow(FALSE);
+		break;
 	case 14:
 		(GetDlgItem(IDC_STATIC14))->ShowWindow(FALSE);
+		break;
 	case 15:
 		(GetDlgItem(IDC_STATIC15))->ShowWindow(FALSE);
-	default:
 		break;
+	default:
+		return;
 	}
+
+	// 일치하는 단어 찾았을 때만
+	endGameIndex++;
+	score.Format("%d", endGameIndex);
+	SetDlgItemText(IDC_STATIC_SCORE, score);
 }
 
 void MatchGame::SetGameEnd()
@@ -350,3 +293,4 @@ void MatchGame::SetGameEnd()
 		MessageBox("승");
 
 }
+
