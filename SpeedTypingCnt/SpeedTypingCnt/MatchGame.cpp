@@ -9,7 +9,6 @@
 #include <iostream>
 #include "ArrayList.h"
 
-
 // MatchGame 대화 상자
 
 IMPLEMENT_DYNAMIC(MatchGame, CDialogEx)
@@ -106,11 +105,13 @@ void MatchGame::OnBnClickedButtonConnect()
 		if (b)
 		{
 			m_socCom.Init(this->m_hWnd);
+			m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
 			GetDlgItem(IDOK)->EnableWindow(TRUE);
 		}
 		else
 		{
+			m_strConnect = "접속실패";
 			MessageBox(_T("접속 실패..."));
 
 			GetDlgItem(IDOK)->EnableWindow(FALSE);
@@ -131,11 +132,17 @@ LPARAM MatchGame::OnReceive(UINT wParam, LPARAM lParam)
 	// 데이터를 pTmp에 받는다
 	m_socCom.Receive(pTmp, 256);
 
-	// strTmp에 헤더를 저장
-	strTmp.Format("%c", pTmp[0]);
+	//일단은 헤더 없음
 
-	// 받은 데이터의 헤더를 분석해 행동을 결정한다
-	int iType = atoi(strTmp);
+	str.Format("%s", pTmp);
+	
+	EraseCheck(atoi(str));
+
+	if (IsGameEnd()) {
+		Sleep(1000);
+		SetGameEnd();
+	}
+
 	
 	return LPARAM();
 }

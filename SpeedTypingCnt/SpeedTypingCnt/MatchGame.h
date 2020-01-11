@@ -22,6 +22,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	const CString statics = "IDC_STATIC";
+	int m_wordNum = 15;
+	int m_myScore = 0;
 	CString m_strTyping;
 	CString m_strScore;
 	CString m_strID;
