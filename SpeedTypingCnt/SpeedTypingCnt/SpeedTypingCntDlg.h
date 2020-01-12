@@ -34,9 +34,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonScore();
-	afx_msg void OnBnClickedButtonSolo();
+//	afx_msg void OnBnClickedButtonSolo();
 	afx_msg void OnBnClickedButtonMatch();
 public:
 	afx_msg void OnButtonInit();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnClickedButtonSolo();
 };

@@ -8,7 +8,8 @@
 #include "SpeedTypingCntDlg.h"
 #include "afxdialogex.h"
 #include "ScoreRef.h"
-//#include "SoloGame.h"
+#include "SoloGame.h"
+#include "CDlgLogin.h"
 #include "MatchGame.h"
 
 #ifdef _DEBUG
@@ -53,7 +54,7 @@ END_MESSAGE_MAP()
 
 
 
-CSpeedTypingCntDlg::CSpeedTypingCntDlg(CWnd* pParent /*=nullptr*/)
+CSpeedTypingCntDlg::CSpeedTypingCntDlg(CWnd* pParent /*nullptr*/)
 	: CDialogEx(IDD_SPEEDTYPINGCNT_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -69,9 +70,10 @@ BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
-	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
+//	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
 	ON_BN_CLICKED(IDC_BUTTON_MATCH, &CSpeedTypingCntDlg::OnBnClickedButtonMatch)
 	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnButtonInit)
+	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnClickedButtonSolo)
 END_MESSAGE_MAP()
 
 
@@ -179,12 +181,12 @@ void CSpeedTypingCntDlg::OnBnClickedButtonScore()
 }
 
 
-void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	//SoloGame* dlg = new SoloGame;
-	//dlg->DoModal();
-}
+//void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
+//{
+//	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+//	SoloGame* dlg = new SoloGame;
+//	dlg->DoModal();
+//}
 
 
 void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
@@ -212,4 +214,13 @@ BOOL CSpeedTypingCntDlg::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CSpeedTypingCntDlg::OnClickedButtonSolo()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	SoloGame* dlg = new SoloGame;
+	dlg->DoModal();
+
 }

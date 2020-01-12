@@ -12,6 +12,7 @@
 #include <afxcontrolbars.h>
 #include "afxsock.h"
 #include "CDlgLogin.h"
+
 #include <afxwin.h>
 
 #define UM_RECEIVE WM_USER+2
