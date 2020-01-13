@@ -86,7 +86,7 @@ BOOL CScoreRef::OnInitDialog()
 	try {
 		CString sData(_T(""));
 		CString ar[30][10];
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, _T("select user.username,score.user_score,score.user_date from user join score on( score.user_id = user.member_id);"));
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select USER.username,SCORE.user_score from USER join score on( score.user_id = user.member_id);");
 		
 		if (bOpen)
 		{
@@ -143,6 +143,7 @@ BOOL CScoreRef::OnInitDialog()
 		e->ReportError();
 	}
 	m_pRs->Close();
+	delete m_pRs;
 
 	return TRUE;
 }

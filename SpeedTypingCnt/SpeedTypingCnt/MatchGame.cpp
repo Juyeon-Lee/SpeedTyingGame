@@ -100,6 +100,7 @@ void MatchGame::OnBnClickedButtonConnect()
 		}
 
 		UpdateData(FALSE);
+		delete dlg;
 	}
 }
 
