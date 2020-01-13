@@ -44,4 +44,7 @@ public:
 	CButton m_btnMatch;
 	CButton m_btnScore;
 	CButton m_btnSolo;
+	CString global_userID;
+	CString m_strMainID;
+	void OnButtonVisible();
 };
