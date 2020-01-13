@@ -41,4 +41,9 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnClickedButtonSolo();
 
+	CString global_userID;
+	CString m_strMainID;
+	void OnButtonVisible();
+	CButton m_btnMatch;
+//	CButton m_btnScore;
 };

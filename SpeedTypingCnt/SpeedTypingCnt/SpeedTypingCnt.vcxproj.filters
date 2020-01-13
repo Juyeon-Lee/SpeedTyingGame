@@ -68,9 +68,6 @@
     <ClCompile Include="CSocCom.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SpeedTypingCntDlg.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreRef.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SoloGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeedTypingCntDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

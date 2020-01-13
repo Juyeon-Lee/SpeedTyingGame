@@ -26,4 +26,5 @@ public:
 	CDatabase m_db;
 	CRecordset* m_pRs;
 	afx_msg void OnClickedButtonAdd();
+	afx_msg void OnBnClickedButtonLogin();
 };
