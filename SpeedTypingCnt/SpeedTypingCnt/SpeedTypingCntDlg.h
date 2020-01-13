@@ -40,6 +40,13 @@ public:
 	afx_msg void OnButtonInit();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnClickedButtonSolo();
+
+	CButton m_btnMatch;
+	CButton m_btnScore;
+	CButton m_btnSolo;
+	CString global_userID;
+	CString m_strMainID;
+	void OnButtonVisible();
 	CFont m_font;
 //	CStatic m_title;
 	//CStatic m_title;
