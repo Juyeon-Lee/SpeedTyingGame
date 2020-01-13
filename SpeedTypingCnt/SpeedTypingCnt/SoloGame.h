@@ -30,7 +30,7 @@ public:
 
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	void SetWord();
+	void SetWord(int a);
 	void ViewWord();
 	void EraseCheck(int cnt);
 	BOOL IsGameEnd(int cnt);
@@ -41,7 +41,7 @@ public:
 	clock_t endTime;
 	double result;
 	//	CString m_strID;
-	CStatic m_txt1;
+//	CStatic m_txt1;
 	CStatic m_txt10;
 	CEdit m_strTyping;
 	CStatic m_txt11;
@@ -56,5 +56,27 @@ public:
 	CStatic m_txt6;
 	CStatic m_txt7;
 	CStatic m_txt8;
-	CStatic m_txt9;
+	CStatic m_txt9; 
+
+	CString word1;
+	CString word2;
+	CString word3;
+	CString word4;
+	CString word5;
+	CString word6;
+	CString word7;
+	CString word8;
+	CString word9;
+	CString word10;
+	CString word11;
+	CString word12;
+	CString word13;
+	CString word14;
+	CString word15;
+
+	
+	
+	afx_msg void OnBnClickedButton3();
+//	CString m_txt1;
+	CStatic m_txt1;
 };
