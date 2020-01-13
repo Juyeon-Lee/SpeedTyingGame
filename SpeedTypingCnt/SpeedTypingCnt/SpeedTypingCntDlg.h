@@ -40,4 +40,10 @@ public:
 	afx_msg void OnButtonInit();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnClickedButtonSolo();
+	CFont m_font;
+//	CStatic m_title;
+	//CStatic m_title;
+	CStatic m_title;
+	
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

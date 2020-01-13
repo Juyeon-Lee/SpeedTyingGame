@@ -63,6 +63,8 @@
 #define IDC_STATIC14_SOLO               1063
 #define IDC_STATIC15_SOLO               1064
 #define IDC_STATIC_SOLOTYPE             1065
+#define IDC_BUTTON3                     1068
+#define IDC_STATIC_TITLE                1072
 
 // Next default values for new objects
 // 
@@ -70,7 +72,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        145
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1066
+#define _APS_NEXT_CONTROL_VALUE         1073
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

@@ -63,6 +63,9 @@ CSpeedTypingCntDlg::CSpeedTypingCntDlg(CWnd* pParent /*nullptr*/)
 void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
+	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
+	DDX_Control(pDX, IDC_STATIC_TITLE, m_title);
 }
 
 BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
@@ -74,6 +77,7 @@ BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_MATCH, &CSpeedTypingCntDlg::OnBnClickedButtonMatch)
 	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnButtonInit)
 	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnClickedButtonSolo)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -120,6 +124,10 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 		e->ReportError();
 
 	}*/
+	
+	m_font.CreatePointFont(120, "굴림");
+	m_title.SetFont(&m_font, TRUE);
+	//m_brush.CreateSolidBrush()
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -223,4 +231,22 @@ void CSpeedTypingCntDlg::OnClickedButtonSolo()
 	SoloGame* dlg = new SoloGame;
 	dlg->DoModal();
 
+}
+
+
+HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  여기서 DC의 특성을 변경합니다.
+	UINT nID = pWnd->GetDlgCtrlID();
+	switch (nID)
+	{
+	case IDC_STATIC_TITLE:
+			pDC->SetTextColor(RGB(0, 0, 255)); //파란색
+			//hbr = ::CreateSolidBrush(RGB(255, 0, 0));
+			break;
+	}
+
+	return hbr;
 }
