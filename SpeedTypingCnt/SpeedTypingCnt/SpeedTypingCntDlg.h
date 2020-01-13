@@ -40,4 +40,5 @@ public:
 	afx_msg void OnButtonInit();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnClickedButtonSolo();
+
 };

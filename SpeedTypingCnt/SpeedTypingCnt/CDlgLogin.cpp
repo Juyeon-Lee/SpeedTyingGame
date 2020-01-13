@@ -44,15 +44,33 @@ END_MESSAGE_MAP()
 void CDlgLogin::OnClickedButtonAdd()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	try
+	{
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+
+	}
+
 	m_db.BeginTrans();
 	try
 	{
-		//m_db.ExecuteSQL(_T("INSERT INTO USER_INFO(USER_ID,USER_PW) VALUES('CAT',1234)"));
-		
+		UpdateData(TRUE);
+		m_db.ExecuteSQL(_T("INSERT INTO user(username,password) VALUES('"+m_strID+"','"+m_strPW+"')"));
+
+
 	}
 	catch (CException * e)
 	{
 		e->ReportError();
 	}
 	m_db.CommitTrans();
+
+
+
+	::SendMessage(this->m_hWnd, WM_CLOSE, NULL,NULL);
 }
