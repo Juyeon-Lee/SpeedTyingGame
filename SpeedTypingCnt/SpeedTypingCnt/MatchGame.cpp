@@ -186,12 +186,74 @@ BOOL MatchGame::OnInitDialog()
 	m_bConnect = FALSE;
 
 	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
+	//UpdateData(TRUE);
+	try {
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+	try {
+		CString sData(_T(""));
+		
+		int c = 1;
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select * from word order by rand() limit 15;");
+		if (bOpen)
+		{
+			int iRow = 1;
+			BOOL bIsEOF = m_pRs->IsEOF();
+			DWORD dwSize = m_pRs->GetRowsetSize();
+			if (!bIsEOF)
+			{
+				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				{
+					int iFieldCnt = m_pRs->GetODBCFieldCount();
+					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+					{
+						CString sItem;
+						m_pRs->SetAbsolutePosition(iRow);
+						m_pRs->GetFieldValue(iCol, sItem);
+						if (iCol == 0)
+							sData = sData + sItem;
 
+						else {
+							sData = sData + _T(",") + sItem;
+							//m_string_list.AddTail(sItem);
+							ar[iRow - 1][0] = sItem;
+							
+
+						}
+
+					}
+					sData +=_T("\n");
+					iRow++;
+				}
+
+			}
+
+			AfxMessageBox(sData);
+		}
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+
+	m_pRs->Close();
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
+	
 
+
+/*void MatchGame::ViewWord()
+{
+
+}*/
 BOOL MatchGame::IsGameEnd()
 {
 	// TODO: 여기에 구현 코드 추가.

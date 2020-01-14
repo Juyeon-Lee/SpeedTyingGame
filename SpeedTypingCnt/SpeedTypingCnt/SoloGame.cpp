@@ -15,13 +15,13 @@ SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SOLO1, pParent)
 	, m_strTyping()
 
-	
+
 {
-	SetWord(1);
+	//SetWord(1);
 	//ViewWord();
 	endcnt = 1;
 	cnt = 1;
-	
+
 
 }
 
@@ -57,18 +57,18 @@ void SoloGame::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(SoloGame, CDialogEx)
-	
+
 	ON_BN_CLICKED(IDC_BUTTON3, &SoloGame::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
 // SoloGame 메시지 처리기
-void SoloGame::SetWord(int a)//db에 연결 시 필요 없음 // 테스트를 위한 함수
+void SoloGame::SetWord(int a, CString word)//db에 연결 시 필요 없음 // 테스트를 위한 함수
 {
 	POSITION pos = m_string_list.GetHeadPosition();//문자열의 시작위치를 
 	if (pos != NULL)//만약 문자열에 단어가 있다면
 		m_string_list.RemoveAll();//모든 단어를 지운다.
-
+	/*
 		//리스트에 문자 추가
 	if (a == 1) {
 		word1 = "발바닥";
@@ -105,7 +105,7 @@ void SoloGame::SetWord(int a)//db에 연결 시 필요 없음 // 테스트를 �
 		word14 = "green";
 		word15 = "handsome";
 	}
-	
+
 
 	m_string_list.AddTail(_T(word1));
 	m_string_list.AddTail(_T(word2));
@@ -122,10 +122,11 @@ void SoloGame::SetWord(int a)//db에 연결 시 필요 없음 // 테스트를 �
 	m_string_list.AddTail(_T(word13));
 	m_string_list.AddTail(_T(word14));
 	m_string_list.AddTail(_T(word15));
-	
-	
-	
-	
+	*/
+	m_string_list.AddTail(_T(word));
+
+
+
 }
 
 BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값 비교
@@ -133,7 +134,7 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 
 	CString strText = _T("");
 	m_strTyping.GetWindowTextA(strText);
-	
+
 
 	POSITION pos = m_string_list.GetHeadPosition();
 	//POSITION remove_pos;
@@ -143,7 +144,7 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 	ViewWord();
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd)
 	{
-		
+
 		if (pMsg->wParam == VK_RETURN)
 		{
 
@@ -178,7 +179,58 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 
 void SoloGame::ViewWord()
 {
-	SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
+	POSITION pos = m_string_list.GetHeadPosition();
+
+	while (pos != NULL) {
+		
+			SetDlgItemText(IDC_STATIC1_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC2_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC3_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC4_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC5_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC6_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC7_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC8_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC9_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC10_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC11_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC12_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC13_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC14_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			SetDlgItemText(IDC_STATIC15_SOLO, m_string_list.GetAt(pos));
+			m_string_list.GetNext(pos);
+			break;
+			
+
+		
+	}
+	/*CString str;
+	CString s;
+
+	str = "IDC_STATIC";
+	for (int i = 0; i < 2; i++)
+	{
+		s.Format(_T("%d"), i+1);
+		str = str + s + "_SOLO";
+		SetDlgItemText(str, word);
+		SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
+	}*/
+	
+	/*SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
 	SetDlgItemText(IDC_STATIC2_SOLO, _T(word2));
 	SetDlgItemText(IDC_STATIC3_SOLO, _T(word3));
 	SetDlgItemText(IDC_STATIC4_SOLO, _T(word4));
@@ -192,8 +244,8 @@ void SoloGame::ViewWord()
 	SetDlgItemText(IDC_STATIC12_SOLO, _T(word12));
 	SetDlgItemText(IDC_STATIC13_SOLO, _T(word13));
 	SetDlgItemText(IDC_STATIC14_SOLO, _T(word14));
-	SetDlgItemText(IDC_STATIC15_SOLO, _T(word15));
-	
+	SetDlgItemText(IDC_STATIC15_SOLO, _T(word15));*/
+
 
 
 }
@@ -283,5 +335,82 @@ BOOL SoloGame::IsGameEnd(int endcnt)
 
 void SoloGame::OnBnClickedButton3()//영어로 단어 바꿔줌
 {
-	SetWord(0);
+	//SetWord(0);
+	
+}
+
+void SoloGame::addItem(int index, CString word)
+{
+	/*for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			word[i][j]=
+		}
+	}*/
+
+}
+BOOL SoloGame::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+
+	//UpdateData(TRUE);
+	try {
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+	try {
+		CString sData(_T(""));
+		CString ar[10][10];
+		int c = 1;
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select * from word order by rand() limit 15;");
+		if (bOpen)
+		{
+			int iRow = 1;
+			BOOL bIsEOF = m_pRs->IsEOF();
+			DWORD dwSize = m_pRs->GetRowsetSize();
+			if (!bIsEOF)
+			{
+				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				{
+					int iFieldCnt = m_pRs->GetODBCFieldCount();
+					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+					{
+						CString sItem;
+						m_pRs->SetAbsolutePosition(iRow);
+						m_pRs->GetFieldValue(iCol, sItem);
+						if (iCol == 0)
+							sData = sData + sItem;
+							
+						else {
+							sData = sData + _T(",") + sItem;
+							m_string_list.AddTail(sItem);
+							
+				
+						}
+
+					}
+					sData +=_T("\n");
+					iRow++;
+				}
+
+			}
+			
+			AfxMessageBox(sData);
+		}
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+	
+	m_pRs->Close();
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
