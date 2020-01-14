@@ -13,6 +13,8 @@ IMPLEMENT_DYNAMIC(SoloGameEng, CDialogEx)
 
 SoloGameEng::SoloGameEng(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SOLO21, pParent)
+	, m_strTyping1()
+
 {
 	//SetWord(1);
 	//ViewWord();
@@ -74,7 +76,7 @@ BOOL SoloGameEng::PreTranslateMessage(MSG * pMsg)//edit control 에서 enter 로
 
 
 	ViewWord();
-	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd)
+	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING1)->m_hWnd)
 	{
 
 		if (pMsg->wParam == VK_RETURN)
@@ -87,10 +89,6 @@ BOOL SoloGameEng::PreTranslateMessage(MSG * pMsg)//edit control 에서 enter 로
 					EraseCheck(cnt);
 					endcnt++;
 
-					//랜덤한 값을 만약 받는다면
-					/*remove_pos = pos;
-					m_string_list.GetNext(pos);
-					m_string_list.RemoveAt(pos);*/
 					break;
 				}
 				else {
