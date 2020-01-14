@@ -10,6 +10,7 @@ class CDlgLogin : public CDialogEx
 public:
 	CDlgLogin(CWnd* pParent = nullptr);   // 표준 생성자입니다.
 	virtual ~CDlgLogin();
+//	CSpeedTypingCntDlg* mainDlg;
 	
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
@@ -30,6 +31,5 @@ public:
 //	afx_msg void OnBnClickedButtonLogin();
 //	CString idText;
 	CString userID;
-	CString userPW;
-	
+	CString userPW;	
 };

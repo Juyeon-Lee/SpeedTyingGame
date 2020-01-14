@@ -58,35 +58,30 @@ END_MESSAGE_MAP()
 
 CSpeedTypingCntDlg::CSpeedTypingCntDlg(CWnd* pParent /*nullptr*/)
 	: CDialogEx(IDD_SPEEDTYPINGCNT_DIALOG, pParent)
-	, m_strMainID(_T("로그아웃 되어있음"))
+	, m_strMainID(_T("로그인 안함."))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	global_userID = _T("");
 }
 
-void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
-
-	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
-	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
-	DDX_Control(pDX, IDC_STATIC_TITLE, m_title);
-	DDX_Text(pDX, IDC_STATIC_MAINID, m_strMainID);
-	DDX_Control(pDX, IDC_BUTTON_MATCH, m_btnMatch);
-	DDX_Control(pDX, IDC_BUTTON_SCORE, m_btnScore);
-	DDX_Control(pDX, IDC_BUTTON_SOLO, m_btnSolo);
-}
+//void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
+//{
+//	CDialogEx::DoDataExchange(pDX);
+//	DDX_Control(pDX, IDC_BUTTON_MATCH, m_btnMatch);
+//	//  DDX_Control(pDX, IDC_BUTTON_SCORE, m_btnScore);
+//	//  DDX_Control(pDX, IDC_BUTTON_SOLO, m_btnSolo);
+//	//  DDX_Text(pDX, IDC_STATIC_MAINID, m_strMainID);
+//	//  DDX_Control(pDX, IDC_BUTTON_INIT, m_btnLogin);
+//}
 
 BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
-	//	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
+	ON_WM_QUERYDRAGICON()	
+	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
 	ON_BN_CLICKED(IDC_BUTTON_MATCH, &CSpeedTypingCntDlg::OnBnClickedButtonMatch)
-	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnButtonInit)
-	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnClickedButtonSolo)
-	ON_WM_CTLCOLOR()
+	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
+	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnBnClickedButtonInit)
 END_MESSAGE_MAP()
 
 
@@ -144,11 +139,11 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
-	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	/*GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_HIDE);
-	GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_HIDE);
-	GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_HIDE);*/
-	
+	// TODO: 여기에 추가 초기화 작업을 추가합니다.	
+	GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
+		
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 
 }
@@ -159,6 +154,7 @@ void CSpeedTypingCntDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
+		delete dlgAbout;
 	}
 	else
 	{
@@ -202,40 +198,6 @@ HCURSOR CSpeedTypingCntDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CSpeedTypingCntDlg::OnBnClickedButtonScore()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	// 점수 조회 버튼을 누르면 해당 다이얼로그 보이기
-	CScoreRef dlg;
-	dlg.DoModal();
-}
-
-
-//void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
-//{
-//	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-//	SoloGame* dlg = new SoloGame;
-//	dlg->DoModal();
-//}
-
-
-void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	MatchGame* dlg = new MatchGame;
-	dlg->DoModal();
-}
-
-
-void CSpeedTypingCntDlg::OnButtonInit()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CDlgLogin* dlg = new CDlgLogin;
-
-	dlg->DoModal();
-
-	//if(d)
-}
 BOOL CSpeedTypingCntDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
@@ -247,11 +209,58 @@ BOOL CSpeedTypingCntDlg::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
+void CSpeedTypingCntDlg::OnButtonVisible()
+{
+	// TODO: 여기에 구현 코드 추가.
+	GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
+	GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
+	GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+}
 
-void CSpeedTypingCntDlg::OnClickedButtonSolo()
+
+void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	SoloGame* dlg = new SoloGame;
+	dlg->DoModal();
+	delete dlg;
+}
+
+
+void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	MatchGame* dlg = new MatchGame;
+	dlg->DoModal();
+	delete dlg;
+}
+
+
+void CSpeedTypingCntDlg::OnBnClickedButtonScore()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CScoreRef* dlg = new CScoreRef;
+	dlg->DoModal();
+	delete dlg;
+}
+
+
+void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	CDialogEx::DoDataExchange(pDX);
+	//  DDX_Control(pDX, IDC_BUTTON_INIT, m_btnLogin);
+	//  DDX_Control(pDX, IDC_BUTTON_MATCH, m_btnMatch);
+	//  DDX_Control(pDX, IDC_BUTTON_SCORE, m_btnScore);
+	//  DDX_Control(pDX, IDC_BUTTON_SOLO, m_btnSolo);
+	DDX_Text(pDX, IDC_STATIC_MAINID, m_strMainID);
+}
+
+
+void CSpeedTypingCntDlg::OnBnClickedButtonInit()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDlgLogin* dlg = new CDlgLogin;
 	dlg->DoModal();
 
 }

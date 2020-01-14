@@ -9,8 +9,6 @@
 #include "MatchGame.h"
 
 
-
-
 // CDlgLogin 대화 상자
 
 IMPLEMENT_DYNAMIC(CDlgLogin, CDialogEx)
@@ -78,8 +76,8 @@ void CDlgLogin::OnClickedButtonAdd()
 
 	// 로그인
 	::SendMessage(this->m_hWnd, WM_CLOSE, NULL,NULL);
+	delete m_pRs;
 }
-
 
 void CDlgLogin::OnBnClickedButtonLogin()
 {
@@ -151,23 +149,28 @@ void CDlgLogin::OnBnClickedButtonLogin()
 					else
 					{
 						AfxMessageBox("회원등록 필요");
+						AfxMessageBox("로그인 되셨습니다");											
+						CString strMainDlgStatus = m_strID + "님이 로그인 중입니다";
+						CSpeedTypingCntDlg* pMainDlg = (CSpeedTypingCntDlg*)GetParent();
+						pMainDlg->GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(TRUE);
+						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
+						pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
+						pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
+						pMainDlg->global_userID = m_strID;
+						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);								
+						UpdateData(FALSE);						
 						break;
-					}
-
+					}									
 					iRow++;
-				}
+				}				
 			}
-
-
 		}
+
 	}
 	catch (CException * e)
 	{
 		e->ReportError();
 	}
 	m_pRs->Close();
-
-	
-
-		
+	delete m_pRs;		
 }

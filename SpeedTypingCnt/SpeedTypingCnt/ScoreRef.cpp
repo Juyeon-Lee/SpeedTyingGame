@@ -143,6 +143,7 @@ BOOL CScoreRef::OnInitDialog()
 		e->ReportError();
 	}
 	m_pRs->Close();
+	delete m_pRs;
 
 	return TRUE;
 }
