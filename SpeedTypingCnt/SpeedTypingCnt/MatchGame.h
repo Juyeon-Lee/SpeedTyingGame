@@ -63,7 +63,6 @@ public:
 	void SetGameEnd();
 	void SendGame(CString strTmp);
 	int staticStringToIndex(CString str);
-	void scatterStrToWords(CString sData);
 	CDatabase m_db;
 	CRecordset* m_pRs;
 	CString ar[15][2]; //char ar[10][10];    ar[0][0] == "word"

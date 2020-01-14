@@ -198,29 +198,6 @@ BOOL MatchGame::OnInitDialog()
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
-void MatchGame::scatterStrToWords(CString sData)
-{
-		AfxExtractSubString(m_word1, sData, 0, ',');
-		AfxExtractSubString(m_word2, sData, 1, ',');
-		AfxExtractSubString(m_word3, sData, 2, ',');
-		AfxExtractSubString(m_word4, sData, 3, ',');
-		AfxExtractSubString(m_word5, sData, 4, ',');
-		AfxExtractSubString(m_word6, sData, 5, ',');
-		AfxExtractSubString(m_word7, sData, 6, ',');
-		AfxExtractSubString(m_word8, sData, 7, ',');
-		AfxExtractSubString(m_word9, sData, 8, ',');
-		AfxExtractSubString(m_word10, sData, 9, ',');
-		AfxExtractSubString(m_word11, sData, 10, ',');
-		AfxExtractSubString(m_word12, sData, 11, ',');
-		AfxExtractSubString(m_word13, sData, 12, ',');
-		AfxExtractSubString(m_word14, sData, 13, ',');
-		AfxExtractSubString(m_word15, sData, 14, ',');
-
-		UpdateData(false);
-
-}
-
-
 BOOL MatchGame::IsGameEnd()
 {
 	// TODO: 여기에 구현 코드 추가.
@@ -414,29 +391,6 @@ void MatchGame::SendGame(CString strTmp)
 
 	m_socCom.Send(pTmp, 256);
 }
-
-
-void MatchGame::InitGame()
-{
-	/*m_strList[0] = "함함하다";
-	m_strList[1] = "괴랄하다";
-	m_strList[2] = "신선함";
-	m_strList[3] = "고구마라떼";
-	m_strList[4] = "카푸치노";
-	m_strList[5] = "드라이기";
-	m_strList[6] = "가방";
-	m_strList[7] = "칠성";
-	m_strList[8] = "장수돌침대";
-	m_strList[9] = "슬렉스";
-	m_strList[10] = "트리트먼트";
-	m_strList[11] = "치킨";
-	m_strList[12] = "의자";
-	m_strList[13] = "요거트";
-	m_strList[14] = "수맥";*/
-}
-
-
-
 
 void MatchGame::scatterStrToWords(CString sData)
 {
