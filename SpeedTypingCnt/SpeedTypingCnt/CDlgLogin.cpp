@@ -51,7 +51,7 @@ void CDlgLogin::OnClickedButtonAdd()
 
 	UpdateData(TRUE);
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -139,31 +139,14 @@ void CDlgLogin::OnClickedButtonAdd()
 	//m_pRs->Close();
 	//delete m_pRs;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 void CDlgLogin::OnBnClickedButtonLogin()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	
 
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}

@@ -190,9 +190,6 @@ BOOL MatchGame::OnInitDialog()
 
 	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 	//UpdateData(TRUE);
-	CString a;
-	a.Format("%s","ab,bb,cc,dd,ee,ff,ab,bb,cc,dd,ee,ff,cc,dd,ee");
-	scatterStrToWords(a);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -320,69 +317,7 @@ void MatchGame::SetGameEnd()
 		MessageBox("패");
 	else
 		MessageBox("승");
-	try
-	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
-		if (bOpen)
-			m_pRs = new CRecordset(&m_db);
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-
-	}
-
-
-	try
-	{
-		CString sData(_T(""));
-		CString u[30][10];
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select member_id from user where username ='" + m_strID + "'");
-
-		if (bOpen)
-		{
-			int iRow = 1;
-			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
-			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-
-
-						u[iRow - 1][iCol] = sItem;
-						UpdateData(FALSE);
-
-					}
-
-					iRow++;
-				}
-			}
-			m_db.BeginTrans();
-
-			UpdateData(TRUE);
-
-			m_db.ExecuteSQL(_T("INSERT INTO score(user_id,user_score,user_date) VALUES('" + u[0][0] + "','" + m_strScore + "',now())"));
-
-			m_db.CommitTrans();
-		}
-	}
-
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
 	
-
-
-	//Sleep(1000);
-
 	try
 	{
 		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);

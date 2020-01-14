@@ -68,65 +68,8 @@ void SoloGame::SetWord(int a, CString word)//db에 연결 시 필요 없음 // �
 	POSITION pos = m_string_list.GetHeadPosition();//문자열의 시작위치를 
 	if (pos != NULL)//만약 문자열에 단어가 있다면
 		m_string_list.RemoveAll();//모든 단어를 지운다.
-	/*
-		//리스트에 문자 추가
-	if (a == 1) {
-		word1 = "발바닥";
-		word2 = "아깝다";
-		word3 = "싫어하다";
-		word4 = "핏줄기";
-		word5 = "힘겹다";
-		word6 = "저녁때";
-		word7 = "비슷비슷";
-		word8 = "능동태";
-		word9 = "남자";
-		word10 = "내리다";
-		word11 = "싱숭생숭";
-		word12 = "설레다";
-		word13 = "미꾸라지";
-		word14 = "토지";
-		word15 = "메뚜기";
-	}
-	else
-	{
-		word1 = "accurate";
-		word2 = "achieve";
-		word3 = "baby";
-		word4 = "ball";
-		word5 = "cake";
-		word6 = "card";
-		word7 = "daughter";
-		word8 = "dictionary";
-		word9 = "enough";
-		word10 = "eye";
-		word11 = "face";
-		word12 = "fast";
-		word13 = "glad";
-		word14 = "green";
-		word15 = "handsome";
-	}
-
-
-	m_string_list.AddTail(_T(word1));
-	m_string_list.AddTail(_T(word2));
-	m_string_list.AddTail(_T(word3));
-	m_string_list.AddTail(_T(word4));
-	m_string_list.AddTail(_T(word5));
-	m_string_list.AddTail(_T(word6));
-	m_string_list.AddTail(_T(word7));
-	m_string_list.AddTail(_T(word8));
-	m_string_list.AddTail(_T(word9));
-	m_string_list.AddTail(_T(word10));
-	m_string_list.AddTail(_T(word11));
-	m_string_list.AddTail(_T(word12));
-	m_string_list.AddTail(_T(word13));
-	m_string_list.AddTail(_T(word14));
-	m_string_list.AddTail(_T(word15));
-	*/
+	
 	m_string_list.AddTail(_T(word));
-
-
-
 }
 
 BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값 비교
@@ -141,7 +84,7 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 	cnt = 1;
 
 
-	ViewWord();
+//	ViewWord();
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd)
 	{
 
@@ -213,42 +156,10 @@ void SoloGame::ViewWord()
 			m_string_list.GetNext(pos);
 			SetDlgItemText(IDC_STATIC15_SOLO, m_string_list.GetAt(pos));
 			m_string_list.GetNext(pos);
-			break;
-			
-
-		
+			break;		
 	}
-	/*CString str;
-	CString s;
-
-	str = "IDC_STATIC";
-	for (int i = 0; i < 2; i++)
-	{
-		s.Format(_T("%d"), i+1);
-		str = str + s + "_SOLO";
-		SetDlgItemText(str, word);
-		SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
-	}*/
-	
-	/*SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
-	SetDlgItemText(IDC_STATIC2_SOLO, _T(word2));
-	SetDlgItemText(IDC_STATIC3_SOLO, _T(word3));
-	SetDlgItemText(IDC_STATIC4_SOLO, _T(word4));
-	SetDlgItemText(IDC_STATIC5_SOLO, _T(word5));
-	SetDlgItemText(IDC_STATIC6_SOLO, _T(word6));
-	SetDlgItemText(IDC_STATIC7_SOLO, _T(word7));
-	SetDlgItemText(IDC_STATIC8_SOLO, _T(word8));
-	SetDlgItemText(IDC_STATIC9_SOLO, _T(word9));
-	SetDlgItemText(IDC_STATIC10_SOLO, _T(word10));
-	SetDlgItemText(IDC_STATIC11_SOLO, _T(word11));
-	SetDlgItemText(IDC_STATIC12_SOLO, _T(word12));
-	SetDlgItemText(IDC_STATIC13_SOLO, _T(word13));
-	SetDlgItemText(IDC_STATIC14_SOLO, _T(word14));
-	SetDlgItemText(IDC_STATIC15_SOLO, _T(word15));*/
-
-
-
 }
+
 void SoloGame::EraseCheck(int wordIndex)
 {
 	// (GetDlgItem(IDC_BT_EMCSTOP))->ShowWindow(FALSE);
@@ -326,17 +237,9 @@ BOOL SoloGame::IsGameEnd(int endcnt)
 		return FALSE;
 }
 
-
-
-
-
-
-
-
 void SoloGame::OnBnClickedButton3()//영어로 단어 바꿔줌
 {
-	//OnReceiveEnglish();
-	
+	OnReceiveEnglish();
 }
 
 void SoloGame::addItem(int index, CString word)
@@ -353,16 +256,17 @@ void SoloGame::addItem(int index, CString word)
 BOOL SoloGame::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
-
-	//UpdateData(TRUE);
+	
 	OnReceiveWord();
+	ViewWord();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
-/*void SoloGame::OnReceiveEnglish()
+
+void SoloGame::OnReceiveEnglish()
 {
-	/*try
+	try
 	{
 		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
 		if (bOpen)
@@ -417,13 +321,13 @@ BOOL SoloGame::OnInitDialog()
 	delete m_pRs;
 
 }
-*/
+
 void SoloGame::OnReceiveWord()
 {
 	// TODO: 여기에 구현 코드 추가.
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 
