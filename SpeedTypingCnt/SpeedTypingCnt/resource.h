@@ -62,7 +62,6 @@
 #define IDC_STATIC13_SOLO               1062
 #define IDC_STATIC14_SOLO               1063
 #define IDC_STATIC15_SOLO               1064
-#define IDC_STATIC_SOLOTYPE             1065
 #define IDC_BUTTON3                     1068
 #define IDC_STATIC_TITLE                1072
 

@@ -67,13 +67,14 @@ CSpeedTypingCntDlg::CSpeedTypingCntDlg(CWnd* pParent /*nullptr*/)
 void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+
+	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
+	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
+	DDX_Control(pDX, IDC_STATIC_TITLE, m_title);
 	DDX_Text(pDX, IDC_STATIC_MAINID, m_strMainID);
 	DDX_Control(pDX, IDC_BUTTON_MATCH, m_btnMatch);
 	DDX_Control(pDX, IDC_BUTTON_SCORE, m_btnScore);
 	DDX_Control(pDX, IDC_BUTTON_SOLO, m_btnSolo);
-	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
-	//DDX_Control(pDX, IDC_STATIC_TEXTEX, m_title);
-	DDX_Control(pDX, IDC_STATIC_TITLE, m_title);
 }
 
 BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
@@ -115,12 +116,12 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 		}
 	}
 
-	// ÀÌ ´ëÈ­ »óÀÚÀÇ ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.  ÀÀ¿ë ÇÁ·Î±×·¥ÀÇ ÁÖ Ã¢ÀÌ ´ëÈ­ »óÀÚ°¡ ¾Æ´Ò °æ¿ì¿¡´Â
-	//  ÇÁ·¹ÀÓ¿öÅ©°¡ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
-	SetIcon(m_hIcon, TRUE);			// Å« ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
-	SetIcon(m_hIcon, FALSE);		// ÀÛÀº ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	// ???€???ìž???„ì´ì½˜ì„ ?¤ì •?©ë‹ˆ??  ?‘ìš© ?„ë¡œê·¸ëž¨??ì£?ì°½ì´ ?€???ìžê°€ ?„ë‹ ê²½ìš°?ëŠ”
+	//  ?„ë ˆ?„ì›Œ?¬ê? ???‘ì—…???ë™?¼ë¡œ ?˜í–‰?©ë‹ˆ??
+	SetIcon(m_hIcon, TRUE);			// ???„ì´ì½˜ì„ ?¤ì •?©ë‹ˆ??
+	SetIcon(m_hIcon, FALSE);		// ?‘ì? ?„ì´ì½˜ì„ ?¤ì •?©ë‹ˆ??
 
-	// TODO: ¿©±â¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ?¬ê¸°??ì¶”ê? ì´ˆê¸°???‘ì—…??ì¶”ê??©ë‹ˆ??
 	/*try
 	{
 		BOOL bOpen = m_db.OpenEx(_T("DSN=test_odbc;SERVER=127.0.0.1;PORT=3306;UID=root;PWD=root;DATABASE=test_db;"), CDatabase::noOdbcDialog);
@@ -136,11 +137,20 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 	m_font.CreatePointFont(120, "±¼¸²");
 	m_title.SetFont(&m_font, TRUE);
 	//m_brush.CreateSolidBrush()
+	return TRUE;  // ?¬ì»¤?¤ë? ì»¨íŠ¸ë¡¤ì— ?¤ì •?˜ì? ?Šìœ¼ë©?TRUEë¥?ë°˜í™˜?©ë‹ˆ??
+
+	// ÀÌ ´ëÈ­ »óÀÚÀÇ ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.  ÀÀ¿ë ÇÁ·Î±×·¥ÀÇ ÁÖ Ã¢ÀÌ ´ëÈ­ »óÀÚ°¡ ¾Æ´Ò °æ¿ì¿¡´Â
+	//  ÇÁ·¹ÀÓ¿öÅ©°¡ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
+	SetIcon(m_hIcon, TRUE);			// Å« ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	SetIcon(m_hIcon, FALSE);		// ÀÛÀº ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
+
+	// TODO: ¿©±â¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
 	/*GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_HIDE);*/
 	
 	return TRUE;  // Æ÷Ä¿½º¸¦ ÄÁÆ®·Ñ¿¡ ¼³Á¤ÇÏÁö ¾ÊÀ¸¸é TRUE¸¦ ¹ÝÈ¯ÇÕ´Ï´Ù.
+
 }
 
 void CSpeedTypingCntDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -251,24 +261,24 @@ HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 
-	// TODO:  ¿©±â¼­ DCÀÇ Æ¯¼ºÀ» º¯°æÇÕ´Ï´Ù.
+	// TODO:  ?¬ê¸°??DC???¹ì„±??ë³€ê²½í•©?ˆë‹¤.
 	UINT nID = pWnd->GetDlgCtrlID();
 	switch (nID)
 	{
 	case IDC_STATIC_TITLE:
-			pDC->SetTextColor(RGB(0, 0, 255)); //ÆÄ¶õ»ö
-			//hbr = ::CreateSolidBrush(RGB(255, 0, 0));
-			break;
+		pDC->SetTextColor(RGB(0, 0, 255)); //?Œë???
+		//hbr = ::CreateSolidBrush(RGB(255, 0, 0));
+		break;
 	}
 
 	return hbr;
 }
 
+	void CSpeedTypingCntDlg::OnButtonVisible()
+	{
+		// TODO: ¿©±â¿¡ ±¸Çö ÄÚµå Ãß°¡.
+		GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+	}
 
-void CSpeedTypingCntDlg::OnButtonVisible()
-{
-	// TODO: ¿©±â¿¡ ±¸Çö ÄÚµå Ãß°¡.
-	GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
-	GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
-	GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
-}

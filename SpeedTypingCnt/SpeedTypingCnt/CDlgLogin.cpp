@@ -52,7 +52,7 @@ void CDlgLogin::OnClickedButtonAdd()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -80,53 +80,6 @@ void CDlgLogin::OnClickedButtonAdd()
 	::SendMessage(this->m_hWnd, WM_CLOSE, NULL,NULL);
 }
 
-void CDlgLogin::OnBnClickedButtonLogin()
-{
-	CString sql;
-
-	CRecordset rs1;
-
-	GetDlgItemText(IDC_EDIT_ID, userID);
-	GetDlgItemText(IDC_EDIT_PW, userPW);
-
-	CString strSQL = "SELECT * FROM USER WHERE username = '" + userID + "' AND password = '" + userPW + "'";
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	try
-	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
-		if (bOpen)
-			m_pRs = new CRecordset(&m_db);
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-
-	}
-
-	m_db.BeginTrans();
-	try
-	{
-		UpdateData(TRUE);
-		rs1.m_pDatabase = &m_db;
-		rs1.Open(CRecordset::dynaset, strSQL, CRecordset::executeDirect);
-
-		if (rs1.GetRecordCount() == 0)
-		{
-			MessageBox("일치하는 회원정보가 없습니다\n아이디 비밀번호를 다시 확인해주세요");
-		}
-		else {
-			MessageBox("로그인 성공!");
-			::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
-		}
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
-	m_db.CommitTrans();
-}
-
 
 void CDlgLogin::OnBnClickedButtonLogin()
 {
@@ -135,7 +88,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 	CString id_x = m_strID;
 
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -147,7 +100,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 	try {
 		CString sData(_T(""));
 		CString ar[10][10];
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, _T("select user.username,score.user_score,score.user_date from user join score on( score.user_id = user.member_id);"));
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, _T("select user.username,score.user_score from user join score on( score.user_id = user.member_id);"));
 
 		if (bOpen)
 		{
@@ -181,6 +134,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 					if (ar[iRow - 1][0] == m_strID)
 					{
 						AfxMessageBox("사용가능한 회원");
+						
 						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
 						CSpeedTypingCntDlg* dlg = new CSpeedTypingCntDlg;
 						if (dlg->Create(100))

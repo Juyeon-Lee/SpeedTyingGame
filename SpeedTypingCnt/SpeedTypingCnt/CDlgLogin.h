@@ -31,4 +31,5 @@ public:
 //	CString idText;
 	CString userID;
 	CString userPW;
+	
 };
