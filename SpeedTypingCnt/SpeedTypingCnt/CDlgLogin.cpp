@@ -137,6 +137,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
                         pMainDlg->GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(TRUE);
                         pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
                         pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
+                        pMainDlg->GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(TRUE);
                         pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
                         pMainDlg->global_userID = m_strID;
                         ::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);

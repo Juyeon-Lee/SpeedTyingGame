@@ -1,19 +1,19 @@
 ﻿#pragma once
 
+#include "afxdialogex.h"
+// SoloGameEng 대화 상자
 
-// SoloGame 대화 상자
-
-class SoloGame : public CDialogEx
+class SoloGameEng : public CDialogEx
 {
-	DECLARE_DYNAMIC(SoloGame)
+	DECLARE_DYNAMIC(SoloGameEng)
 
 public:
-	SoloGame(CWnd* pParent = nullptr);   // 표준 생성자입니다.
-	virtual ~SoloGame();
+	SoloGameEng(CWnd* pParent = nullptr);   // 표준 생성자입니다.
+	virtual ~SoloGameEng();
 
-	// 대화 상자 데이터입니다.
+// 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_DIALOG_SOLO1 };
+	enum { IDD = IDD_DIALOG_SOLO21 };
 #endif
 
 protected:
@@ -41,23 +41,7 @@ public:
 	clock_t endTime;
 	double result;
 	//	CString m_strID;
-//	CStatic m_txt1;
-	CStatic m_txt10;
-	CEdit m_strTyping;
-	CStatic m_txt11;
-	CStatic m_txt12;
-	CStatic m_txt13;
-	CStatic m_txt14;
-	CStatic m_txt15;
-	CStatic m_txt2;
-	CStatic m_txt3;
-	CStatic m_txt4;
-	CStatic m_txt5;
-	CStatic m_txt6;
-	CStatic m_txt7;
-	CStatic m_txt8;
-	CStatic m_txt9;
-
+//
 	CString word1;
 	CString word2;
 	CString word3;
@@ -79,13 +63,25 @@ public:
 	CRecordset* m_pRs;
 
 
-	
-	//	CString m_txt1;
-	CStatic m_txt1;
 
-	//	CFont m_font;
-	//	CStatic m_title;
+	
 	virtual BOOL OnInitDialog();
 	void OnReceiveWord();
-	void OnReceiveEnglish();
+	
+	CStatic m_txt1;
+	CStatic m_txt10;
+	CEdit m_strTyping1;
+	CStatic m_txt11;
+	CStatic m_txt12;
+	CStatic m_txt13;
+	CStatic m_txt14;
+	CStatic m_txt15;
+	CStatic m_txt2;
+	CStatic m_txt3;
+	CStatic m_txt4;
+	CStatic m_txt5;
+	CStatic m_txt6;
+	CStatic m_txt7;
+	CStatic m_txt8;
+	CStatic m_txt9;
 };

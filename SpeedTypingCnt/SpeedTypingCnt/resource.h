@@ -1,12 +1,13 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by SpeedTypingCnt.rc
+// Microsoft Visual C++에서 생성한 포함 파일입니다.
+// SpeedTypingCnt.rc에서 사용되고 있습니다.
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDD_SPEEDTYPINGCNT_DIALOG       102
 #define IDP_SOCKETS_INIT_FAILED         103
+#define IDD_DIALOG_SOLO21               109
 #define IDR_MAINFRAME                   128
 #define IDD_DIALOG_LOGIN                130
 #define IDD_DIALOG_SCORE                134
@@ -15,6 +16,7 @@
 #define IDD_DIALOG_SOLO1                143
 #define IDC_BUTTON_SOLO                 1000
 #define IDC_EDIT_ID                     1001
+#define IDC_BUTTON_SOLO2                1001
 #define IDC_BUTTON_INIT                 1002
 #define IDC_BUTTON_SCORE                1003
 #define IDC_EDIT_PW                     1004
@@ -65,14 +67,30 @@
 #define IDC_BUTTON3                     1068
 #define IDC_STATIC_T                    1072
 #define IDC_STATIC_TITLE                1072
+#define IDC_STATIC1_SOLO1               1073
+#define IDC_STATIC2_SOLO2               1074
+#define IDC_STATIC3_SOLO3               1075
+#define IDC_STATIC4_SOLO4               1076
+#define IDC_STATIC5_SOLO5               1077
+#define IDC_STATIC6_SOLO6               1078
+#define IDC_STATIC7_SOLO7               1079
+#define IDC_STATIC8_SOLO8               1080
+#define IDC_STATIC9_SOLO9               1081
+#define IDC_STATIC10_SOLO10             1082
+#define IDC_STATIC11_SOLO11             1083
+#define IDC_STATIC12_SOLO12             1084
+#define IDC_STATIC13_SOLO13             1085
+#define IDC_STATIC14_SOLO14             1086
+#define IDC_STATIC15_SOLO15             1087
+#define IDC_EDIT_TYPING1                1088
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        145
+#define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1073
-#define _APS_NEXT_SYMED_VALUE           108
+#define _APS_NEXT_CONTROL_VALUE         1089
+#define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

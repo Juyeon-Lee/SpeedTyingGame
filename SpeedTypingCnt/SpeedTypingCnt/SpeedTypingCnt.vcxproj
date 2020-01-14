@@ -198,6 +198,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ScoreRef.h" />
     <ClInclude Include="SoloGame.h" />
+    <ClInclude Include="SoloGameEng.h" />
     <ClInclude Include="SpeedTypingCnt.h" />
     <ClInclude Include="SpeedTypingCntDlg.h" />
     <ClInclude Include="targetver.h" />
@@ -215,6 +216,7 @@
     </ClCompile>
     <ClCompile Include="ScoreRef.cpp" />
     <ClCompile Include="SoloGame.cpp" />
+    <ClCompile Include="SoloGameEng.cpp" />
     <ClCompile Include="SpeedTypingCnt.cpp" />
     <ClCompile Include="SpeedTypingCntDlg.cpp" />
   </ItemGroup>
