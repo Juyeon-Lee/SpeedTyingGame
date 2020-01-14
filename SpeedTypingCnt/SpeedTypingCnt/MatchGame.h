@@ -55,7 +55,7 @@ public:
 
 	afx_msg void OnBnClickedButtonConnect();
 	virtual BOOL OnInitDialog();
-	void scatterStrToWords();
+	void scatterStrToWords(CString sData);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	BOOL IsGameEnd();
@@ -63,8 +63,5 @@ public:
 	void SetGameEnd();
 	void SendGame(CString strTmp);
 	int staticStringToIndex(CString str);
-//	void InitGame();
 	CString ar[15][2]; //char ar[10][10];    ar[0][0] == "word"
-	CDatabase m_db;
-	CRecordset* m_pRs;
 };
