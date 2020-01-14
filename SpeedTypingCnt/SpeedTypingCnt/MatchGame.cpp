@@ -162,8 +162,8 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 			
 		if (IsGameEnd())
 		{
-			/*str.Format("%s%d%s", "게임이 종료되었습니다!\n최종 스코어 :", m_myScore, "점");
-			MessageBox(str);*/
+			//str.Format("%s%d%s", "게임이 종료되었습니다!\n최종 스코어 :", m_myScore, "점");
+			//AfxMessageBox(str);
 			Sleep(1000);
 			SetGameEnd();
 		}
@@ -298,7 +298,7 @@ void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 	if (itsMe)//내가 맞췄을 때만 내 점수 오른다.
 	{
 		m_myScore++;
-		m_strScore.Format("%d%s", m_myScore, "점");
+		m_strScore.Format("%d", m_myScore);
 	}
 
 	score.Format("%d", endGameIndex);
@@ -312,6 +312,68 @@ void MatchGame::SetGameEnd()
 		MessageBox("패");
 	else
 		MessageBox("승");
+	try
+	{
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+
+	}
+
+
+	try
+	{
+		CString sData(_T(""));
+		CString u[30][10];
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select member_id from user where username ='" + m_strID + "'");
+
+		if (bOpen)
+		{
+			int iRow = 1;
+			BOOL bIsEOF = m_pRs->IsEOF();
+			DWORD dwSize = m_pRs->GetRowsetSize();
+			if (!bIsEOF)
+			{
+				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				{
+					int iFieldCnt = m_pRs->GetODBCFieldCount();
+					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+					{
+						CString sItem;
+						m_pRs->SetAbsolutePosition(iRow);
+						m_pRs->GetFieldValue(iCol, sItem);
+
+
+						u[iRow - 1][iCol] = sItem;
+						UpdateData(FALSE);
+
+					}
+
+					iRow++;
+				}
+			}
+			m_db.BeginTrans();
+
+			UpdateData(TRUE);
+
+			m_db.ExecuteSQL(_T("INSERT INTO score(user_id,user_score,user_date) VALUES('" + u[0][0] + "','" + m_strScore + "',now())"));
+
+			m_db.CommitTrans();
+		}
+	}
+
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+	
+
+
+	//Sleep(1000);
 
 }
 

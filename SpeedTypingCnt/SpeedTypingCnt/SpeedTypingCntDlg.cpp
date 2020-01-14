@@ -207,6 +207,7 @@ void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	MatchGame* dlg = new MatchGame;
+	dlg->m_strID = global_userID;
 	dlg->DoModal();
 	delete dlg;
 }
@@ -216,6 +217,7 @@ void CSpeedTypingCntDlg::OnBnClickedButtonScore()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CScoreRef* dlg = new CScoreRef;
+	dlg->m_strID_score = global_userID;
 	dlg->DoModal();
 	delete dlg;
 }

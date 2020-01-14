@@ -197,6 +197,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ScoreRef.h" />
+    <ClInclude Include="Search.h" />
+    <ClInclude Include="SearchShow.h" />
     <ClInclude Include="SoloGame.h" />
     <ClInclude Include="SpeedTypingCnt.h" />
     <ClInclude Include="SpeedTypingCntDlg.h" />
@@ -214,6 +216,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ScoreRef.cpp" />
+    <ClCompile Include="Search.cpp" />
+    <ClCompile Include="SearchShow.cpp" />
     <ClCompile Include="SoloGame.cpp" />
     <ClCompile Include="SpeedTypingCnt.cpp" />
     <ClCompile Include="SpeedTypingCntDlg.cpp" />
