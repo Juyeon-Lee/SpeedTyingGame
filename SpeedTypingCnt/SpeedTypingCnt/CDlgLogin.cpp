@@ -51,7 +51,7 @@ void CDlgLogin::OnClickedButtonAdd()
 
 	UpdateData(TRUE);
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -163,7 +163,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 	
 
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -215,6 +215,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
 						pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
 						pMainDlg->GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(TRUE);
+						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(TRUE);
 						pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
 						pMainDlg->global_userID = m_strID;
 						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);								

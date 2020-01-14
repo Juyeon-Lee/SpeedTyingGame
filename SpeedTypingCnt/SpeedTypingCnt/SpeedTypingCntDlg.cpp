@@ -244,20 +244,20 @@ void CSpeedTypingCntDlg::OnBnClickedButtonLogout()
 	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(FALSE);
 	SetDlgItemText(IDC_STATIC_MAINID, "");
 	global_userID = "";
 }
 
-	void CSpeedTypingCntDlg::OnButtonVisible()
+/*	void CSpeedTypingCntDlg::OnButtonVisible()
 	{
 		// TODO: 여기에 구현 코드 추가.
 		GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
 		GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
 		GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
-		GetDlgItem(IDC_BUTTON_SOLO2)->ShowWindow(SW_SHOWNORMAL);
 	}
 
-
+	*/
 
 
 HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
