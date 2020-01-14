@@ -17,12 +17,8 @@ SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 
 
 {
-	//SetWord(1);
-	//ViewWord();
 	endcnt = 1;
 	cnt = 1;
-
-
 }
 
 SoloGame::~SoloGame()
@@ -32,9 +28,6 @@ SoloGame::~SoloGame()
 void SoloGame::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	//  DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
-
-	//  DDX_Control(pDX, IDC_STATIC1_SOLO, m_txt1);
 	DDX_Control(pDX, IDC_STATIC10_SOLO, m_txt10);
 	DDX_Control(pDX, IDC_EDIT_TYPING, m_strTyping);
 	DDX_Control(pDX, IDC_STATIC11_SOLO, m_txt11);
@@ -50,87 +43,17 @@ void SoloGame::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC7_SOLO, m_txt7);
 	DDX_Control(pDX, IDC_STATIC8_SOLO, m_txt8);
 	DDX_Control(pDX, IDC_STATIC9_SOLO, m_txt9);
-	//  DDX_Text(pDX, IDC_STATIC1_SOLO, m_txt1);
 	DDX_Control(pDX, IDC_STATIC1_SOLO, m_txt1);
-	//  DDX_Control(pDX, IDC_STATIC_STATUS, m_title);
 }
 
 
 BEGIN_MESSAGE_MAP(SoloGame, CDialogEx)
 
-	ON_BN_CLICKED(IDC_BUTTON3, &SoloGame::OnBnClickedButton3)
+	
 END_MESSAGE_MAP()
 
 
-// SoloGame 메시지 처리기
-void SoloGame::SetWord(int a, CString word)//db에 연결 시 필요 없음 // 테스트를 위한 함수
-{
-	POSITION pos = m_string_list.GetHeadPosition();//문자열의 시작위치를 
-	if (pos != NULL)//만약 문자열에 단어가 있다면
-		m_string_list.RemoveAll();//모든 단어를 지운다.
-	/*
-		//리스트에 문자 추가
-	if (a == 1) {
-		word1 = "발바닥";
-		word2 = "아깝다";
-		word3 = "싫어하다";
-		word4 = "핏줄기";
-		word5 = "힘겹다";
-		word6 = "저녁때";
-		word7 = "비슷비슷";
-		word8 = "능동태";
-		word9 = "남자";
-		word10 = "내리다";
-		word11 = "싱숭생숭";
-		word12 = "설레다";
-		word13 = "미꾸라지";
-		word14 = "토지";
-		word15 = "메뚜기";
-	}
-	else
-	{
-		word1 = "accurate";
-		word2 = "achieve";
-		word3 = "baby";
-		word4 = "ball";
-		word5 = "cake";
-		word6 = "card";
-		word7 = "daughter";
-		word8 = "dictionary";
-		word9 = "enough";
-		word10 = "eye";
-		word11 = "face";
-		word12 = "fast";
-		word13 = "glad";
-		word14 = "green";
-		word15 = "handsome";
-	}
 
-
-	m_string_list.AddTail(_T(word1));
-	m_string_list.AddTail(_T(word2));
-	m_string_list.AddTail(_T(word3));
-	m_string_list.AddTail(_T(word4));
-	m_string_list.AddTail(_T(word5));
-	m_string_list.AddTail(_T(word6));
-	m_string_list.AddTail(_T(word7));
-	m_string_list.AddTail(_T(word8));
-	m_string_list.AddTail(_T(word9));
-	m_string_list.AddTail(_T(word10));
-	m_string_list.AddTail(_T(word11));
-	m_string_list.AddTail(_T(word12));
-	m_string_list.AddTail(_T(word13));
-	m_string_list.AddTail(_T(word14));
-	m_string_list.AddTail(_T(word15));
-	*/
-	m_string_list.AddTail(_T(word));
-
-
-
-}
-
-BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값 비교
-{
 
 	CString strText = _T("");
 	m_strTyping.GetWindowTextA(strText);
@@ -141,33 +64,28 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 	cnt = 1;
 
 
-	ViewWord();
+//	ViewWord();
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd)
 	{
 
-		if (pMsg->wParam == VK_RETURN)
+		if (pMsg->wParam == VK_RETURN)//엔터키 이벤트가 발생하면
 		{
 
-			while (pos != NULL && IsGameEnd(endcnt)) {
+			while (pos != NULL && IsGameEnd(endcnt)) {//NULL 부분이 나올 때 까지 && ISGAMEEND가 TRUE일 때
 
-				if (strText == m_string_list.GetAt(pos)) {
-					m_strTyping.SetWindowTextA("");
-					EraseCheck(cnt);
-					endcnt++;
-
-					//랜덤한 값을 만약 받는다면
-					/*remove_pos = pos;
-					m_string_list.GetNext(pos);
-					m_string_list.RemoveAt(pos);*/
+				if (strText == m_string_list.GetAt(pos)) {// STRTEXT와 리스트 안의 내용 
+					m_strTyping.SetWindowTextA("");//단어 바꿔주기
+					EraseCheck(cnt);//인덱스를 보내서 단어 화면에서 삭제
+					endcnt++;//ENDCNT가 16가 넘으면(처음을 1로 설정) ISGAMEEND에서 FALSE가 보내짐
 					break;
 				}
-				else {
-					m_string_list.GetNext(pos);
-					cnt++;
+				else {//리스트 안의 단어와 내용이 틀리다면
+					m_string_list.GetNext(pos);//리스트 위치 다음위치로 바꾸기
+					cnt++;//ERASECHECK 인덱스 값 올리기
 				}
 
 			}
-			if (!IsGameEnd(endcnt))
+			if (!IsGameEnd(endcnt))// 마지막 남는 값을 화면에서 지우기 위해
 				EraseCheck(cnt);
 
 			return TRUE;
@@ -177,9 +95,9 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-void SoloGame::ViewWord()
+void SoloGame::ViewWord() //화면에 단어를 뿌려주는 함수
 {
-	POSITION pos = m_string_list.GetHeadPosition();
+	POSITION pos = m_string_list.GetHeadPosition();//리스트 위치
 
 	while (pos != NULL) {
 		
@@ -213,42 +131,10 @@ void SoloGame::ViewWord()
 			m_string_list.GetNext(pos);
 			SetDlgItemText(IDC_STATIC15_SOLO, m_string_list.GetAt(pos));
 			m_string_list.GetNext(pos);
-			break;
-			
-
-		
+			break;		
 	}
-	/*CString str;
-	CString s;
-
-	str = "IDC_STATIC";
-	for (int i = 0; i < 2; i++)
-	{
-		s.Format(_T("%d"), i+1);
-		str = str + s + "_SOLO";
-		SetDlgItemText(str, word);
-		SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
-	}*/
-	
-	/*SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
-	SetDlgItemText(IDC_STATIC2_SOLO, _T(word2));
-	SetDlgItemText(IDC_STATIC3_SOLO, _T(word3));
-	SetDlgItemText(IDC_STATIC4_SOLO, _T(word4));
-	SetDlgItemText(IDC_STATIC5_SOLO, _T(word5));
-	SetDlgItemText(IDC_STATIC6_SOLO, _T(word6));
-	SetDlgItemText(IDC_STATIC7_SOLO, _T(word7));
-	SetDlgItemText(IDC_STATIC8_SOLO, _T(word8));
-	SetDlgItemText(IDC_STATIC9_SOLO, _T(word9));
-	SetDlgItemText(IDC_STATIC10_SOLO, _T(word10));
-	SetDlgItemText(IDC_STATIC11_SOLO, _T(word11));
-	SetDlgItemText(IDC_STATIC12_SOLO, _T(word12));
-	SetDlgItemText(IDC_STATIC13_SOLO, _T(word13));
-	SetDlgItemText(IDC_STATIC14_SOLO, _T(word14));
-	SetDlgItemText(IDC_STATIC15_SOLO, _T(word15));*/
-
-
-
 }
+
 void SoloGame::EraseCheck(int wordIndex)
 {
 	// (GetDlgItem(IDC_BT_EMCSTOP))->ShowWindow(FALSE);
@@ -304,17 +190,17 @@ void SoloGame::EraseCheck(int wordIndex)
 		break;
 	}
 }
-BOOL SoloGame::IsGameEnd(int endcnt)
+BOOL SoloGame::IsGameEnd(int endcnt) // 게임이 끝나는 지 확인
 {
-	if (endcnt == 1) {
+	if (endcnt == 1) {//ENTER KEY가 들어오는 첫 번 째 순간부터 타이머 작동
 		startTime = clock();
 		return TRUE;
 	}
 	else if (endcnt < 16)
 		return TRUE;
-	else if (endcnt == 16) {
+	else if (endcnt == 16) {//ENTER KEY가 들어오는 마지막 순간에 타이머 멈춤
 		endTime = clock();
-		result = ((double)(endTime - startTime)) / CLOCKS_PER_SEC;
+		result = ((double)(endTime - startTime)) / CLOCKS_PER_SEC;// END TIME과 START TIME 값을 비교해 걸린 시간 측정
 		CString strResult;
 		strResult.Format(_T("%.3f"), result);
 		EraseCheck(cnt);
@@ -325,44 +211,19 @@ BOOL SoloGame::IsGameEnd(int endcnt)
 	else
 		return FALSE;
 }
-
-
-
-
-
-
-
-
-void SoloGame::OnBnClickedButton3()//영어로 단어 바꿔줌
-{
-	//OnReceiveEnglish();
-	
-}
-
-void SoloGame::addItem(int index, CString word)
-{
-	/*for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 10; j++)
-		{
-			word[i][j]=
-		}
-	}*/
-
-}
-BOOL SoloGame::OnInitDialog()
+BOOL SoloGame::OnInitDialog()// 
 {
 	CDialogEx::OnInitDialog();
-
-
-	//UpdateData(TRUE);
 	OnReceiveWord();
+	ViewWord();
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
-/*void SoloGame::OnReceiveEnglish()
+void SoloGame::OnReceiveWord()//데이터 베이스에서 단어를 받아서 리스트에 추가해주는 함수
 {
-	/*try
+	// TODO: 여기에 구현 코드 추가.
+	//데이터 베이스 연결
+	try
 	{
 		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
 		if (bOpen)
@@ -373,7 +234,7 @@ BOOL SoloGame::OnInitDialog()
 	{
 		e->ReportError();
 	}
-	
+
 	try {
 		CString sData(_T(""));
 		CString ar[30][2];
@@ -417,13 +278,13 @@ BOOL SoloGame::OnInitDialog()
 	delete m_pRs;
 
 }
-*/
+
 void SoloGame::OnReceiveWord()
 {
 	// TODO: 여기에 구현 코드 추가.
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 
@@ -433,11 +294,8 @@ void SoloGame::OnReceiveWord()
 		e->ReportError();
 	}
 
-	try {
-		CString sData(_T(""));
-		CString ar[30][2];
 		
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from word order by rand() limit 15;");
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from word order by rand() limit 15;");//MY SQL 쿼리 
 			
 		if (bOpen)
 		{
@@ -459,7 +317,7 @@ void SoloGame::OnReceiveWord()
 
 						result = *sItem.m_pstringW;
 						ar[iRow - 1][iCol] = result;
-						m_string_list.AddTail(result);
+						m_string_list.AddTail(result);//받은 데이터를 리스트에 추가
 						//MessageBox(ar[iRow - 1][iCol]);
 						UpdateData(FALSE);
 					}

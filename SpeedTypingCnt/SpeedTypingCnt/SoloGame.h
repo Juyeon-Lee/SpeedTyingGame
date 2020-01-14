@@ -58,7 +58,7 @@ public:
 	CStatic m_txt8;
 	CStatic m_txt9;
 
-	CString word1;
+	/*CString word1;
 	CString word2;
 	CString word3;
 	CString word4;
@@ -73,13 +73,13 @@ public:
 	CString word13;
 	CString word14;
 	CString word15;
-	CString word[10][10];
+	CString word[10][10];*/
 
 	CDatabase m_db;
 	CRecordset* m_pRs;
-	void addItem(int index, CString word);
 
-	afx_msg void OnBnClickedButton3();
+
+	
 	//	CString m_txt1;
 	CStatic m_txt1;
 

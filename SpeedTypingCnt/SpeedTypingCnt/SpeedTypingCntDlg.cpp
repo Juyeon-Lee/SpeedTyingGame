@@ -13,6 +13,7 @@
 #include "MatchGame.h"
 #include "ScoreRef.h"
 #include "afxdb.h"
+#include "SoloGameEng.h";
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,10 +70,12 @@ BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()	
 	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
+	ON_BN_CLICKED(IDC_BUTTON_SOLO2, &CSpeedTypingCntDlg::OnClickedButtonSolo2)
 	ON_BN_CLICKED(IDC_BUTTON_MATCH, &CSpeedTypingCntDlg::OnBnClickedButtonMatch)
 	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
 	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnBnClickedButtonInit)
 	ON_WM_CTLCOLOR()
+	ON_BN_CLICKED(IDC_BUTTON_LOGOUT, &CSpeedTypingCntDlg::OnBnClickedButtonLogout)
 END_MESSAGE_MAP()
 
 
@@ -111,9 +114,12 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 	GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(FALSE);
 
 	m_font.CreatePointFont(130, "굴림");
 	m_title.SetFont(&m_font, TRUE);
+		
+	GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(FALSE);
 		
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 
@@ -190,6 +196,7 @@ void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	MatchGame* dlg = new MatchGame;
+	dlg->m_strID = global_userID;
 	dlg->DoModal();
 	delete dlg;
 }
@@ -197,6 +204,7 @@ void CSpeedTypingCntDlg::OnBnClickedButtonScore()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CScoreRef* dlg = new CScoreRef;
+	dlg->m_strID_score = global_userID;
 	dlg->DoModal();
 	delete dlg;
 }
@@ -217,21 +225,43 @@ void CSpeedTypingCntDlg::OnBnClickedButtonInit()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CDlgLogin* dlg = new CDlgLogin;
 	dlg->DoModal();
+	delete dlg;
 }
 
+	void CSpeedTypingCntDlg::OnClickedButtonSolo2()
+	{
+		SoloGameEng* dlg = new SoloGameEng;
+		dlg->DoModal();
+		delete dlg;
+		// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	}
 
-void CSpeedTypingCntDlg::OnButtonVisible()
+void CSpeedTypingCntDlg::OnBnClickedButtonLogout()
 {
-	// TODO: 여기에 구현 코드 추가.
-	GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
-	GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
-	GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	AfxMessageBox("로그아웃 되셨습니다");
+	GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(FALSE);
+	SetDlgItemText(IDC_STATIC_MAINID, "");
+	global_userID = "";
 }
+
+	void CSpeedTypingCntDlg::OnButtonVisible()
+	{
+		// TODO: 여기에 구현 코드 추가.
+		GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SOLO2)->ShowWindow(SW_SHOWNORMAL);
+	}
+
 
 
 
 HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
-{
+{		
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 
 	UINT nID = pWnd->GetDlgCtrlID();
@@ -241,6 +271,5 @@ HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		pDC->SetTextColor(RGB(0, 0, 255)); //파란색
 		break;
 	}
-
 	return hbr;
 }

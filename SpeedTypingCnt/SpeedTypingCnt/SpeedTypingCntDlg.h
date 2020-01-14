@@ -43,10 +43,11 @@ public:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	afx_msg void OnBnClickedButtonInit();
 	CString m_strMainID;
-	void OnButtonVisible();
 
 	CFont m_font;
 
 	CStatic m_title;
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnBnClickedButtonLogout();
+	afx_msg void OnClickedButtonSolo2();
 };
