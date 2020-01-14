@@ -189,9 +189,35 @@ BOOL MatchGame::OnInitDialog()
 	m_bConnect = FALSE;
 
 	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
+	//UpdateData(TRUE);
+	CString a;
+	a.Format("%s","ab,bb,cc,dd,ee,ff,ab,bb,cc,dd,ee,ff,cc,dd,ee");
+	scatterStrToWords(a);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+
+void MatchGame::scatterStrToWords(CString sData)
+{
+		AfxExtractSubString(m_word1, sData, 0, ',');
+		AfxExtractSubString(m_word2, sData, 1, ',');
+		AfxExtractSubString(m_word3, sData, 2, ',');
+		AfxExtractSubString(m_word4, sData, 3, ',');
+		AfxExtractSubString(m_word5, sData, 4, ',');
+		AfxExtractSubString(m_word6, sData, 5, ',');
+		AfxExtractSubString(m_word7, sData, 6, ',');
+		AfxExtractSubString(m_word8, sData, 7, ',');
+		AfxExtractSubString(m_word9, sData, 8, ',');
+		AfxExtractSubString(m_word10, sData, 9, ',');
+		AfxExtractSubString(m_word11, sData, 10, ',');
+		AfxExtractSubString(m_word12, sData, 11, ',');
+		AfxExtractSubString(m_word13, sData, 12, ',');
+		AfxExtractSubString(m_word14, sData, 13, ',');
+		AfxExtractSubString(m_word15, sData, 14, ',');
+
+		UpdateData(false);
+
 }
 
 
@@ -205,7 +231,8 @@ BOOL MatchGame::IsGameEnd()
 
 }
 
-
+//str 멤버변수 중에서 일치하는 static이 몇번째인지 알려준다.
+//일치하는 것이 없다면 0이 반환된다.
 int MatchGame::staticStringToIndex(CString str)
 {
 	if (str == m_word1)
@@ -242,7 +269,8 @@ int MatchGame::staticStringToIndex(CString str)
 		return 0;
 }
 
-
+// wordIndex로 해당하는 static을 지워준다.
+// itsMe : 자기 자신일 때만 m_myScore를 올려준다.
 void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 {
 	switch (wordIndex)

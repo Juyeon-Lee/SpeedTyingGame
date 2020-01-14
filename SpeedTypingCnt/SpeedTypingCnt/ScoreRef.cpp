@@ -48,7 +48,7 @@ BOOL CScoreRef::OnInitDialog()
 
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -86,7 +86,7 @@ BOOL CScoreRef::OnInitDialog()
 	try {
 		CString sData(_T(""));
 		CString ar[30][10];
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select USER.username,SCORE.user_score from USER join score on( score.user_id = user.member_id);");
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, _T("select user.username,score.user_score from user join score on( score.user_id = user.member_id);"));
 		
 		if (bOpen)
 		{

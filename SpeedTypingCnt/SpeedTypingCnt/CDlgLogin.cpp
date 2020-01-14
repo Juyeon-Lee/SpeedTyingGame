@@ -50,7 +50,7 @@ void CDlgLogin::OnClickedButtonAdd()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -81,51 +81,51 @@ void CDlgLogin::OnClickedButtonAdd()
 
 void CDlgLogin::OnBnClickedButtonLogin()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	CString id_x = m_strID;
+    // TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+    UpdateData(TRUE);
+    CString id_x = m_strID;
 
-	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
-		if (bOpen)
-			m_pRs = new CRecordset(&m_db);
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
+    try {
+        BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+        if (bOpen)
+            m_pRs = new CRecordset(&m_db);
+    }
+    catch (CException * e)
+    {
+        e->ReportError();
+    }
 
-	try {
-		CString sData(_T(""));
-		CString ar[10][10];
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select user.username,score.user_score from user join score on( score.user_id = user.member_id);");
+    try {
+        CString sData(_T(""));
+        CString ar[10][10];
+        BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select user.username,score.user_score from user join score on( score.user_id = user.member_id);");
 
-		if (bOpen)
-		{
-			int iRow = 1;
-			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
-			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-						ar[iRow - 1][iCol] = sItem;
-						UpdateData(FALSE);
+        if (bOpen)
+        {
+            int iRow = 1;
+            BOOL bIsEOF = m_pRs->IsEOF();
+            DWORD dwSize = m_pRs->GetRowsetSize();
+            if (!bIsEOF)
+            {
+                for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+                {
+                    int iFieldCnt = m_pRs->GetODBCFieldCount();
+                    for (int iCol = 0; iCol < iFieldCnt; iCol++)
+                    {
+                        CString sItem;
+                        m_pRs->SetAbsolutePosition(iRow);
+                        m_pRs->GetFieldValue(iCol, sItem);
+                        ar[iRow - 1][iCol] = sItem;
+                        UpdateData(FALSE);
 
-					}
-				
-					iRow++;
-				}
-			}
-			if (!bIsEOF)
-			{
-				iRow = 1;
+                    }
+
+                    iRow++;
+                }
+            }
+            if (!bIsEOF)
+            {
+                iRow = 1;
 
 				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
 				{
@@ -149,11 +149,11 @@ void CDlgLogin::OnBnClickedButtonLogin()
 			}
 		}
 
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
-	m_pRs->Close();
-	delete m_pRs;		
+    }
+    catch (CException * e)
+    {
+        e->ReportError();
+    }
+    m_pRs->Close();
+    delete m_pRs;
 }
