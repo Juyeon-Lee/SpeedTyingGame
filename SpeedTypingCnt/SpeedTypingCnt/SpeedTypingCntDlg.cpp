@@ -220,27 +220,27 @@ void CSpeedTypingCntDlg::OnBnClickedButtonInit()
 }
 
 
-	void CSpeedTypingCntDlg::OnButtonVisible()
+void CSpeedTypingCntDlg::OnButtonVisible()
+{
+	// TODO: 여기에 구현 코드 추가.
+	GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
+	GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
+	GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+}
+
+
+
+HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	UINT nID = pWnd->GetDlgCtrlID();
+	switch (nID)
 	{
-		// TODO: 여기에 구현 코드 추가.
-		GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
-		GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
-		GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+	case IDC_STATIC_TITLE:
+		pDC->SetTextColor(RGB(0, 0, 255)); //파란색
+		break;
 	}
 
-
-
-	HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
-	{
-		HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
-
-		UINT nID = pWnd->GetDlgCtrlID();
-		switch (nID)
-		{
-		case IDC_STATIC_TITLE:
-			pDC->SetTextColor(RGB(0, 0, 255)); //파란색
-			break;
-		}
-
-		return hbr;
-	}
+	return hbr;
+}

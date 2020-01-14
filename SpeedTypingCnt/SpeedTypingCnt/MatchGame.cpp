@@ -74,10 +74,7 @@ void MatchGame::OnBnClickedButtonConnect()
 		if (b)
 		{
 			m_socCom.Init(this->m_hWnd);
-			m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
-			m_bConnect = TRUE;
-			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 		}
 		else
 		{
@@ -89,6 +86,10 @@ void MatchGame::OnBnClickedButtonConnect()
 	}
 }
 
+// 서버로부터 들어온 입력(char[256])을 처리한다.
+// "접속성공" : m_bConnect = true 로 바꾸고 입력칸을 활성화한다.
+// 단어 15개 조합 : static에 적용한다.
+// 상대방이 단어를 지웠다 : 나도 같은 단어를 화면에서 지운다.
 afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 {
 	char pTmp[256];
@@ -103,7 +104,9 @@ afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 	str.Format("%s", pTmp);
 	if (str == _T("접속성공"))
 	{
+		m_strConnect = "접속성공";
 		m_bConnect = TRUE;
+		GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 	}
 	else if (str.Find(",") != std::string::npos) // for setting m_words
 	{
@@ -184,6 +187,7 @@ BOOL MatchGame::OnInitDialog()
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
+//','로 이루어진 문자열을 잘라 멤버변수에 넣어준다.
 void MatchGame::scatterStrToWords(CString sData)
 {
 		AfxExtractSubString(m_word1, sData, 0, ',');
