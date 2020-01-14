@@ -75,7 +75,7 @@ void SoloGame::SetWord(int a)//db에 연결 시 필요 없음 // 테스트를 �
 		word2 = "아깝다";
 		word3 = "싫어하다";
 		word4 = "핏줄기";
-		word5 = "힙겹다";
+		word5 = "힘겹다";
 		word6 = "저녁때";
 		word7 = "비슷비슷";
 		word8 = "능동태";

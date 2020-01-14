@@ -36,7 +36,7 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	
 	CString global_userID;
-	void OnButtonVisible();
+	
 	afx_msg void OnBnClickedButtonSolo();
 	afx_msg void OnBnClickedButtonMatch();
 	afx_msg void OnBnClickedButtonScore();
@@ -44,10 +44,9 @@ public:
 	afx_msg void OnBnClickedButtonInit();
 	CString m_strMainID;
 	void OnButtonVisible();
+
 	CFont m_font;
-//	CStatic m_title;
-	//CStatic m_title;
+
 	CStatic m_title;
-	
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

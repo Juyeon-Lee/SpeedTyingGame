@@ -1,6 +1,6 @@
-﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++에서 생성한 포함 파일입니다.
-// SpeedTypingCnt.rc에서 사용되고 있습니다.
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by SpeedTypingCnt.rc
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -13,56 +13,58 @@
 #define IDD_DIALOG_MATCH                136
 #define IDD_DIALOG_CONNECT              138
 #define IDD_DIALOG_SOLO1                143
-#define IDC_EDIT_ID                     5000
-#define IDC_BUTTON_SOLO                 5001
-#define IDC_BUTTON_INIT                 5002
-#define IDC_BUTTON_SCORE                5003
-#define IDC_EDIT_PW                     5004
-#define IDC_BUTTON_MATCH                5005
-#define IDC_BUTTON_LOGIN                5006
-#define IDC_BUTTON_ADD                  5007
-#define IDC_STATIC_ID                   5008
-#define IDC_STATIC_ID_SCORE             5009
-#define IDC_LIST_SCORE                  5010
-#define IDC_EDIT_TYPING                 5011
-#define IDC_BUTTON_CONNECT              5013
-#define IDC_STATIC_SCORE                5014
-#define IDC_STATIC1                     5015
-#define IDC_STATIC2                     5016
-#define IDC_STATIC3                     5017
-#define IDC_STATIC4                     5018
-#define IDC_STATIC5                     5019
-#define IDC_STATIC6                     5020
-#define IDC_STATIC7                     5021
-#define IDC_STATIC8                     5022
-#define IDC_STATIC9                     5023
-#define IDC_STATIC10                    5024
-#define IDC_STATIC11                    5025
-#define IDC_STATIC12                    5026
-#define IDC_STATIC13                    5027
-#define IDC_STATIC14                    5028
-#define IDC_STATIC15                    5029
-#define IDC_EDIT_IP                     5030
-#define IDC_STATIC_STATUS               5031
-#define IDC_STATIC_                     5032
-#define IDC_STATIC_SCORETEXT            5033
-#define IDC_STATIC_MAINID               5035
-#define IDC_STATIC1_SOLO                5050
-#define IDC_STATIC2_SOLO                5051
-#define IDC_STATIC3_SOLO                5052
-#define IDC_STATIC4_SOLO                5053
-#define IDC_STATIC5_SOLO                5054
-#define IDC_STATIC6_SOLO                5055
-#define IDC_STATIC7_SOLO                5056
-#define IDC_STATIC8_SOLO                5057
-#define IDC_STATIC9_SOLO                5058
-#define IDC_STATIC10_SOLO               5059
-#define IDC_STATIC11_SOLO               5060
-#define IDC_STATIC12_SOLO               5061
-#define IDC_STATIC13_SOLO               5062
-#define IDC_STATIC14_SOLO               5063
-#define IDC_STATIC15_SOLO               5064
-#define IDC_STATIC_SOLOTYPE             5065
+#define IDC_BUTTON_SOLO                 1000
+#define IDC_EDIT_ID                     1001
+#define IDC_BUTTON_INIT                 1002
+#define IDC_BUTTON_SCORE                1003
+#define IDC_EDIT_PW                     1004
+#define IDC_BUTTON_MATCH                1005
+#define IDC_BUTTON_LOGIN                1006
+#define IDC_BUTTON_ADD                  1007
+#define IDC_STATIC_ID                   1008
+#define IDC_STATIC_ID_SCORE             1009
+#define IDC_LIST_SCORE                  1010
+#define IDC_EDIT_TYPING                 1011
+#define IDC_BUTTON_CONNECT              1013
+#define IDC_STATIC_SCORE                1014
+#define IDC_STATIC1                     1015
+#define IDC_STATIC2                     1016
+#define IDC_STATIC3                     1017
+#define IDC_STATIC4                     1018
+#define IDC_STATIC5                     1019
+#define IDC_STATIC6                     1020
+#define IDC_STATIC7                     1021
+#define IDC_STATIC8                     1022
+#define IDC_STATIC9                     1023
+#define IDC_STATIC10                    1024
+#define IDC_STATIC11                    1025
+#define IDC_STATIC12                    1026
+#define IDC_STATIC13                    1027
+#define IDC_STATIC14                    1028
+#define IDC_STATIC15                    1029
+#define IDC_EDIT_IP                     1030
+#define IDC_STATIC_STATUS               1031
+#define IDC_STATIC_                     1032
+#define IDC_STATIC_SCORETEXT            1033
+#define IDC_STATIC_MAINID               1035
+#define IDC_STATIC1_SOLO                1050
+#define IDC_STATIC2_SOLO                1051
+#define IDC_STATIC3_SOLO                1052
+#define IDC_STATIC4_SOLO                1053
+#define IDC_STATIC5_SOLO                1054
+#define IDC_STATIC6_SOLO                1055
+#define IDC_STATIC7_SOLO                1056
+#define IDC_STATIC8_SOLO                1057
+#define IDC_STATIC9_SOLO                1058
+#define IDC_STATIC10_SOLO               1059
+#define IDC_STATIC11_SOLO               1060
+#define IDC_STATIC12_SOLO               1061
+#define IDC_STATIC13_SOLO               1062
+#define IDC_STATIC14_SOLO               1063
+#define IDC_STATIC15_SOLO               1064
+#define IDC_BUTTON3                     1068
+#define IDC_STATIC_T                    1072
+#define IDC_STATIC_TITLE                1072
 
 // Next default values for new objects
 // 
