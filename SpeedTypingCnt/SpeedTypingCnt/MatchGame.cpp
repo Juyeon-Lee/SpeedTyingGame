@@ -196,9 +196,18 @@ BOOL MatchGame::OnInitDialog()
 	{
 		e->ReportError();
 	}
+	scatterStrToWords();
+
+	m_pRs->Close();
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+
+void MatchGame::scatterStrToWords()
+{
 	try {
 		CString sData(_T(""));
-		
+
 		int c = 1;
 		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select * from word order by rand() limit 15;");
 		if (bOpen)
@@ -216,19 +225,19 @@ BOOL MatchGame::OnInitDialog()
 						CString sItem;
 						m_pRs->SetAbsolutePosition(iRow);
 						m_pRs->GetFieldValue(iCol, sItem);
-						if (iCol == 0)
+						if (iCol == 0) // put index of word
 							sData = sData + sItem;
 
-						else {
+						else { // put a word
 							sData = sData + _T(",") + sItem;
 							//m_string_list.AddTail(sItem);
 							ar[iRow - 1][0] = sItem;
-							
+
 
 						}
 
 					}
-					sData +=_T("\n");
+					sData += _T("\n");
 					iRow++;
 				}
 
@@ -241,13 +250,7 @@ BOOL MatchGame::OnInitDialog()
 	{
 		e->ReportError();
 	}
-
-	m_pRs->Close();
-	return TRUE;  // return TRUE unless you set the focus to a control
-				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
-
-	
 
 
 /*void MatchGame::ViewWord()
@@ -390,23 +393,23 @@ void MatchGame::SendGame(CString strTmp)
 }
 
 
-void MatchGame::InitGame()
-{
-	/*m_strList[0] = "함함하다";
-	m_strList[1] = "괴랄하다";
-	m_strList[2] = "신선함";
-	m_strList[3] = "고구마라떼";
-	m_strList[4] = "카푸치노";
-	m_strList[5] = "드라이기";
-	m_strList[6] = "가방";
-	m_strList[7] = "칠성";
-	m_strList[8] = "장수돌침대";
-	m_strList[9] = "슬렉스";
-	m_strList[10] = "트리트먼트";
-	m_strList[11] = "치킨";
-	m_strList[12] = "의자";
-	m_strList[13] = "요거트";
-	m_strList[14] = "수맥";*/
-}
+//void MatchGame::InitGame()
+//{
+//	/*m_strList[0] = "함함하다";
+//	m_strList[1] = "괴랄하다";
+//	m_strList[2] = "신선함";
+//	m_strList[3] = "고구마라떼";
+//	m_strList[4] = "카푸치노";
+//	m_strList[5] = "드라이기";
+//	m_strList[6] = "가방";
+//	m_strList[7] = "칠성";
+//	m_strList[8] = "장수돌침대";
+//	m_strList[9] = "슬렉스";
+//	m_strList[10] = "트리트먼트";
+//	m_strList[11] = "치킨";
+//	m_strList[12] = "의자";
+//	m_strList[13] = "요거트";
+//	m_strList[14] = "수맥";*/
+//}
 
 

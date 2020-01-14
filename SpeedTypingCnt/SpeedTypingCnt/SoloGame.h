@@ -30,7 +30,7 @@ public:
 
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	void SetWord(int a,CString word);
+	void SetWord(int a, CString word);
 	void ViewWord();
 	void EraseCheck(int cnt);
 	BOOL IsGameEnd(int cnt);
@@ -56,7 +56,7 @@ public:
 	CStatic m_txt6;
 	CStatic m_txt7;
 	CStatic m_txt8;
-	CStatic m_txt9; 
+	CStatic m_txt9;
 
 	CString word1;
 	CString word2;
@@ -78,12 +78,14 @@ public:
 	CDatabase m_db;
 	CRecordset* m_pRs;
 	void addItem(int index, CString word);
-	
+
 	afx_msg void OnBnClickedButton3();
-//	CString m_txt1;
+	//	CString m_txt1;
 	CStatic m_txt1;
 
-//	CFont m_font;
-//	CStatic m_title;
+	//	CFont m_font;
+	//	CStatic m_title;
 	virtual BOOL OnInitDialog();
+	void OnReceiveWord();
+	void OnReceiveEnglish();
 };

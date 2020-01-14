@@ -335,7 +335,7 @@ BOOL SoloGame::IsGameEnd(int endcnt)
 
 void SoloGame::OnBnClickedButton3()//영어로 단어 바꿔줌
 {
-	//SetWord(0);
+	//OnReceiveEnglish();
 	
 }
 
@@ -356,20 +356,29 @@ BOOL SoloGame::OnInitDialog()
 
 
 	//UpdateData(TRUE);
-	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+	OnReceiveWord();
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+/*void SoloGame::OnReceiveEnglish()
+{
+	/*try
+	{
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
+
 	}
 	catch (CException * e)
 	{
 		e->ReportError();
 	}
+	
 	try {
 		CString sData(_T(""));
-		CString ar[10][10];
-		int c = 1;
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select * from word order by rand() limit 15;");
+		CString ar[30][2];
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from english order by rand() limit 15;");
+
 		if (bOpen)
 		{
 			int iRow = 1;
@@ -382,35 +391,88 @@ BOOL SoloGame::OnInitDialog()
 					int iFieldCnt = m_pRs->GetODBCFieldCount();
 					for (int iCol = 0; iCol < iFieldCnt; iCol++)
 					{
-						CString sItem;
+						CDBVariant sItem;
+						CString result;
+
 						m_pRs->SetAbsolutePosition(iRow);
 						m_pRs->GetFieldValue(iCol, sItem);
-						if (iCol == 0)
-							sData = sData + sItem;
-							
-						else {
-							sData = sData + _T(",") + sItem;
-							m_string_list.AddTail(sItem);
-							
-				
-						}
 
+						result = *sItem.m_pstringW;
+						ar[iRow - 1][iCol] = result;
+						m_string_list.AddTail(result);
+						MessageBox(ar[iRow - 1][iCol]);
+						UpdateData(FALSE);
 					}
-					sData +=_T("\n");
 					iRow++;
 				}
-
 			}
-			
-			AfxMessageBox(sData);
 		}
+
 	}
 	catch (CException * e)
 	{
 		e->ReportError();
 	}
-	
 	m_pRs->Close();
-	return TRUE;  // return TRUE unless you set the focus to a control
-				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+	delete m_pRs;
+
+}
+*/
+void SoloGame::OnReceiveWord()
+{
+	// TODO: 여기에 구현 코드 추가.
+	try
+	{
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+
+	try {
+		CString sData(_T(""));
+		CString ar[30][2];
+		
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from word order by rand() limit 15;");
+			
+		if (bOpen)
+		{
+			int iRow = 1;
+			BOOL bIsEOF = m_pRs->IsEOF();
+			DWORD dwSize = m_pRs->GetRowsetSize();
+			if (!bIsEOF)
+			{
+				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				{
+					int iFieldCnt = m_pRs->GetODBCFieldCount();
+					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+					{
+						CDBVariant sItem;
+						CString result;
+
+						m_pRs->SetAbsolutePosition(iRow);
+						m_pRs->GetFieldValue(iCol, sItem);
+
+						result = *sItem.m_pstringW;
+						ar[iRow - 1][iCol] = result;
+						m_string_list.AddTail(result);
+						//MessageBox(ar[iRow - 1][iCol]);
+						UpdateData(FALSE);
+					}
+					iRow++;
+				}
+			}
+		}
+
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+	m_pRs->Close();
+	delete m_pRs;
 }
