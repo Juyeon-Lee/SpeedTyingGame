@@ -54,6 +54,12 @@
     <ClInclude Include="SoloGame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Search.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchShow.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="SoloGameEng.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -87,6 +93,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SoloGameEng.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Search.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SearchShow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

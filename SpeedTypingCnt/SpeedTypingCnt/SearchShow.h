@@ -1,21 +1,20 @@
 ﻿#pragma once
 
-
 #include "afxdb.h"
+#include "Search.h"
+// SearchShow 대화 상자
 
-// CScoreRef 대화 상자
-
-class CScoreRef : public CDialogEx
+class SearchShow : public CDialogEx
 {
-	DECLARE_DYNAMIC(CScoreRef)
+	DECLARE_DYNAMIC(SearchShow)
 
 public:
-	CScoreRef(CWnd* pParent = nullptr);   // 표준 생성자입니다.
-	virtual ~CScoreRef();
+	SearchShow(CWnd* pParent = nullptr);   // 표준 생성자입니다.
+	virtual ~SearchShow();
 
-	// 대화 상자 데이터입니다.
+// 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_DIALOG_SCORE };
+	enum { IDD = IDD_DIALOG_SEARCH_SHOW };
 #endif
 
 protected:
@@ -23,21 +22,15 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CListCtrl m_scoreList;
-	//	CString m_strIP_score;
 	virtual BOOL OnInitDialog();
+//	CListCtrl m_scoreList;
 	CString m_strID_score;
 	SQLHANDLE mh_environment; //ODBC 기술을 사용하기 위한 환경 정보
 	SQLHDBC mh_odbc; // ODBC  함수를 사용하기 위한 정보
 	char m_connect_flag = 0; //서버와 연결 여부를 저장할 변수(1:연결)
 	CDatabase m_db;
 	CRecordset* m_pRs;
-	int flag;
-	int* f = &flag;
-	
-	afx_msg void OnStnClickedStaticIdScore();
-	afx_msg void OnBnClickedButton1();
-//	CString m_strID;
-	afx_msg void OnBnClickedButtonSearch();
-	CString m_searchID_score;
+
+	CListCtrl m_scoreList;
+	CString m_strID_search_show;
 };

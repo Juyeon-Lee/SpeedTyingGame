@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "CSocCom.h"
-
+#include "afxdb.h"
 // MatchGame 대화 상자
 
 class MatchGame : public CDialogEx
@@ -29,7 +29,8 @@ public:
 	CString m_strID;
 	CSocCom m_socCom;
 	CString m_strConnect;
-
+	CDatabase m_db;
+	CRecordset* m_pRs;
 	CString m_word1;
 	CString m_word10;
 	CString m_word11;
@@ -55,7 +56,7 @@ public:
 
 	afx_msg void OnBnClickedButtonConnect();
 	virtual BOOL OnInitDialog();
-	void scatterStrToWords();
+	void scatterStrToWords(CString sData);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	BOOL IsGameEnd();
@@ -63,8 +64,7 @@ public:
 	void SetGameEnd();
 	void SendGame(CString strTmp);
 	int staticStringToIndex(CString str);
-//	void InitGame();
-	CString ar[15][2]; //char ar[10][10];    ar[0][0] == "word"
 	CDatabase m_db;
 	CRecordset* m_pRs;
+	CString ar[15][2]; //char ar[10][10];    ar[0][0] == "word"
 };

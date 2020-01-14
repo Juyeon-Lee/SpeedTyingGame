@@ -18,21 +18,21 @@ MatchGame::MatchGame(CWnd* pParent /*=nullptr*/)
 	, m_strTyping(_T(""))
 	, m_strScore(_T("0"))
 	, m_strID(_T("회원"))
-	, m_word1(_T("함함하다"))
-	, m_word10(_T("슬렉스"))
-	, m_word11(_T("트리트먼트"))
-	, m_word12(_T("치킨"))
-	, m_word13(_T("의자"))
-	, m_word14(_T("요거트"))
-	, m_word15(_T("수맥"))
-	, m_word2(_T("괴랄하다"))
-	, m_word3(_T("신선함"))
-	, m_word4(_T("고구마라떼"))
-	, m_word5(_T("카푸치노"))
-	, m_word6(_T("드라이기"))
-	, m_word7(_T("가방"))
-	, m_word8(_T("칠성"))
-	, m_word9(_T("장수돌침대"))
+	, m_word1(_T(""))
+	, m_word10(_T(""))
+	, m_word11(_T(""))
+	, m_word12(_T(""))
+	, m_word13(_T(""))
+	, m_word14(_T(""))
+	, m_word15(_T(""))
+	, m_word2(_T(""))
+	, m_word3(_T(""))
+	, m_word4(_T(""))
+	, m_word5(_T(""))
+	, m_word6(_T(""))
+	, m_word7(_T(""))
+	, m_word8(_T(""))
+	, m_word9(_T(""))
 	, m_strConnect(_T(""))
 {
 }
@@ -100,7 +100,6 @@ void MatchGame::OnBnClickedButtonConnect()
 		}
 
 		UpdateData(FALSE);
-		delete dlg;
 	}
 }
 
@@ -119,6 +118,10 @@ afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 	if (str == _T("접속성공"))
 	{
 		m_bConnect = TRUE;
+	}
+	else if (str.Find(",") != std::string::npos) // for setting m_words
+	{
+		scatterStrToWords(str);
 	}
 	else 
 	{
@@ -162,8 +165,8 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 			
 		if (IsGameEnd())
 		{
-			/*str.Format("%s%d%s", "게임이 종료되었습니다!\n최종 스코어 :", m_myScore, "점");
-			MessageBox(str);*/
+			//str.Format("%s%d%s", "게임이 종료되었습니다!\n최종 스코어 :", m_myScore, "점");
+			//AfxMessageBox(str);
 			Sleep(1000);
 			SetGameEnd();
 		}
@@ -187,76 +190,14 @@ BOOL MatchGame::OnInitDialog()
 
 	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 	//UpdateData(TRUE);
-	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
-		if (bOpen)
-			m_pRs = new CRecordset(&m_db);
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
-	scatterStrToWords();
+	CString a;
+	a.Format("%s","ab,bb,cc,dd,ee,ff,ab,bb,cc,dd,ee,ff,cc,dd,ee");
+	scatterStrToWords(a);
 
-	m_pRs->Close();
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
-void MatchGame::scatterStrToWords()
-{
-	try {
-		CString sData(_T(""));
-
-		int c = 1;
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select * from word order by rand() limit 15;");
-		if (bOpen)
-		{
-			int iRow = 1;
-			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
-			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-						if (iCol == 0) // put index of word
-							sData = sData + sItem;
-
-						else { // put a word
-							sData = sData + _T(",") + sItem;
-							//m_string_list.AddTail(sItem);
-							ar[iRow - 1][0] = sItem;
-
-
-						}
-
-					}
-					sData += _T("\n");
-					iRow++;
-				}
-
-			}
-
-			AfxMessageBox(sData);
-		}
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
-}
-
-
-/*void MatchGame::ViewWord()
-{
-
-}*/
 BOOL MatchGame::IsGameEnd()
 {
 	// TODO: 여기에 구현 코드 추가.
@@ -267,7 +208,8 @@ BOOL MatchGame::IsGameEnd()
 
 }
 
-
+//str 멤버변수 중에서 일치하는 static이 몇번째인지 알려준다.
+//일치하는 것이 없다면 0이 반환된다.
 int MatchGame::staticStringToIndex(CString str)
 {
 	if (str == m_word1)
@@ -304,7 +246,8 @@ int MatchGame::staticStringToIndex(CString str)
 		return 0;
 }
 
-
+// wordIndex로 해당하는 static을 지워준다.
+// itsMe : 자기 자신일 때만 m_myScore를 올려준다.
 void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 {
 	switch (wordIndex)
@@ -363,7 +306,7 @@ void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 	if (itsMe)//내가 맞췄을 때만 내 점수 오른다.
 	{
 		m_myScore++;
-		m_strScore.Format("%d%s", m_myScore, "점");
+		m_strScore.Format("%d", m_myScore);
 	}
 
 	score.Format("%d", endGameIndex);
@@ -377,7 +320,126 @@ void MatchGame::SetGameEnd()
 		MessageBox("패");
 	else
 		MessageBox("승");
+	try
+	{
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=123123;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
 
+	}
+
+
+	try
+	{
+		CString sData(_T(""));
+		CString u[30][10];
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select member_id from user where username ='" + m_strID + "'");
+
+		if (bOpen)
+		{
+			int iRow = 1;
+			BOOL bIsEOF = m_pRs->IsEOF();
+			DWORD dwSize = m_pRs->GetRowsetSize();
+			if (!bIsEOF)
+			{
+				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				{
+					int iFieldCnt = m_pRs->GetODBCFieldCount();
+					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+					{
+						CString sItem;
+						m_pRs->SetAbsolutePosition(iRow);
+						m_pRs->GetFieldValue(iCol, sItem);
+
+
+						u[iRow - 1][iCol] = sItem;
+						UpdateData(FALSE);
+
+					}
+
+					iRow++;
+				}
+			}
+			m_db.BeginTrans();
+
+			UpdateData(TRUE);
+
+			m_db.ExecuteSQL(_T("INSERT INTO score(user_id,user_score,user_date) VALUES('" + u[0][0] + "','" + m_strScore + "',now())"));
+
+			m_db.CommitTrans();
+		}
+	}
+
+	catch (CException * e)
+	{
+		e->ReportError();
+	}
+	
+
+
+	//Sleep(1000);
+
+	try
+	{
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		if (bOpen)
+			m_pRs = new CRecordset(&m_db);
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+
+	}
+
+
+	try
+	{
+		CString sData(_T(""));
+		CString u[30][10];
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select member_id from user where username ='" + m_strID + "'");
+
+		if (bOpen)
+		{
+			int iRow = 1;
+			BOOL bIsEOF = m_pRs->IsEOF();
+			DWORD dwSize = m_pRs->GetRowsetSize();
+			if (!bIsEOF)
+			{
+				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				{
+					int iFieldCnt = m_pRs->GetODBCFieldCount();
+					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+					{
+						CString sItem;
+						m_pRs->SetAbsolutePosition(iRow);
+						m_pRs->GetFieldValue(iCol, sItem);
+
+
+						u[iRow - 1][iCol] = sItem;
+						UpdateData(FALSE);
+
+					}
+
+					iRow++;
+				}
+			}
+			m_db.BeginTrans();
+
+			UpdateData(TRUE);
+			CString sqlStr = "INSERT INTO score(user_id,user_score,user_date) VALUES('" + u[0][0] + "','" + m_strScore + "',now())";
+			m_db.ExecuteSQL(sqlStr);
+
+			m_db.CommitTrans();
+		}
+	}
+	catch (CException * e)
+	{
+		e->ReportError();
+	}	
 }
 
 void MatchGame::SendGame(CString strTmp)
@@ -392,24 +454,25 @@ void MatchGame::SendGame(CString strTmp)
 	m_socCom.Send(pTmp, 256);
 }
 
+void MatchGame::scatterStrToWords(CString sData)
+{
+	// TODO: 여기에 구현 코드 추가.
+	AfxExtractSubString(m_word1, sData, 0, ',');
+	AfxExtractSubString(m_word2, sData, 1, ',');
+	AfxExtractSubString(m_word3, sData, 2, ',');
+	AfxExtractSubString(m_word4, sData, 3, ',');
+	AfxExtractSubString(m_word5, sData, 4, ',');
+	AfxExtractSubString(m_word6, sData, 5, ',');
+	AfxExtractSubString(m_word7, sData, 6, ',');
+	AfxExtractSubString(m_word8, sData, 7, ',');
+	AfxExtractSubString(m_word9, sData, 8, ',');
+	AfxExtractSubString(m_word10, sData, 9, ',');
+	AfxExtractSubString(m_word11, sData, 10, ',');
+	AfxExtractSubString(m_word12, sData, 11, ',');
+	AfxExtractSubString(m_word13, sData, 12, ',');
+	AfxExtractSubString(m_word14, sData, 13, ',');
+	AfxExtractSubString(m_word15, sData, 14, ',');
 
-//void MatchGame::InitGame()
-//{
-//	/*m_strList[0] = "함함하다";
-//	m_strList[1] = "괴랄하다";
-//	m_strList[2] = "신선함";
-//	m_strList[3] = "고구마라떼";
-//	m_strList[4] = "카푸치노";
-//	m_strList[5] = "드라이기";
-//	m_strList[6] = "가방";
-//	m_strList[7] = "칠성";
-//	m_strList[8] = "장수돌침대";
-//	m_strList[9] = "슬렉스";
-//	m_strList[10] = "트리트먼트";
-//	m_strList[11] = "치킨";
-//	m_strList[12] = "의자";
-//	m_strList[13] = "요거트";
-//	m_strList[14] = "수맥";*/
-//}
+	UpdateData(false);
 
-
+}
