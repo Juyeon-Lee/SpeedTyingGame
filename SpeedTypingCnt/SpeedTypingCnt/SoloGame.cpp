@@ -17,12 +17,8 @@ SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 
 
 {
-	//SetWord(1);
-	//ViewWord();
 	endcnt = 1;
 	cnt = 1;
-
-
 }
 
 SoloGame::~SoloGame()
@@ -32,9 +28,6 @@ SoloGame::~SoloGame()
 void SoloGame::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	//  DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
-
-	//  DDX_Control(pDX, IDC_STATIC1_SOLO, m_txt1);
 	DDX_Control(pDX, IDC_STATIC10_SOLO, m_txt10);
 	DDX_Control(pDX, IDC_EDIT_TYPING, m_strTyping);
 	DDX_Control(pDX, IDC_STATIC11_SOLO, m_txt11);
@@ -50,9 +43,7 @@ void SoloGame::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC7_SOLO, m_txt7);
 	DDX_Control(pDX, IDC_STATIC8_SOLO, m_txt8);
 	DDX_Control(pDX, IDC_STATIC9_SOLO, m_txt9);
-	//  DDX_Text(pDX, IDC_STATIC1_SOLO, m_txt1);
 	DDX_Control(pDX, IDC_STATIC1_SOLO, m_txt1);
-	//  DDX_Control(pDX, IDC_STATIC_STATUS, m_title);
 }
 
 
@@ -75,7 +66,7 @@ BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 로 값
 	cnt = 1;
 
 
-	ViewWord();
+	
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd)
 	{
 
@@ -149,35 +140,6 @@ void SoloGame::ViewWord()
 
 		
 	}
-	/*CString str;
-	CString s;
-
-	str = "IDC_STATIC";
-	for (int i = 0; i < 2; i++)
-	{
-		s.Format(_T("%d"), i+1);
-		str = str + s + "_SOLO";
-		SetDlgItemText(str, word);
-		SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
-	}*/
-	
-	/*SetDlgItemText(IDC_STATIC1_SOLO, _T(word1));
-	SetDlgItemText(IDC_STATIC2_SOLO, _T(word2));
-	SetDlgItemText(IDC_STATIC3_SOLO, _T(word3));
-	SetDlgItemText(IDC_STATIC4_SOLO, _T(word4));
-	SetDlgItemText(IDC_STATIC5_SOLO, _T(word5));
-	SetDlgItemText(IDC_STATIC6_SOLO, _T(word6));
-	SetDlgItemText(IDC_STATIC7_SOLO, _T(word7));
-	SetDlgItemText(IDC_STATIC8_SOLO, _T(word8));
-	SetDlgItemText(IDC_STATIC9_SOLO, _T(word9));
-	SetDlgItemText(IDC_STATIC10_SOLO, _T(word10));
-	SetDlgItemText(IDC_STATIC11_SOLO, _T(word11));
-	SetDlgItemText(IDC_STATIC12_SOLO, _T(word12));
-	SetDlgItemText(IDC_STATIC13_SOLO, _T(word13));
-	SetDlgItemText(IDC_STATIC14_SOLO, _T(word14));
-	SetDlgItemText(IDC_STATIC15_SOLO, _T(word15));*/
-
-
 
 }
 void SoloGame::EraseCheck(int wordIndex)
@@ -256,20 +218,14 @@ BOOL SoloGame::IsGameEnd(int endcnt)
 	else
 		return FALSE;
 }
-
-
-
 BOOL SoloGame::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
-
-	//UpdateData(TRUE);
 	OnReceiveWord();
+	ViewWord();
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
-
 void SoloGame::OnReceiveWord()
 {
 	// TODO: 여기에 구현 코드 추가.

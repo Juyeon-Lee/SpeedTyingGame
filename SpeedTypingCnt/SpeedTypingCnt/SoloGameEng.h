@@ -22,15 +22,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	//	CString m_strTyping;
-		//CString m_strTime;
-
-	//	CEdit m_strTyping;
-	//	CButton m_strSend;
-
-
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	void SetWord(int a, CString word);
+
 	void ViewWord();
 	void EraseCheck(int cnt);
 	BOOL IsGameEnd(int cnt);
@@ -40,9 +33,8 @@ public:
 	clock_t startTime;
 	clock_t endTime;
 	double result;
-	//	CString m_strID;
-//
-	CString word1;
+
+	/*CString word1;
 	CString word2;
 	CString word3;
 	CString word4;
@@ -57,14 +49,11 @@ public:
 	CString word13;
 	CString word14;
 	CString word15;
-	CString word[10][10];
+	CString word[10][10];*/
 
 	CDatabase m_db;
 	CRecordset* m_pRs;
 
-
-
-	
 	virtual BOOL OnInitDialog();
 	void OnReceiveWord();
 	

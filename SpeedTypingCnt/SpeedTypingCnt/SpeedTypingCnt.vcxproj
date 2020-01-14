@@ -224,6 +224,7 @@
     <ResourceCompile Include="SpeedTypingCnt.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\SpeedTypingCnt.rc2" />
   </ItemGroup>
   <ItemGroup>

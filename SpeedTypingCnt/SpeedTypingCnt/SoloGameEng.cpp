@@ -75,7 +75,7 @@ BOOL SoloGameEng::PreTranslateMessage(MSG * pMsg)//edit control 에서 enter 로
 	cnt = 1;
 
 
-	ViewWord();
+	
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING1)->m_hWnd)
 	{
 
@@ -237,6 +237,7 @@ BOOL SoloGameEng::OnInitDialog()
 
 	//UpdateData(TRUE);
 	OnReceiveWord();
+	ViewWord();
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
