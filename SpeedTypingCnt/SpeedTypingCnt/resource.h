@@ -1,6 +1,6 @@
-﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++에서 생성한 포함 파일입니다.
-// SpeedTypingCnt.rc에서 사용되고 있습니다.
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by SpeedTypingCnt.rc
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -18,6 +18,7 @@
 #define IDD_DIALOG_SEARCH_SHOW          147
 #define IDC_BUTTON_SEARCH               1066
 #define IDC_BUTTON_ENTER                1068
+#define IDC_BUTTON_LOGOUT               1066
 #define IDC_EDIT_ID                     5000
 #define IDC_BUTTON_SOLO                 5001
 #define IDC_BUTTON_INIT                 5002
@@ -68,7 +69,9 @@
 #define IDC_STATIC14_SOLO               5063
 #define IDC_STATIC15_SOLO               5064
 #define IDC_STATIC_SOLOTYPE             5065
-
+#define IDC_BUTTON3						5066
+#define IDC_STATIC_T					5067
+#define IDC_STATIC_TITLE				5068
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

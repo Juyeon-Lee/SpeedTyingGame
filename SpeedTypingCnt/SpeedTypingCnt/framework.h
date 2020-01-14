@@ -17,6 +17,7 @@
 
 #include <afxdisp.h>        // MFC 자동화 클래스입니다.
 
+# include <afxdb.h>
 
 
 #ifndef _AFX_NO_OLE_SUPPORT

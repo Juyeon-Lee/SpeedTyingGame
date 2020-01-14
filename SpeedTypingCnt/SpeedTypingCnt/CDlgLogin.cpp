@@ -156,11 +156,6 @@ void CDlgLogin::OnClickedButtonAdd()
 
 
 	
-
-	
-	
-
-
 void CDlgLogin::OnBnClickedButtonLogin()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -182,32 +177,32 @@ void CDlgLogin::OnBnClickedButtonLogin()
 		CString ar[40][3];
 		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select user.username from user");
 
-		if (bOpen)
-		{
-			int iRow = 1;
-			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
-			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-						ar[iRow - 1][iCol] = sItem;
-						UpdateData(FALSE);
+        if (bOpen)
+        {
+            int iRow = 1;
+            BOOL bIsEOF = m_pRs->IsEOF();
+            DWORD dwSize = m_pRs->GetRowsetSize();
+            if (!bIsEOF)
+            {
+                for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+                {
+                    int iFieldCnt = m_pRs->GetODBCFieldCount();
+                    for (int iCol = 0; iCol < iFieldCnt; iCol++)
+                    {
+                        CString sItem;
+                        m_pRs->SetAbsolutePosition(iRow);
+                        m_pRs->GetFieldValue(iCol, sItem);
+                        ar[iRow - 1][iCol] = sItem;
+                        UpdateData(FALSE);
 
-					}
-				
-					iRow++;
-				}
-			}
-			if (!bIsEOF)
-			{
-				iRow = 1;
+                    }
+
+                    iRow++;
+                }
+            }
+            if (!bIsEOF)
+            {
+                iRow = 1;
 
 				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
 				{
@@ -219,6 +214,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 						pMainDlg->GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(TRUE);
 						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
 						pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
+						pMainDlg->GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(TRUE);
 						pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
 						pMainDlg->global_userID = m_strID;
 						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);								
@@ -230,11 +226,11 @@ void CDlgLogin::OnBnClickedButtonLogin()
 			}
 		}
 
-	}
-	catch (CException * e)
-	{
-		e->ReportError();
-	}
-	m_pRs->Close();
-	delete m_pRs;		
+    }
+    catch (CException * e)
+    {
+        e->ReportError();
+    }
+    m_pRs->Close();
+    delete m_pRs;
 }
