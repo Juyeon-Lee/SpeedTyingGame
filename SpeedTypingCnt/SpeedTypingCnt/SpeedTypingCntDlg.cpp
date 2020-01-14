@@ -13,6 +13,7 @@
 #include "MatchGame.h"
 #include "ScoreRef.h"
 #include "afxdb.h"
+#include "SoloGameEng.h";
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,6 +70,7 @@ BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()	
 	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
+	ON_BN_CLICKED(IDC_BUTTON_SOLO2, &CSpeedTypingCntDlg::OnClickedButtonSolo2)
 	ON_BN_CLICKED(IDC_BUTTON_MATCH, &CSpeedTypingCntDlg::OnBnClickedButtonMatch)
 	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
 	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnBnClickedButtonInit)
@@ -112,6 +114,7 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 	GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(FALSE);
 
 	m_font.CreatePointFont(130, "굴림");
 	m_title.SetFont(&m_font, TRUE);
@@ -225,6 +228,13 @@ void CSpeedTypingCntDlg::OnBnClickedButtonInit()
 	delete dlg;
 }
 
+	void CSpeedTypingCntDlg::OnClickedButtonSolo2()
+	{
+		SoloGameEng* dlg = new SoloGameEng;
+		dlg->DoModal();
+		delete dlg;
+		// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	}
 
 void CSpeedTypingCntDlg::OnBnClickedButtonLogout()
 {
@@ -237,6 +247,15 @@ void CSpeedTypingCntDlg::OnBnClickedButtonLogout()
 	SetDlgItemText(IDC_STATIC_MAINID, "");
 	global_userID = "";
 }
+
+	void CSpeedTypingCntDlg::OnButtonVisible()
+	{
+		// TODO: 여기에 구현 코드 추가.
+		GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SOLO2)->ShowWindow(SW_SHOWNORMAL);
+	}
 
 
 

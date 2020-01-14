@@ -200,6 +200,7 @@
     <ClInclude Include="Search.h" />
     <ClInclude Include="SearchShow.h" />
     <ClInclude Include="SoloGame.h" />
+    <ClInclude Include="SoloGameEng.h" />
     <ClInclude Include="SpeedTypingCnt.h" />
     <ClInclude Include="SpeedTypingCntDlg.h" />
     <ClInclude Include="targetver.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Search.cpp" />
     <ClCompile Include="SearchShow.cpp" />
     <ClCompile Include="SoloGame.cpp" />
+    <ClCompile Include="SoloGameEng.cpp" />
     <ClCompile Include="SpeedTypingCnt.cpp" />
     <ClCompile Include="SpeedTypingCntDlg.cpp" />
   </ItemGroup>
