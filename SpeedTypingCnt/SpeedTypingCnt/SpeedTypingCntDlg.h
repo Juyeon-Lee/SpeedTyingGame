@@ -36,11 +36,12 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	
 	CString global_userID;
-	void OnButtonVisible();
+//	void OnButtonVisible();
 	afx_msg void OnBnClickedButtonSolo();
 	afx_msg void OnBnClickedButtonMatch();
 	afx_msg void OnBnClickedButtonScore();
 	virtual void DoDataExchange(CDataExchange* pDX);
 	afx_msg void OnBnClickedButtonInit();
 	CString m_strMainID;
+	afx_msg void OnBnClickedButtonLogout();
 };

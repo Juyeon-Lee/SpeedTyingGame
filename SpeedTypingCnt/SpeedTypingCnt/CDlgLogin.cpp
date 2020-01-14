@@ -15,7 +15,7 @@ IMPLEMENT_DYNAMIC(CDlgLogin, CDialogEx)
 
 CDlgLogin::CDlgLogin(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_LOGIN, pParent)
-	, m_strID(_T("함함"))
+	, m_strID(_T(""))
 	, m_strPW(_T(""))
 {
 
@@ -137,6 +137,7 @@ void CDlgLogin::OnBnClickedButtonLogin()
 						pMainDlg->GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(TRUE);
 						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
 						pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
+						pMainDlg->GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(TRUE);
 						pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
 						pMainDlg->global_userID = m_strID;
 						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);								

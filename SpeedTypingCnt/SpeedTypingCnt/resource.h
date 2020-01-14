@@ -13,6 +13,7 @@
 #define IDD_DIALOG_MATCH                136
 #define IDD_DIALOG_CONNECT              138
 #define IDD_DIALOG_SOLO1                143
+#define IDC_BUTTON_LOGOUT               1066
 #define IDC_EDIT_ID                     5000
 #define IDC_BUTTON_SOLO                 5001
 #define IDC_BUTTON_INIT                 5002
@@ -70,7 +71,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        145
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1066
+#define _APS_NEXT_CONTROL_VALUE         1067
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

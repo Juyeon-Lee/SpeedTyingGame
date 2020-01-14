@@ -63,4 +63,7 @@ public:
 	void SendGame(CString strTmp);
 	int staticStringToIndex(CString str);
 	void InitGame();
+	void scatterStrToWords(CString sData);
+	CDatabase m_db;
+	CRecordset* m_pRs;
 };
