@@ -113,7 +113,7 @@ afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 	// 데이터를 pTmp에 받는다
 	m_socCom.Receive(pTmp, 256);
 
-	//일단은 헤더 없음
+	//헤더 없음
 
 	str.Format("%s", pTmp);
 	if (str == _T("접속성공"))
@@ -126,7 +126,7 @@ afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 	{
 		scatterStrToWords(str);
 	}
-	else 
+	else //상대방이 단어를 지웠다 : 나도 같은 단어를 화면에서 지운다.
 	{
 		EraseCheck(atoi(str), FALSE);
 
@@ -168,8 +168,6 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 			
 		if (IsGameEnd())
 		{
-			/*str.Format("%s%d%s", "게임이 종료되었습니다!\n최종 스코어 :", m_myScore, "점");
-			MessageBox(str);*/
 			Sleep(1000);
 			SetGameEnd();
 		}
@@ -185,12 +183,12 @@ BOOL MatchGame::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	endGameIndex = 0;
 	score = _T("");
 	m_strScore.Format("%d", m_myScore);
 	m_bConnect = FALSE;
 
+	//접속 전에는 단어 입력 불가
 	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -220,10 +218,9 @@ void MatchGame::scatterStrToWords(CString sData)
 
 }
 
-
+// 화면에 단어가 모두 지워졌는지를 이용하여 게임이 끝났는지 확인한다.
 BOOL MatchGame::IsGameEnd()
 {
-	// TODO: 여기에 구현 코드 추가.
 	if (endGameIndex >= 15)
 		return TRUE;
 	else
@@ -337,7 +334,7 @@ void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 
 void MatchGame::SetGameEnd()
 {
-	// TODO: 여기에 구현 코드 추가.
+	// 내 점수로 상대방의 점수를 계산 한 후, 승패를 가린다.
 	int competitorScore = 15 - m_myScore;
 	if (competitorScore > m_myScore)
 		MessageBox("패");
@@ -346,7 +343,7 @@ void MatchGame::SetGameEnd()
 	
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}

@@ -1,5 +1,5 @@
 ﻿// SoloGame.cpp: 구현 파일
-//
+//연습 게임(kor) 실행 부분
 
 #include "pch.h"
 #include "SpeedTypingCnt.h"
@@ -14,8 +14,6 @@ IMPLEMENT_DYNAMIC(SoloGame, CDialogEx)
 SoloGame::SoloGame(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SOLO1, pParent)
 	, m_strTyping()
-
-
 {
 	endcnt = 1;
 	cnt = 1;
@@ -53,20 +51,19 @@ BEGIN_MESSAGE_MAP(SoloGame, CDialogEx)
 END_MESSAGE_MAP()
 
 
-
-BOOL SoloGame::PreTranslateMessage(MSG* pMsg)//edit control 에서 enter 값으로 넣어진 값을 리스트의 내용과 비교하여 화면에서 단어 지우기
+//edit control 에서 enter 값으로 넣어진 값을 리스트의 내용과 비교하여 화면에서 단어 지우기
+BOOL SoloGame::PreTranslateMessage(MSG* pMsg)
 {
-
 	CString strText = _T("");
 	m_strTyping.GetWindowTextA(strText);//타이핑 한 단어
 
 
 	POSITION pos = m_string_list.GetHeadPosition();// 리스트 위치 비교 위해
-	
+
 	cnt = 1;//ERASE CHECK를 위한 인덱스
 
 
-	
+
 	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING)->m_hWnd) // 키 이벤트가 발생할 경우 && IDC_EDIT_TYPING에 포커스가 맞춰있을 때
 	{
 
@@ -140,9 +137,10 @@ void SoloGame::ViewWord() //화면에 단어를 뿌려주는 함수
 	}
 
 }
-void SoloGame::EraseCheck(int wordIndex)//인덱스 값에 맞는 STATIC TEXT 를 찾아서 화면에서 보이지 않게 함
+
+//인덱스 값에 맞는 STATIC TEXT 를 찾아서 화면에서 보이지 않게 함
+void SoloGame::EraseCheck(int wordIndex)
 {
-	// (GetDlgItem(IDC_BT_EMCSTOP))->ShowWindow(FALSE);
 
 	switch (wordIndex)
 	{
@@ -195,7 +193,8 @@ void SoloGame::EraseCheck(int wordIndex)//인덱스 값에 맞는 STATIC TEXT �
 		break;
 	}
 }
-BOOL SoloGame::IsGameEnd(int endcnt) // 게임이 끝나는 지 확인
+
+BOOL SoloGame::IsGameEnd(int endcnt) // 게임이 끝나는지 확인
 {
 	if (endcnt == 1) {//ENTER KEY가 들어오는 첫 번 째 순간부터 타이머 작동
 		startTime = clock();
@@ -216,7 +215,8 @@ BOOL SoloGame::IsGameEnd(int endcnt) // 게임이 끝나는 지 확인
 	else
 		return FALSE;
 }
-BOOL SoloGame::OnInitDialog()// 
+
+BOOL SoloGame::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	OnReceiveWord();
@@ -224,13 +224,15 @@ BOOL SoloGame::OnInitDialog()//
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
-void SoloGame::OnReceiveWord()//데이터 베이스에서 단어를 받아서 리스트에 추가해주는 함수
+
+//데이터 베이스에서 단어를 받아서 리스트에 추가해주는 함수
+void SoloGame::OnReceiveWord()
 {
-	// TODO: 여기에 구현 코드 추가.
+
 	//데이터 베이스 연결
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;STMT=set names euckr;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 
@@ -243,12 +245,9 @@ void SoloGame::OnReceiveWord()//데이터 베이스에서 단어를 받아서 �
 	try {
 		CString sData(_T(""));
 		CString ar[30][2];
-		
-		
 
-		
 		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from word order by rand() limit 15;");//MY SQL 쿼리 
-			
+
 		if (bOpen)
 		{
 			int iRow = 1;

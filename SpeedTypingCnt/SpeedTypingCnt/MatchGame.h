@@ -27,7 +27,7 @@ public:
 	CString m_strTyping;
 	CString m_strScore;
 	CString m_strID;
-	CSocCom m_socCom;
+	CSocCom m_socCom; //서버 연결을 위한 변수.
 	CString m_strConnect;
 	
 	CString m_word1;
@@ -48,22 +48,20 @@ public:
 
 	int m_myScore = 0;
 	BOOL m_bConnect;
-	int m_listSize;
-	int endGameIndex;
-	CString m_strList[15];
+	int endGameIndex; // endGameIndex>=15 이면 게임 끝남.
 	CString score;
 
 	afx_msg void OnBnClickedButtonConnect();
 	virtual BOOL OnInitDialog();
 	void scatterStrToWords(CString sData);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-
 	BOOL IsGameEnd();
 	void EraseCheck(int wordIndex, BOOL itsMe);
 	void SetGameEnd();
 	void SendGame(CString strTmp);
 	int staticStringToIndex(CString str);
+
+	//데이터베이스 연동을 위한 변수
 	CDatabase m_db;
 	CRecordset* m_pRs;
-	//CString ar[15][2]; //char ar[10][10];    ar[0][0] == "word"
 };

@@ -1,5 +1,5 @@
 ﻿// SoloGameEng.cpp: 구현 파일
-//
+//연습게임(eng)실행 부분
 
 #include "pch.h"
 #include "SpeedTypingCnt.h"
@@ -16,12 +16,8 @@ SoloGameEng::SoloGameEng(CWnd* pParent /*=nullptr*/)
 	, m_strTyping1()
 
 {
-	//SetWord(1);
-	//ViewWord();
 	endcnt = 1;
 	cnt = 1;
-
-
 }
 
 SoloGameEng::~SoloGameEng()
@@ -31,11 +27,6 @@ SoloGameEng::~SoloGameEng()
 void SoloGameEng::DoDataExchange(CDataExchange * pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	//  DDX_Text(pDX, IDC_EDIT_TYPING, m_strTyping);
-
-	//  DDX_Control(pDX, IDC_STATIC1_SOLO, m_txt1);
-	
-	//  DDX_Control(pDX, IDC_STATIC_STATUS, m_title);
 	DDX_Control(pDX, IDC_STATIC1_SOLO1, m_txt1);
 	DDX_Control(pDX, IDC_STATIC10_SOLO10, m_txt10);
 	DDX_Control(pDX, IDC_EDIT_TYPING1, m_strTyping1);
@@ -57,47 +48,42 @@ void SoloGameEng::DoDataExchange(CDataExchange * pDX)
 
 BEGIN_MESSAGE_MAP(SoloGameEng, CDialogEx)
 
-	//ON_BN_CLICKED(IDC_BUTTON3, &SoloGameEng::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
-
-
-
-BOOL SoloGameEng::PreTranslateMessage(MSG * pMsg)//edit control 에서 enter 로 값 비교
+//edit control 에서 enter 값으로 넣어진 값을 리스트의 내용과 비교하여 화면에서 단어 지우기
+BOOL SoloGameEng::PreTranslateMessage(MSG * pMsg)
 {
 
 	CString strText = _T("");
-	m_strTyping1.GetWindowTextA(strText);
+	m_strTyping1.GetWindowTextA(strText);//타이핑 한 단어
+
+	POSITION pos = m_string_list.GetHeadPosition();// 리스트 위치 비교 위해
+
+	cnt = 1;//ERASE CHECK를 위한 인덱스
 
 
-	POSITION pos = m_string_list.GetHeadPosition();
-	//POSITION remove_pos;
-	cnt = 1;
-
-
-	
-	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING1)->m_hWnd)
+	if (pMsg->message == WM_KEYDOWN && pMsg->hwnd == GetDlgItem(IDC_EDIT_TYPING1)->m_hWnd)// 키 이벤트가 발생할 경우 && IDC_EDIT_TYPING에 포커스가 맞춰있을 때
 	{
 
-		if (pMsg->wParam == VK_RETURN)
+		if (pMsg->wParam == VK_RETURN)//엔터키 이벤트가 발생하면
 		{
 
-			while (pos != NULL && IsGameEnd(endcnt)) {
+			while (pos != NULL && IsGameEnd(endcnt)) {//NULL 부분이 나올 때 까지 && ISGAMEEND가 TRUE일 때
 
-				if (strText == m_string_list.GetAt(pos)) {
-					m_strTyping1.SetWindowTextA("");
-					EraseCheck(cnt);
-					endcnt++;
+				if (strText == m_string_list.GetAt(pos)) {// STRTEXT와 리스트 안의 내용 
+					m_strTyping1.SetWindowTextA("");//단어 바꿔주기
+					EraseCheck(cnt);//인덱스를 보내서 단어 화면에서 삭제
+					endcnt++;//ENDCNT가 16가 넘으면(처음을 1로 설정) ISGAMEEND에서 FALSE가 보내짐
 
 					break;
 				}
-				else {
-					m_string_list.GetNext(pos);
-					cnt++;
+				else {//리스트 안의 단어와 내용이 틀리다면
+					m_string_list.GetNext(pos);//리스트 위치 다음위치로 바꾸기
+					cnt++;//ERASECHECK 인덱스 값 올리기
 				}
 
 			}
-			if (!IsGameEnd(endcnt))
+			if (!IsGameEnd(endcnt))// 마지막 남는 값을 화면에서 지우기 위해
 				EraseCheck(cnt);
 
 			return TRUE;
@@ -107,9 +93,9 @@ BOOL SoloGameEng::PreTranslateMessage(MSG * pMsg)//edit control 에서 enter 로
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-void SoloGameEng::ViewWord()
+void SoloGameEng::ViewWord() //화면에 단어를 뿌려주는 함수
 {
-	POSITION pos = m_string_list.GetHeadPosition();
+	POSITION pos = m_string_list.GetHeadPosition(); //리스트 위치
 
 	while (pos != NULL) {
 
@@ -151,9 +137,10 @@ void SoloGameEng::ViewWord()
 
 
 }
+
+//인덱스 값에 맞는 STATIC TEXT 를 찾아서 화면에서 보이지 않게 함
 void SoloGameEng::EraseCheck(int wordIndex)
 {
-	// (GetDlgItem(IDC_BT_EMCSTOP))->ShowWindow(FALSE);
 
 	switch (wordIndex)
 	{
@@ -206,17 +193,18 @@ void SoloGameEng::EraseCheck(int wordIndex)
 		break;
 	}
 }
-BOOL SoloGameEng::IsGameEnd(int endcnt)
+
+BOOL SoloGameEng::IsGameEnd(int endcnt)// 게임이 끝나는 지 확인
 {
-	if (endcnt == 1) {
+	if (endcnt == 1) {//ENTER KEY가 들어오는 첫 번 째 순간부터 타이머 작동
 		startTime = clock();
 		return TRUE;
 	}
 	else if (endcnt < 16)
 		return TRUE;
-	else if (endcnt == 16) {
+	else if (endcnt == 16) {//ENTER KEY가 들어오는 마지막 순간에 타이머 멈춤
 		endTime = clock();
-		result = ((double)(endTime - startTime)) / CLOCKS_PER_SEC;
+		result = ((double)(endTime - startTime)) / CLOCKS_PER_SEC;// END TIME과 START TIME 값을 비교해 걸린 시간 측정
 		CString strResult;
 		strResult.Format(_T("%.3f"), result);
 		EraseCheck(cnt);
@@ -227,8 +215,6 @@ BOOL SoloGameEng::IsGameEnd(int endcnt)
 	else
 		return FALSE;
 }
-
-
 
 BOOL SoloGameEng::OnInitDialog()
 {
@@ -242,12 +228,13 @@ BOOL SoloGameEng::OnInitDialog()
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
+//데이터 베이스에서 단어를 받아서 리스트에 추가해주는 함수
 void SoloGameEng::OnReceiveWord()
 {
 	// TODO: 여기에 구현 코드 추가.
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=rhfro@@9515;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 
@@ -259,9 +246,7 @@ void SoloGameEng::OnReceiveWord()
 
 	try {
 		CString sData(_T(""));
-
-
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from english order by rand() limit 15;");
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select context from english order by rand() limit 15;");//영어 단어 가져오기
 
 		if (bOpen)
 		{
@@ -284,27 +269,13 @@ void SoloGameEng::OnReceiveWord()
 
 						result = *sItem.m_pstringW;
 
-						/*if (iCol == 0)
-							sData = sData + sItem;
-							
-						else {
-							sData = sData + _T(",") + sItem;
-							m_string_list.AddTail(sItem);*/
-							
-						
-						
-						m_string_list.AddTail(result);
-
-
-						//}
+						m_string_list.AddTail(result);//받은 데이터를 리스트에 추가
 
 					}
 					//sData +=_T("\n");
 					iRow++;
 				}
-
 			}
-
 			//AfxMessageBox(sData);
 		}
 
