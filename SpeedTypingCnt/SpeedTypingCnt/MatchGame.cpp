@@ -317,9 +317,10 @@ void MatchGame::SetGameEnd()
 	else
 		MessageBox("승");
 
+	//데베 연결
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=??????????;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -329,52 +330,109 @@ void MatchGame::SetGameEnd()
 
 	}
 
-
+	//update user's score
 	try
 	{
-		CString sData(_T(""));
-		CString u[30][10];
 		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select member_id from user where username ='" + m_strID + "'");
+		//이미 로그인 되어 있으며 member_id가 중복이 없다.
 
 		if (bOpen)
 		{
-			int iRow = 1;
 			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
+			
+			if (bIsEOF)
 			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-
-
-						u[iRow - 1][iCol] = sItem;
-						UpdateData(FALSE);
-
-					}
-
-					iRow++;
-				}
+				AfxMessageBox("Connected id doesn't exists.");
 			}
-			m_db.BeginTrans();
+			else
+			{
+				m_db.BeginTrans();
 
-			UpdateData(TRUE);
-			CString sqlStr = "INSERT INTO score(user_id,user_score,user_date) VALUES('" + u[0][0] + "','" + m_strScore + "',now())";
-			m_db.ExecuteSQL(sqlStr);
+				UpdateData(TRUE);
+				CString sqlStr = "INSERT INTO score(user_id,user_score,user_date) VALUES('" + m_strID + "','" + m_strScore + "',now())";
+				m_db.ExecuteSQL(sqlStr);
 
-			m_db.CommitTrans();
+				m_db.CommitTrans();
+			}
 		}
+		m_pRs->Close();
 	}
 	catch (CException * e)
 	{
-		e->ReportError();
+		e->ReportError(); //에러 메세지 창으로 띄우기
 	}
+
+	if (m_db.IsOpen())
+		m_db.Close();
 }
+
+//void MatchGame::SetGameEnd()
+//{
+//	// TODO: 여기에 구현 코드 추가.
+//	int competitorScore = 15 - m_myScore;
+//	if (competitorScore > m_myScore)
+//		MessageBox("패");
+//	else
+//		MessageBox("승");
+//
+//	try
+//	{
+//		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+//		if (bOpen)
+//			m_pRs = new CRecordset(&m_db);
+//	}
+//	catch (CException * e)
+//	{
+//		e->ReportError();
+//
+//	}
+//
+//
+//	try
+//	{
+//		CString sData(_T(""));
+//		CString u[30][10];
+//		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select member_id from user where username ='" + m_strID + "'");
+//
+//		if (bOpen)
+//		{
+//			int iRow = 1;
+//			BOOL bIsEOF = m_pRs->IsEOF();
+//			DWORD dwSize = m_pRs->GetRowsetSize();
+//			if (!bIsEOF)
+//			{
+//				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+//				{
+//					int iFieldCnt = m_pRs->GetODBCFieldCount();
+//					for (int iCol = 0; iCol < iFieldCnt; iCol++)
+//					{
+//						CString sItem;
+//						m_pRs->SetAbsolutePosition(iRow);
+//						m_pRs->GetFieldValue(iCol, sItem);
+//
+//
+//						u[iRow - 1][iCol] = sItem;//
+//						UpdateData(FALSE);
+//
+//					}
+//
+//					iRow++;
+//				}
+//			}
+//			m_db.BeginTrans();
+//
+//			UpdateData(TRUE);
+//			CString sqlStr = "INSERT INTO score(user_id,user_score,user_date) VALUES('" + u[0][0] + "','" + m_strScore + "',now())";
+//			m_db.ExecuteSQL(sqlStr);
+//
+//			m_db.CommitTrans();
+//		}
+//	}
+//	catch (CException * e)
+//	{
+//		e->ReportError();
+//	}
+//}
 
 // 소켓을 통해 게임에 관련된 메시지 서버에 전달
 void MatchGame::SendGame(CString strTmp)

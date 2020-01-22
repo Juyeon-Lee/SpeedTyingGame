@@ -43,15 +43,16 @@ END_MESSAGE_MAP()
 
 
 // CDlgLogin 메시지 처리기
-
-
-void CDlgLogin::OnClickedButtonAdd()
+void CDlgLogin::OnClickedButtonAdd() // 등록
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
 	UpdateData(TRUE);
+
+	//database connect
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=????????;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;")
+			, CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -59,86 +60,46 @@ void CDlgLogin::OnClickedButtonAdd()
 	{
 		e->ReportError();
 	}
+
 	try {
-		CString sData(_T(""));
-		CString ar[30][10];	// db값을 받기위한 배열 
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select username from user");
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, 
+			"select member_id from user where username ='" + m_strID + "'");
 
 		if (bOpen)
 		{
-			int iRow = 1;
 			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
+
+			if (!bIsEOF) // 아이디 중복
 			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
+				AfxMessageBox("아이디가 이미 존재합니다.");
+			}
+			else
+			{
+				m_db.BeginTrans();
+				try
 				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-						ar[iRow - 1][iCol] = sItem;	// 쿼리문 실행한 결과값을 ar배열에 대입
-						UpdateData(FALSE);
-
-					}
-
-					iRow++;
+					UpdateData(TRUE);
+					// db에 입력한 아이디와 비밀번호를 저장
+					m_db.ExecuteSQL(_T("INSERT INTO user(username,password) VALUES('" + m_strID + "','" + m_strPW + "')"));
+					m_db.CommitTrans();
+					AfxMessageBox("등록되었습니다.");
+				}
+				catch (CException * e)
+				{
+					e->ReportError();
 				}
 			}
-			if (!bIsEOF)
-			{
-				iRow = 1;
-				int flag = 1;
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					if (ar[iRow - 1][0] == m_strID) // 입력한 값과 username이 같다면(즉 db에 동일한 username이 존재한다면)
-					{
-						UpdateData(FALSE);
-
-						AfxMessageBox("이미 존재합니다.");
-						flag = 0;
-						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
-
-						break;
-					}
-					iRow++;
-
-				}
-				if (flag == 1) // 입력한 값과 다르다면 
-				{
-					m_db.BeginTrans();
-					try
-					{
-						UpdateData(TRUE);
-						AfxMessageBox("등록되었습니다.");
-						// db에 입력한 아이디와 비밀번호를 저장
-						m_db.ExecuteSQL(_T("INSERT INTO user(username,password) VALUES('" + m_strID + "','" + m_strPW + "')"));
-						m_db.CommitTrans();
-						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
-
-					}
-					catch (CException * e)
-					{
-						e->ReportError();
-					}
-
-
-					// 로그인
-					//delete m_pRs;
-				}
-			}
-
-
+			::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL); //윈도우창 닫기
 		}
+		m_pRs->Close();
 	}
 	catch (CException * e)
 	{
 		e->ReportError();
 	}
-	//m_pRs->Close();
-	//delete m_pRs;
+	
+	if (m_db.IsOpen())
+		m_db.Close();
 }
 
 // 로그인 버튼 클릭시
@@ -147,8 +108,10 @@ void CDlgLogin::OnBnClickedButtonLogin()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 
+	//database connect
 	try {
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=?????????;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;")
+			, CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -158,72 +121,45 @@ void CDlgLogin::OnBnClickedButtonLogin()
 	}
 
 	try {
-		CString sData(_T(""));
-		CString ar[40][3];	// db값을 받기위한 배열 
-		BOOL bOpen = m_pRs->Open(CRecordset::snapshot, "select user.username from user");
-
+		BOOL bOpen = m_pRs->Open(CRecordset::snapshot
+				, "select member_id from user where username ='" + m_strID + "' AND password ='" + m_strPW + "'");
 		if (bOpen)
 		{
-			int iRow = 1;
 			BOOL bIsEOF = m_pRs->IsEOF();
-			DWORD dwSize = m_pRs->GetRowsetSize();
-			if (!bIsEOF)
+
+			if (bIsEOF) // 일치하는 정보 없음
 			{
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					int iFieldCnt = m_pRs->GetODBCFieldCount();
-					for (int iCol = 0; iCol < iFieldCnt; iCol++)
-					{
-						CString sItem;
-						m_pRs->SetAbsolutePosition(iRow);
-						m_pRs->GetFieldValue(iCol, sItem);
-						ar[iRow - 1][iCol] = sItem; // 쿼리문 실행한 결과값을 ar배열에 대입
-						UpdateData(FALSE);
-
-					}
-
-					iRow++;
-				}
+				AfxMessageBox("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
 			}
-			if (!bIsEOF)
+			else // 로그인 성공
 			{
-				iRow = 1;
+				AfxMessageBox("로그인 되셨습니다");
+				CString strMainDlgStatus = m_strID + "님이 로그인 중입니다";
+				// 메인프레임의 포인터 획득
+				CSpeedTypingCntDlg* pMainDlg = (CSpeedTypingCntDlg*)GetParent();
 
-				for (m_pRs->MoveFirst(); !m_pRs->IsEOF(); m_pRs->MoveNext())
-				{
-					// 로그인 성공 시
-					if (ar[iRow - 1][0] == m_strID)
-					{
-						AfxMessageBox("로그인 되셨습니다");
-						CString strMainDlgStatus = m_strID + "님이 로그인 중입니다";
-						// 메인프레임의 포인터 획득
-						CSpeedTypingCntDlg* pMainDlg = (CSpeedTypingCntDlg*)GetParent();
+				// 버튼 활성화
+				pMainDlg->GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(TRUE);
+				pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
+				pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
+				pMainDlg->GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(TRUE);
+				pMainDlg->GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(TRUE);
+				pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
+				pMainDlg->global_userID = m_strID;
 
-						// 버튼 활성화
-						pMainDlg->GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(TRUE);
-						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(TRUE);
-						pMainDlg->GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(TRUE);
-						pMainDlg->GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(TRUE);
-						pMainDlg->GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(TRUE);
-						pMainDlg->SetDlgItemText(IDC_STATIC_MAINID, strMainDlgStatus);
-						pMainDlg->global_userID = m_strID;
-
-						// 창 종료
-						::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
-
-						UpdateData(FALSE);
-						break;
-					}
-					iRow++;
-				}
+				UpdateData(FALSE);
+				// 창 종료
+				::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
 			}
 		}
-
+		m_pRs->Close();
 	}
 	catch (CException * e)
 	{
 		e->ReportError();
 	}
-	m_pRs->Close();
-	delete m_pRs;
+
+	if (m_db.IsOpen())
+		m_db.Close();
+
 }
