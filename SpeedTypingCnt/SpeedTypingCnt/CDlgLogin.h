@@ -10,8 +10,8 @@ class CDlgLogin : public CDialogEx
 public:
 	CDlgLogin(CWnd* pParent = nullptr);   // 표준 생성자입니다.
 	virtual ~CDlgLogin();
-	CDatabase m_db;
-	CRecordset* m_pRs;
+//	CSpeedTypingCntDlg* mainDlg;
+	
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_DIALOG_LOGIN };
@@ -24,5 +24,12 @@ protected:
 public:
 	CString m_strID;
 	CString m_strPW;
+	CDatabase m_db;
+	CRecordset* m_pRs;
 	afx_msg void OnClickedButtonAdd();
+	afx_msg void OnBnClickedButtonLogin();
+//	afx_msg void OnBnClickedButtonLogin();
+//	CString idText;
+	CString userID;
+	CString userPW;	
 };

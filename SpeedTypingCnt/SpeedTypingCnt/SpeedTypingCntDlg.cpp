@@ -1,5 +1,5 @@
-ï»¿
-// SpeedTypingCntDlg.cpp: êµ¬í˜„ íŒŒì¼
+
+// SpeedTypingCntDlg.cpp: ±¸Çö ÆÄÀÏ
 //
 
 #include "pch.h"
@@ -11,28 +11,31 @@
 #include "SoloGame.h"
 #include "CDlgLogin.h"
 #include "MatchGame.h"
+#include "ScoreRef.h"
+#include "afxdb.h"
+#include "SoloGameEng.h";
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// ì‘ìš© í”„ë¡œê·¸ë¨ ì •ë³´ì— ì‚¬ìš©ë˜ëŠ” CAboutDlg ëŒ€í™” ìƒìì…ë‹ˆë‹¤.
+// ÀÀ¿ë ÇÁ·Î±×·¥ Á¤º¸¿¡ »ç¿ëµÇ´Â CAboutDlg ´ëÈ­ »óÀÚÀÔ´Ï´Ù.
 
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
-// ëŒ€í™” ìƒì ë°ì´í„°ì…ë‹ˆë‹¤.
+	// ´ëÈ­ »óÀÚ µ¥ÀÌÅÍÀÔ´Ï´Ù.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
 
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ì§€ì›ì…ë‹ˆë‹¤.
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Áö¿øÀÔ´Ï´Ù.
 
-// êµ¬í˜„ì…ë‹ˆë‹¤.
+// ±¸ÇöÀÔ´Ï´Ù.
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -50,42 +53,41 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CSpeedTypingCntDlg ëŒ€í™” ìƒì
+// CSpeedTypingCntDlg ´ëÈ­ »óÀÚ
 
 
 
 CSpeedTypingCntDlg::CSpeedTypingCntDlg(CWnd* pParent /*nullptr*/)
 	: CDialogEx(IDD_SPEEDTYPINGCNT_DIALOG, pParent)
+	, m_strMainID(_T("·Î±×ÀÎ ¾ÈÇÔ."))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-}
-
-void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
+	global_userID = _T("");
 }
 
 BEGIN_MESSAGE_MAP(CSpeedTypingCntDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
-//	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
+	ON_WM_QUERYDRAGICON()	
+	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnBnClickedButtonSolo)
+	ON_BN_CLICKED(IDC_BUTTON_SOLO2, &CSpeedTypingCntDlg::OnClickedButtonSolo2)
 	ON_BN_CLICKED(IDC_BUTTON_MATCH, &CSpeedTypingCntDlg::OnBnClickedButtonMatch)
-	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnButtonInit)
-	ON_BN_CLICKED(IDC_BUTTON_SOLO, &CSpeedTypingCntDlg::OnClickedButtonSolo)
+	ON_BN_CLICKED(IDC_BUTTON_SCORE, &CSpeedTypingCntDlg::OnBnClickedButtonScore)
+	ON_BN_CLICKED(IDC_BUTTON_INIT, &CSpeedTypingCntDlg::OnBnClickedButtonInit)
+	ON_WM_CTLCOLOR()
+	ON_BN_CLICKED(IDC_BUTTON_LOGOUT, &CSpeedTypingCntDlg::OnBnClickedButtonLogout)
 END_MESSAGE_MAP()
 
 
-// CSpeedTypingCntDlg ë©”ì‹œì§€ ì²˜ë¦¬ê¸°
+// CSpeedTypingCntDlg ¸Ş½ÃÁö Ã³¸®±â
 
 BOOL CSpeedTypingCntDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// ì‹œìŠ¤í…œ ë©”ë‰´ì— "ì •ë³´..." ë©”ë‰´ í•­ëª©ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
+	// ½Ã½ºÅÛ ¸Ş´º¿¡ "Á¤º¸..." ¸Ş´º Ç×¸ñÀ» Ãß°¡ÇÕ´Ï´Ù.
 
-	// IDM_ABOUTBOXëŠ” ì‹œìŠ¤í…œ ëª…ë ¹ ë²”ìœ„ì— ìˆì–´ì•¼ í•©ë‹ˆë‹¤.
+	// IDM_ABOUTBOX´Â ½Ã½ºÅÛ ¸í·É ¹üÀ§¿¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -103,24 +105,24 @@ BOOL CSpeedTypingCntDlg::OnInitDialog()
 		}
 	}
 
-	// ì´ ëŒ€í™” ìƒìì˜ ì•„ì´ì½˜ì„ ì„¤ì •í•©ë‹ˆë‹¤.  ì‘ìš© í”„ë¡œê·¸ë¨ì˜ ì£¼ ì°½ì´ ëŒ€í™” ìƒìê°€ ì•„ë‹ ê²½ìš°ì—ëŠ”
-	//  í”„ë ˆì„ì›Œí¬ê°€ ì´ ì‘ì—…ì„ ìë™ìœ¼ë¡œ ìˆ˜í–‰í•©ë‹ˆë‹¤.
-	SetIcon(m_hIcon, TRUE);			// í° ì•„ì´ì½˜ì„ ì„¤ì •í•©ë‹ˆë‹¤.
-	SetIcon(m_hIcon, FALSE);		// ì‘ì€ ì•„ì´ì½˜ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+	// ÀÌ ´ëÈ­ »óÀÚÀÇ ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.  ÀÀ¿ë ÇÁ·Î±×·¥ÀÇ ÁÖ Ã¢ÀÌ ´ëÈ­ »óÀÚ°¡ ¾Æ´Ò °æ¿ì¿¡´Â
+	//  ÇÁ·¹ÀÓ¿öÅ©°¡ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
+	SetIcon(m_hIcon, TRUE);			// Å« ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	SetIcon(m_hIcon, FALSE);		// ÀÛÀº ¾ÆÀÌÄÜÀ» ¼³Á¤ÇÕ´Ï´Ù.
 
-	// TODO: ì—¬ê¸°ì— ì¶”ê°€ ì´ˆê¸°í™” ì‘ì—…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
-	/*try
-	{
-		BOOL bOpen = m_db.OpenEx(_T("DSN=test_odbc;SERVER=127.0.0.1;PORT=3306;UID=root;PWD=root;DATABASE=test_db;"), CDatabase::noOdbcDialog);
-		if (bOpen)
-			m_pRs = new CRecordset(&m_db);
-	}
-	catch(CException *e)
-	{
-		e->ReportError();
+	// TODO: ¿©±â¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.	
+	GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(FALSE);
 
-	}*/
-	return TRUE;  // í¬ì»¤ìŠ¤ë¥¼ ì»¨íŠ¸ë¡¤ì— ì„¤ì •í•˜ì§€ ì•Šìœ¼ë©´ TRUEë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
+	m_font.CreatePointFont(130, "±¼¸²");
+	m_title.SetFont(&m_font, TRUE);
+		
+	GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(FALSE);
+		
+	return TRUE;  // Æ÷Ä¿½º¸¦ ÄÁÆ®·Ñ¿¡ ¼³Á¤ÇÏÁö ¾ÊÀ¸¸é TRUE¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+
 }
 
 void CSpeedTypingCntDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -129,6 +131,7 @@ void CSpeedTypingCntDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
+		delete dlgAbout;
 	}
 	else
 	{
@@ -136,19 +139,19 @@ void CSpeedTypingCntDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// ëŒ€í™” ìƒìì— ìµœì†Œí™” ë‹¨ì¶”ë¥¼ ì¶”ê°€í•  ê²½ìš° ì•„ì´ì½˜ì„ ê·¸ë¦¬ë ¤ë©´
-//  ì•„ë˜ ì½”ë“œê°€ í•„ìš”í•©ë‹ˆë‹¤.  ë¬¸ì„œ/ë·° ëª¨ë¸ì„ ì‚¬ìš©í•˜ëŠ” MFC ì• í”Œë¦¬ì¼€ì´ì…˜ì˜ ê²½ìš°ì—ëŠ”
-//  í”„ë ˆì„ì›Œí¬ì—ì„œ ì´ ì‘ì—…ì„ ìë™ìœ¼ë¡œ ìˆ˜í–‰í•©ë‹ˆë‹¤.
+// ´ëÈ­ »óÀÚ¿¡ ÃÖ¼ÒÈ­ ´ÜÃß¸¦ Ãß°¡ÇÒ °æ¿ì ¾ÆÀÌÄÜÀ» ±×¸®·Á¸é
+//  ¾Æ·¡ ÄÚµå°¡ ÇÊ¿äÇÕ´Ï´Ù.  ¹®¼­/ºä ¸ğµ¨À» »ç¿ëÇÏ´Â MFC ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀÇ °æ¿ì¿¡´Â
+//  ÇÁ·¹ÀÓ¿öÅ©¿¡¼­ ÀÌ ÀÛ¾÷À» ÀÚµ¿À¸·Î ¼öÇàÇÕ´Ï´Ù.
 
 void CSpeedTypingCntDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // ê·¸ë¦¬ê¸°ë¥¼ ìœ„í•œ ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ì…ë‹ˆë‹¤.
+		CPaintDC dc(this); // ±×¸®±â¸¦ À§ÇÑ µğ¹ÙÀÌ½º ÄÁÅØ½ºÆ®ÀÔ´Ï´Ù.
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// í´ë¼ì´ì–¸íŠ¸ ì‚¬ê°í˜•ì—ì„œ ì•„ì´ì½˜ì„ ê°€ìš´ë°ì— ë§ì¶¥ë‹ˆë‹¤.
+		// Å¬¶óÀÌ¾ğÆ® »ç°¢Çü¿¡¼­ ¾ÆÀÌÄÜÀ» °¡¿îµ¥¿¡ ¸ÂÃä´Ï´Ù.
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -156,7 +159,7 @@ void CSpeedTypingCntDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// ì•„ì´ì½˜ì„ ê·¸ë¦½ë‹ˆë‹¤.
+		// ¾ÆÀÌÄÜÀ» ±×¸³´Ï´Ù.
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -165,62 +168,108 @@ void CSpeedTypingCntDlg::OnPaint()
 	}
 }
 
-// ì‚¬ìš©ìê°€ ìµœì†Œí™”ëœ ì°½ì„ ë„ëŠ” ë™ì•ˆì— ì»¤ì„œê°€ í‘œì‹œë˜ë„ë¡ ì‹œìŠ¤í…œì—ì„œ
-//  ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
+// »ç¿ëÀÚ°¡ ÃÖ¼ÒÈ­µÈ Ã¢À» ²ô´Â µ¿¾È¿¡ Ä¿¼­°¡ Ç¥½ÃµÇµµ·Ï ½Ã½ºÅÛ¿¡¼­
+//  ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÕ´Ï´Ù.
 HCURSOR CSpeedTypingCntDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CSpeedTypingCntDlg::OnBnClickedButtonScore()
-{
-	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
-	// ì ìˆ˜ ì¡°íšŒ ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ í•´ë‹¹ ë‹¤ì´ì–¼ë¡œê·¸ ë³´ì´ê¸°
-	CScoreRef dlg;
-	dlg.DoModal();
-}
-
-
-//void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
-//{
-//	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
-//	SoloGame* dlg = new SoloGame;
-//	dlg->DoModal();
-//}
-
-
-void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
-{
-	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
-	MatchGame* dlg = new MatchGame;
-	dlg->DoModal();
-}
-
-
-void CSpeedTypingCntDlg::OnButtonInit()
-{
-	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
-	CDlgLogin* dlg = new CDlgLogin;
-
-	dlg->DoModal();
-	//if(d)
-}
 BOOL CSpeedTypingCntDlg::PreTranslateMessage(MSG* pMsg)
 {
-	// TODO: ì—¬ê¸°ì— íŠ¹ìˆ˜í™”ëœ ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ í´ë˜ìŠ¤ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
+	// TODO: ¿©±â¿¡ Æ¯¼öÈ­µÈ ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº» Å¬·¡½º¸¦ È£ÃâÇÕ´Ï´Ù.
 	if (pMsg->message == WM_KEYDOWN)
 	{
-		if (pMsg->wParam == VK_RETURN || pMsg->wParam == VK_ESCAPE) // enter or esc ê°’ì„ ë°›ì•˜ì„ ë•Œ ì°½ì´ êº¼ì§€ì§€ ì•ŠìŒ
+		if (pMsg->wParam == VK_RETURN || pMsg->wParam == VK_ESCAPE) // enter or esc °ªÀ» ¹Ş¾ÒÀ» ¶§ Ã¢ÀÌ ²¨ÁöÁö ¾ÊÀ½
 			return TRUE;
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
-
-
-void CSpeedTypingCntDlg::OnClickedButtonSolo()
+void CSpeedTypingCntDlg::OnBnClickedButtonSolo()
 {
-	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
 	SoloGame* dlg = new SoloGame;
 	dlg->DoModal();
+	delete dlg;
+}
+void CSpeedTypingCntDlg::OnBnClickedButtonMatch()
+{
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	MatchGame* dlg = new MatchGame;
+	dlg->m_strID = global_userID;
+	dlg->DoModal();
+	delete dlg;
+}
+void CSpeedTypingCntDlg::OnBnClickedButtonScore()
+{
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	CScoreRef* dlg = new CScoreRef;
+	dlg->m_strID_score = global_userID;
+	dlg->DoModal();
+	delete dlg;
+}
+void CSpeedTypingCntDlg::DoDataExchange(CDataExchange* pDX)
+{
+	// TODO: ¿©±â¿¡ Æ¯¼öÈ­µÈ ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº» Å¬·¡½º¸¦ È£ÃâÇÕ´Ï´Ù.
+	CDialogEx::DoDataExchange(pDX);
+	//  DDX_Control(pDX, IDC_BUTTON_INIT, m_btnLogin);
+	//  DDX_Control(pDX, IDC_BUTTON_MATCH, m_btnMatch);
+	//  DDX_Control(pDX, IDC_BUTTON_SCORE, m_btnScore);
+	//  DDX_Control(pDX, IDC_BUTTON_SOLO, m_btnSolo);
+	DDX_Text(pDX, IDC_STATIC_MAINID, m_strMainID);
+	DDX_Control(pDX, IDC_STATIC_TITLE, m_title);
+	
+}
+void CSpeedTypingCntDlg::OnBnClickedButtonInit()
+{
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	CDlgLogin* dlg = new CDlgLogin;
+	dlg->DoModal();
+	delete dlg;
+}
 
+	void CSpeedTypingCntDlg::OnClickedButtonSolo2()
+	{
+		SoloGameEng* dlg = new SoloGameEng;
+		dlg->DoModal();
+		delete dlg;
+		// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	}
+
+void CSpeedTypingCntDlg::OnBnClickedButtonLogout()
+{
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	AfxMessageBox("·Î±×¾Æ¿ô µÇ¼Ì½À´Ï´Ù");
+	GetDlgItem(IDC_BUTTON_MATCH)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(FALSE);
+	SetDlgItemText(IDC_STATIC_MAINID, "·Î±×ÀÎ ¾ÈÇÔ.");
+	global_userID = "";
+}
+
+/*	void CSpeedTypingCntDlg::OnButtonVisible()
+	{
+		// TODO: ¿©±â¿¡ ±¸Çö ÄÚµå Ãß°¡.
+		GetDlgItem(IDC_BUTTON_MATCH)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SOLO)->ShowWindow(SW_SHOWNORMAL);
+		GetDlgItem(IDC_BUTTON_SCORE)->ShowWindow(SW_SHOWNORMAL);
+	}
+
+	*/
+
+
+HBRUSH CSpeedTypingCntDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{		
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	UINT nID = pWnd->GetDlgCtrlID();
+	switch (nID)
+	{
+	case IDC_STATIC_TITLE:
+		pDC->SetTextColor(RGB(0, 0, 255)); //ÆÄ¶õ»ö
+		break;
+	}
+	return hbr;
 }

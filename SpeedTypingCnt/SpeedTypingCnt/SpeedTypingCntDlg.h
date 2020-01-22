@@ -19,7 +19,7 @@ public:
 #endif
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
+//	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
 
 
 // 구현입니다.
@@ -33,11 +33,21 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedButtonScore();
-//	afx_msg void OnBnClickedButtonSolo();
-	afx_msg void OnBnClickedButtonMatch();
-public:
-	afx_msg void OnButtonInit();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnClickedButtonSolo();
+	
+	CString global_userID;
+	
+	afx_msg void OnBnClickedButtonSolo();
+	afx_msg void OnBnClickedButtonMatch();
+	afx_msg void OnBnClickedButtonScore();
+	virtual void DoDataExchange(CDataExchange* pDX);
+	afx_msg void OnBnClickedButtonInit();
+	CString m_strMainID;
+
+	CFont m_font;
+
+	CStatic m_title;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnBnClickedButtonLogout();
+	afx_msg void OnClickedButtonSolo2();
 };

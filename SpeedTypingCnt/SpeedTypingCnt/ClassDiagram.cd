@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CAboutDlg" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SpeedTypingCntDlg.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArrayList&lt;T, MAX&gt;" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAAgEAAAAAAACAAABAQAAAAAAAAACAIAAAQIAAA=</HashCode>
+      <FileName>ArrayList.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDlgConnect" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAABAAEAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>CDlgConnect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDlgLogin">
+    <Position X="7.25" Y="0.5" Width="3.25" />
+    <NestedTypes>
+      <Enum Name="CDlgLogin::__unnamed_enum_0005_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CDlgLogin.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AACQAAAAAAAAAAAASBAIAAAAAAIAABAAAQAIAAEAAAA=</HashCode>
+      <FileName>CDlgLogin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSocCom" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAQgAAAAAAAAAAAAAAAAAAAAAACAAgAAAA=</HashCode>
+      <FileName>CSocCom.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatchGame" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAf8cAEAgQAAoQABAIoAAggRKEAJIgGAACAQEABAQ=</HashCode>
+      <FileName>MatchGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CScoreRef" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAABAAAIAJACSAAQAEIAEBAQAAAAAAAEQAA=</HashCode>
+      <FileName>ScoreRef.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Search" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAABAAAAAABAAAAAAAAAAAAAAAAAEAAAgAAA=</HashCode>
+      <FileName>Search.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SearchShow" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEBAAAAAAAAABACAAAAAEIAEJAAAAAAIAAEQAA=</HashCode>
+      <FileName>SearchShow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoloGame" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAkAAADADwgABBBhICAAAAIAAFAAEAACEACAABU=</HashCode>
+      <FileName>SoloGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoloGameEng" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAkAAAjADwgABBBgICAIAAIAAFAAAAACEACAAAU=</HashCode>
+      <FileName>SoloGameEng.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSpeedTypingCntApp" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>SpeedTypingCnt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSpeedTypingCntDlg">
+    <Position X="0.5" Y="1.75" Width="3.5" />
+    <NestedTypes>
+      <Enum Name="CSpeedTypingCntDlg::__unnamed_enum_0015_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SpeedTypingCntDlg.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EACAAEEAIAAAAggCABQABAAAAAAAIAQAAAQAAEESAAE=</HashCode>
+      <FileName>SpeedTypingCntDlg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

@@ -23,7 +23,7 @@
     <ProjectGuid>{566A3F4C-ED87-444A-86FF-C8581C95E76A}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>SpeedTypingCnt</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -197,7 +197,10 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ScoreRef.h" />
+    <ClInclude Include="Search.h" />
+    <ClInclude Include="SearchShow.h" />
     <ClInclude Include="SoloGame.h" />
+    <ClInclude Include="SoloGameEng.h" />
     <ClInclude Include="SpeedTypingCnt.h" />
     <ClInclude Include="SpeedTypingCntDlg.h" />
     <ClInclude Include="targetver.h" />
@@ -214,7 +217,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ScoreRef.cpp" />
+    <ClCompile Include="Search.cpp" />
+    <ClCompile Include="SearchShow.cpp" />
     <ClCompile Include="SoloGame.cpp" />
+    <ClCompile Include="SoloGameEng.cpp" />
     <ClCompile Include="SpeedTypingCnt.cpp" />
     <ClCompile Include="SpeedTypingCntDlg.cpp" />
   </ItemGroup>
@@ -222,6 +228,7 @@
     <ResourceCompile Include="SpeedTypingCnt.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\SpeedTypingCnt.rc2" />
   </ItemGroup>
   <ItemGroup>
