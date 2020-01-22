@@ -89,7 +89,10 @@ void MatchGame::OnBnClickedButtonConnect()
 		if (b)
 		{
 			m_socCom.Init(this->m_hWnd);
+			m_strConnect = "접속성공";
 			MessageBox(_T("접속 성공!"));
+			m_bConnect = TRUE;
+			GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 		}
 		else
 		{
@@ -100,10 +103,7 @@ void MatchGame::OnBnClickedButtonConnect()
 	}
 }
 
-// 서버로부터 들어온 입력(char[256])을 처리한다.
-// "접속성공" : m_bConnect = true 로 바꾸고 입력칸을 활성화한다.
-// 단어 15개 조합 : static에 적용한다.
-// 상대방이 단어를 지웠다 : 나도 같은 단어를 화면에서 지운다.
+// 서버로부터의 응답 처리 함수
 afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 {
 	char pTmp[256];
@@ -113,33 +113,29 @@ afx_msg LRESULT MatchGame::OnReceive(WPARAM wParam, LPARAM lParam)
 	// 데이터를 pTmp에 받는다
 	m_socCom.Receive(pTmp, 256);
 
-	//헤더 없음
-
-	str.Format("%s", pTmp);
-	if (str == _T("접속성공"))
+	str.Format("%s", pTmp);	
+	if (str == _T("접속성공"))						// 들어온 데이터가 접속 성공일 경우
 	{
-		m_strConnect = "접속성공";
 		m_bConnect = TRUE;
-		GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(TRUE);
 	}
-	else if (str.Find(",") != std::string::npos) // for setting m_words
+	else if (str.Find(",") != std::string::npos)	// 들어온 데이터가 ,를 포함할 경우 문자리스트로 취급
 	{
-		scatterStrToWords(str);
+		scatterStrToWords(str);						// , 를 구분자로 문자를 구분해주는 함수에게 전달
 	}
-	else //상대방이 단어를 지웠다 : 나도 같은 단어를 화면에서 지운다.
+	else											// 들어온 데이터가 서버에서 맞춘 단어일 경우
 	{
-		EraseCheck(atoi(str), FALSE);
+		EraseCheck(atoi(str), FALSE);				// 해당 단어를 클라이언트의 화면에서도 삭제
 
-		if (IsGameEnd()) {
+		if (IsGameEnd()) {							// 해당 단어가 화면의 마지막 단어일 경우
 			Sleep(1000);
-			SetGameEnd();
+			SetGameEnd();							// 게임을 끝낸다
 		}
 	}
-	
+
 	return LPARAM();
 }
 
-
+// 특수키 입력 처리 함수
 BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
@@ -153,25 +149,26 @@ BOOL MatchGame::PreTranslateMessage(MSG* pMsg)
 		&& m_bConnect == TRUE)
 	{
 		// EDIT TEXT에서 문자열 획득 후, STATIC TEXT들과 비교하는 함수로 전달
-		
 		GetDlgItemText(IDC_EDIT_TYPING, str);
 
+		// 획득한 문자열을 토대로 해당 문자가 있는 STATIC TEXT의 인덱스 획득
 		index = staticStringToIndex(str);
 
-		if (index) // 찾은 인덱스로 EraseCheck(인덱스)하면 단어가 삭제
+		if (index)						// 찾은 인덱스로 EraseCheck(인덱스)하면 단어가 삭제
 		{
 			EraseCheck(index, TRUE);
 			UpdateData(FALSE);
 			str.Format("%d", index);
-			SendGame(str);
-		}
-			
-		if (IsGameEnd())
-		{
-			Sleep(1000);
-			SetGameEnd();
+			SendGame(str);				// 서버에게 클라이언트가 맞춘 단어 전송
 		}
 
+		if (IsGameEnd())				// 클라이언트가 마지막 단어를 맞춘 경우
+		{
+			Sleep(1000);
+			SetGameEnd();				// 게임을 끝낸다
+		}
+
+		// 엔터때마다 입력창 초기화
 		SetDlgItemText(IDC_EDIT_TYPING, "");
 		return true;
 	}
@@ -183,44 +180,22 @@ BOOL MatchGame::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	endGameIndex = 0;
 	score = _T("");
-	m_strScore.Format("%d", m_myScore);
+	m_strScore.Format("%d%s", m_myScore, "점");
 	m_bConnect = FALSE;
 
-	//접속 전에는 단어 입력 불가
 	GetDlgItem(IDC_EDIT_TYPING)->EnableWindow(FALSE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
-//','로 이루어진 문자열을 잘라 멤버변수에 넣어준다.
-void MatchGame::scatterStrToWords(CString sData)
-{
-		AfxExtractSubString(m_word1, sData, 0, ',');
-		AfxExtractSubString(m_word2, sData, 1, ',');
-		AfxExtractSubString(m_word3, sData, 2, ',');
-		AfxExtractSubString(m_word4, sData, 3, ',');
-		AfxExtractSubString(m_word5, sData, 4, ',');
-		AfxExtractSubString(m_word6, sData, 5, ',');
-		AfxExtractSubString(m_word7, sData, 6, ',');
-		AfxExtractSubString(m_word8, sData, 7, ',');
-		AfxExtractSubString(m_word9, sData, 8, ',');
-		AfxExtractSubString(m_word10, sData, 9, ',');
-		AfxExtractSubString(m_word11, sData, 10, ',');
-		AfxExtractSubString(m_word12, sData, 11, ',');
-		AfxExtractSubString(m_word13, sData, 12, ',');
-		AfxExtractSubString(m_word14, sData, 13, ',');
-		AfxExtractSubString(m_word15, sData, 14, ',');
-
-		UpdateData(false);
-
-}
-
-// 화면에 단어가 모두 지워졌는지를 이용하여 게임이 끝났는지 확인한다.
+// 서버와 클라이언트 통합해서 맞춘 단어의 수가 15 이상이면 TRUE 반환
 BOOL MatchGame::IsGameEnd()
 {
+	// TODO: 여기에 구현 코드 추가.
 	if (endGameIndex >= 15)
 		return TRUE;
 	else
@@ -228,8 +203,8 @@ BOOL MatchGame::IsGameEnd()
 
 }
 
-//str 멤버변수 중에서 일치하는 static이 몇번째인지 알려준다.
-//일치하는 것이 없다면 0이 반환된다.
+// str 멤버변수 중에서 일치하는 static이 몇번째인지 알려준다.
+// 일치하는 것이 없다면 0이 반환된다.
 int MatchGame::staticStringToIndex(CString str)
 {
 	if (str == m_word1)
@@ -332,18 +307,19 @@ void MatchGame::EraseCheck(int wordIndex, BOOL itsMe)
 	score.Format("%d", endGameIndex);
 }
 
+// 승패 메시지 출력 및 최종 점수 SCORE 테이블에 추가
 void MatchGame::SetGameEnd()
 {
-	// 내 점수로 상대방의 점수를 계산 한 후, 승패를 가린다.
+	// TODO: 여기에 구현 코드 추가.
 	int competitorScore = 15 - m_myScore;
 	if (competitorScore > m_myScore)
 		MessageBox("패");
 	else
 		MessageBox("승");
-	
+
 	try
 	{
-		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=root;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
+		BOOL bOpen = m_db.OpenEx(_T("DRIVER={MYSQL ODBC 8.0 Unicode Driver};SERVER=127.0.0.1;PORT=3306;USER=root;PASSWORD=??????????;DATABASE=typing;OPTION=3;"), CDatabase::noOdbcDialog);
 		if (bOpen)
 			m_pRs = new CRecordset(&m_db);
 	}
@@ -397,9 +373,10 @@ void MatchGame::SetGameEnd()
 	catch (CException * e)
 	{
 		e->ReportError();
-	}	
+	}
 }
 
+// 소켓을 통해 게임에 관련된 메시지 서버에 전달
 void MatchGame::SendGame(CString strTmp)
 {
 	// 데이터 전송
@@ -412,5 +389,25 @@ void MatchGame::SendGame(CString strTmp)
 	m_socCom.Send(pTmp, 256);
 }
 
+// 서버로부터 받은 단어리스트를 파싱 후 화면에 출력
+void MatchGame::scatterStrToWords(CString sData)
+{
+	// TODO: 여기에 구현 코드 추가.
+	AfxExtractSubString(m_word1, sData, 0, ',');
+	AfxExtractSubString(m_word2, sData, 1, ',');
+	AfxExtractSubString(m_word3, sData, 2, ',');
+	AfxExtractSubString(m_word4, sData, 3, ',');
+	AfxExtractSubString(m_word5, sData, 4, ',');
+	AfxExtractSubString(m_word6, sData, 5, ',');
+	AfxExtractSubString(m_word7, sData, 6, ',');
+	AfxExtractSubString(m_word8, sData, 7, ',');
+	AfxExtractSubString(m_word9, sData, 8, ',');
+	AfxExtractSubString(m_word10, sData, 9, ',');
+	AfxExtractSubString(m_word11, sData, 10, ',');
+	AfxExtractSubString(m_word12, sData, 11, ',');
+	AfxExtractSubString(m_word13, sData, 12, ',');
+	AfxExtractSubString(m_word14, sData, 13, ',');
+	AfxExtractSubString(m_word15, sData, 14, ',');
 
-
+	UpdateData(false);
+}

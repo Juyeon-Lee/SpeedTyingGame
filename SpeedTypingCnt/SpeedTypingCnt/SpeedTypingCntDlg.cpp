@@ -245,7 +245,7 @@ void CSpeedTypingCntDlg::OnBnClickedButtonLogout()
 	GetDlgItem(IDC_BUTTON_SCORE)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_LOGOUT)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_SOLO2)->EnableWindow(FALSE);
-	SetDlgItemText(IDC_STATIC_MAINID, "");
+	SetDlgItemText(IDC_STATIC_MAINID, "로그인 안함.");
 	global_userID = "";
 }
 

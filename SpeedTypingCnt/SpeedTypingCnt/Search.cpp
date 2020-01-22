@@ -38,22 +38,12 @@ END_MESSAGE_MAP()
 
 // Search 메시지 처리기
 
-
-//void Search::OnBnClickedButtonEnter()
-//{
-//	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-//	//CScoreRef* dlg = new CScoreRef;
-//	//GetDlgItemText(IDC_EDIT_ID, dlg->m_searchID_score);
-//	//UpdateData(FALSE);
-//	::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);
-//}
-
-
+// 검색 버튼 클릭 시
 void Search::OnBnClickedOk()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	SearchShow* dlg = new SearchShow;
-	GetDlgItemText(IDC_EDIT_ID, dlg->m_strID_search_show);
-	dlg->DoModal();
+	GetDlgItemText(IDC_EDIT_ID, dlg->m_strID_search_show);	// 입력값을 m_strID_search_show변수에 넣고
+	dlg->DoModal();											// SearchShow 다이얼로그를 띄운다
 	delete dlg;
 }
